@@ -1923,7 +1923,7 @@ export function Navbar() {
             <img
               src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f623b7b6462a86185f110_glamz.svg"
               loading="lazy"
-              alt="Glamz"
+              alt="PurCurie"
             />
           </a>
           <div className="nav-menu-wrap">
@@ -1990,7 +1990,7 @@ export function Navbar() {
             <a href="/categories" className="nav-link">
               Categories
             </a>
-            <a href="/products" className="nav-link">
+            <a href="/product" className="nav-link">
               Shop
             </a>
             <a href="/blogs" className="nav-link">

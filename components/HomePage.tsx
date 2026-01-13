@@ -1153,7 +1153,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="post">
+      {/* <section className="post">
         <div className="w-layout-blockcontainer container w-container">
           <div className="section-title">
             <div className="sub-title">
@@ -1363,7 +1363,7 @@ export default async function HomePage() {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="reviews">
         <div className="w-layout-blockcontainer container w-container">
           <div className="sub-title">

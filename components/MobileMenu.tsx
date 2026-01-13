@@ -20,7 +20,7 @@ export function MobileMenu() {
           <a href="/categories" className="nav-link">
             Categories
           </a>
-          <a href="/products" className="nav-link">
+          <a href="/product" className="nav-link">
             Shop
           </a>
           <a href="/blogs" className="nav-link">
@@ -32,7 +32,7 @@ export function MobileMenu() {
         </div>
       </div>
       <div className="nav-bottom">
-        <div>© 2025 Glamz.</div>
+        <div>© 2026 PurCurie.</div>
         <div className="social-icon-wrap">
           <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16514"
