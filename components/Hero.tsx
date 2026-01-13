@@ -20,7 +20,7 @@ export function Hero() {
         </section>
         <HeroSection />
         <img
-          src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6876010eb83a263837544707_glamz-beauty.svg"
+          src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Svg_Purcurie_2.svg?v=1768310952"
           loading="lazy"
           style={{ opacity: 0 }}
           data-w-id="9061418a-ae45-c063-4c32-479d42553da4"
