@@ -141,7 +141,7 @@ export default async function HomePage() {
                   className="category-item w-dyn-item"
                 >
                   <a
-                    href={`/category/${collection.handle}`}
+                    href={`/categories/${collection.handle}`}
                     className="category-box w-inline-block"
                   >
                     <div className="category-img">

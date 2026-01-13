@@ -65,7 +65,7 @@ function Footer() {
                   Return Policy
                 </a>
                 <a href="/terms" className="ft-link">
-                  Terms &amp;Conditions
+                  Terms &amp; Conditions
                 </a>
                 <a href="/shipping" className="ft-link">
                   Shipping Policy
@@ -194,7 +194,7 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div>© 2025 PurCurie</div>
+        <div>© 2026 PurCurie</div>
       </div>
     </section>
   );

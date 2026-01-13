@@ -23,9 +23,9 @@ export function MobileMenu() {
           <a href="/product" className="nav-link">
             Shop
           </a>
-          <a href="/blogs" className="nav-link">
+          {/* <a href="/blogs" className="nav-link">
             Blogs
-          </a>
+          </a> */}
           <a href="/contact" className="nav-link">
             Contact us
           </a>
@@ -36,7 +36,7 @@ export function MobileMenu() {
         <div className="social-icon-wrap">
           <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16514"
-            href="https://x.com"
+            href="https://x.com/PurCurie"
             target="_blank"
             className="social-icon w-inline-block"
             rel="noreferrer"
@@ -47,7 +47,7 @@ export function MobileMenu() {
               alt="Twitter"
             />
           </a>
-          <a
+          {/* <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16516"
             href="https://facebook.com"
             target="_blank"
@@ -59,8 +59,8 @@ export function MobileMenu() {
               loading="lazy"
               alt="Facebook"
             />
-          </a>
-          <a
+          </a> */}
+          {/* <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16518"
             href="https://youtube.com"
             target="_blank"
@@ -72,10 +72,10 @@ export function MobileMenu() {
               loading="lazy"
               alt="Youtube"
             />
-          </a>
+          </a> */}
           <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b1651a"
-            href="https://instagram.com"
+            href="https://www.instagram.com/purcurie/"
             target="_blank"
             className="social-icon w-inline-block"
             rel="noreferrer"
