@@ -41,12 +41,12 @@ function Footer() {
                 <a href="/categories" className="ft-link">
                   Categories
                 </a>
-                <a href="/products" className="ft-link">
+                <a href="/product" className="ft-link">
                   Shop
                 </a>
-                <a href="/blogs" className="ft-link">
+                {/* <a href="/blogs" className="ft-link">
                   Blogs
-                </a>
+                </a> */}
                 <a href="/contact" className="ft-link">
                   Contact us
                 </a>
@@ -55,20 +55,20 @@ function Footer() {
             <div>
               <div className="ft-sub-title">Utility</div>
               <div className="ft-menu">
-                <a href="/template-info/style-guide" className="ft-link">
-                  Style Guide
+                <a href="/disclaimer" className="ft-link">
+                  Disclaimer
                 </a>
-                <a href="/privacy-policy" className="ft-link">
+                <a href="/privacy" className="ft-link">
                   Privacy Policy
                 </a>
-                <a href="/return-policy" className="ft-link">
+                <a href="/refund" className="ft-link">
                   Return Policy
                 </a>
-                <a href="/terms-conditions" className="ft-link">
+                <a href="/terms" className="ft-link">
                   Terms &amp;Conditions
                 </a>
-                <a href="/template-info/licensing" className="ft-link">
-                  License
+                <a href="/shipping" className="ft-link">
+                  Shipping Policy
                 </a>
               </div>
             </div>
@@ -87,20 +87,20 @@ function Footer() {
         </div>
         <div className="footer-bottom">
           <div>
-            Designed by Aartic. Powered by
-            <a
+           
+            {/* <a
               href="https://webflow.com"
               target="_blank"
               className="utility-link"
             >
               Webflow
-            </a>
-            .
+            </a> */}
+            
           </div>
           <div className="social-icon-wrap">
             <a
               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8aec"
-              href="https://x.com"
+              href="https://x.com/PurCurie"
               target="_blank"
               className="social-icon w-inline-block"
             >
@@ -110,7 +110,7 @@ function Footer() {
                 alt="Twitter"
               />
             </a>
-            <a
+            {/* <a
               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8aee"
               href="https://facebook.com"
               target="_blank"
@@ -121,8 +121,8 @@ function Footer() {
                 loading="lazy"
                 alt="Facebook"
               />
-            </a>
-            <a
+            </a> */}
+            {/* <a
               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8af0"
               href="https://youtube.com"
               target="_blank"
@@ -133,10 +133,10 @@ function Footer() {
                 loading="lazy"
                 alt="Youtube"
               />
-            </a>
+            </a> */}
             <a
               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8af2"
-              href="https://instagram.com"
+              href="https://www.instagram.com/purcurie/"
               target="_blank"
               className="social-icon w-inline-block"
             >
@@ -194,7 +194,7 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div>© 2025 Glamz.</div>
+        <div>© 2025 PurCurie</div>
       </div>
     </section>
   );

@@ -3,79 +3,147 @@ function Terms() {
     <>
       <div className="page-title">
         <div className="w-layout-blockcontainer container w-container">
-          <h1 data-w-id="ffe647bc-70c5-6af7-fca1-3b3a63d3263c" className="main-heading">
-            Privacy Policy
+          <h1 className="main-heading">
+            Terms & Conditions
           </h1>
         </div>
       </div>
+
       <div className="page-wrap">
         <div className="w-layout-blockcontainer container w-container">
           <div className="info-outer">
+
+            {/* INTRODUCTION */}
             <div className="info-data">
               <h3>Introduction</h3>
               <p className="single-text">
-                Pellentesque venenatis neque non magna tempus tortor. Pellentesque eget pellentesque dapibus massa enim. Faucibus in imperdiet augue aliquam tincidunt in dictum lacus maecenas. Feugiat volutpat hendrerit vel tellus eu arcu felis gravida. In cras pulvinar nunc nibh congue tempor cursus. Sed amet at nisl sagittis pellentesque duis. Et sagittis sed suspendisse malesuada volutpat sagittis tempus. Risus ultrices id at pellentesque ridiculus.
+                These Terms and Conditions (“Terms”) govern your access to and use of the PurCurie website, mobile site and related services (collectively referred to as the “Platform”). By accessing or using the Platform or placing an order, you agree to be bound by these Terms. If you do not agree to these Terms, you must not use the Platform.
               </p>
             </div>
+
+            {/* ABOUT */}
             <div className="info-data">
-              <h3>Information We Collect</h3>
-              <div className="data-wrap">
-                <p>
-                  Condimentum sapien ut neque, sit. Dui pellentesque nec sed at eu sit sodales commodo, euismod. Pretium purus elit mattis duis. Vitae sit nunc amet nunc. Scelerisque morbi malesuada libero at massa ac. Nisi et, et pellentesque at arcu. Congue orci cras mauris mauris sed etiam. Vulputate morbi hac est est ut volutpat. Rhoncus habitant scelerisque vulputate rhoncus. Arcu neque, est, ut mauris pulvinar elementum.
-                </p>
-                <p className="single-text">
-                  Rutrum arcu scelerisque iaculis congue tellus. Gravida egestas condimentum tellus ut eu quis duis. Rhoncus tellus sit ac id. Id pellentesque facilisi cras in egestas vel tortor amet feugiat. Fringilla suspendisse eget eget lacus. Ante vivamus dictum senectus suspendisse egestas a velit. In mattis scelerisque viverra lacus varius condimentum aliquet quis dui. Amet mi vestibulum cras tellus suspendisse sagittis. Ultricies interdum bibendum vulputate mattis arcu commodo.
-                </p>
-              </div>
+              <h3>About PurCurie</h3>
+              <p className="single-text">
+                PurCurie is a skincare and personal care brand engaged in the business of selling beauty, wellness and grooming products through its digital Platform. PurCurie reserves the right to modify, suspend or discontinue any part of its services at any time without prior notice.
+              </p>
             </div>
+
+            {/* ELIGIBILITY */}
             <div className="info-data">
-              <h3>Legal Basis for Data Processing</h3>
-              <div className="data-wrap">
-                <p>
-                  Tellus ornare fringilla egestas eros massa pharetra tortor et vitae. Enim aliquam vitae molestie condimentum tempor suspendisse ac. Pharetra venenatis fusce lorem aliquet at ut sit amet euismod. Fames nisi parturient nec ut. Laoreet tellus feugiat et ultrices augue eget eu in velit. Elit tincidunt amet erat faucibus ultricies.
-                </p>
-                <ul role="list" className="data-list">
-                  <li>
-                    Dui duis ultricies interdum feugiat tellus nisi a ligula varius. Urna eleifend massa leo vel.
-                  </li>
-                  <li>
-                    Metus mattis imperdiet pharetra dignissim nibh. Euismod nibh est a nibh.
-                  </li>
-                  <li>
-                    Sollicitudin nunc sollicitudin sit in nulla aliquam. Interdum metus sed turpis tellus bibendum eget.
-                  </li>
-                  <li>
-                    Scelerisque tristique eget eget netus. In semper sem suspendisse cursus feugiat nisl volutpat et.
-                  </li>
-                  <li>
-                    Nec et amet libero faucibus amet purus vivamus non at velit rhoncus lacus volutpat.
-                  </li>
-                </ul>
-              </div>
+              <h3>Eligibility to Use</h3>
+              <p className="single-text">
+                You must be at least 18 years of age to use the Platform and place orders. By using the Platform, you represent that you are legally capable of entering into a binding contract under Indian law.
+              </p>
             </div>
+
+            {/* ACCOUNT */}
+            <div className="info-data">
+              <h3>Account Registration</h3>
+              <p className="single-text">
+                To access certain features, you may be required to create an account. You agree to provide accurate, complete and up-to-date information. You are responsible for maintaining the confidentiality of your login credentials and all activities that occur under your account.
+              </p>
+            </div>
+
+            {/* PRODUCTS */}
+            <div className="info-data">
+              <h3>Product Information</h3>
+              <p className="single-text">
+                PurCurie makes every effort to display product details, images and descriptions accurately. However, slight variations in packaging, color, fragrance or appearance may occur due to manufacturing batches or digital display differences. Such variations shall not be considered defects.
+              </p>
+            </div>
+
+            {/* PRICING */}
+            <div className="info-data">
+              <h3>Pricing and Payments</h3>
+              <p className="single-text">
+                All prices on the Platform are displayed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise. PurCurie reserves the right to change prices at any time without prior notice. Payments must be made through the payment methods available on the Platform. PurCurie does not store card or banking details.
+              </p>
+            </div>
+
+            {/* ORDERS */}
+            <div className="info-data">
+              <h3>Order Acceptance</h3>
+              <p className="single-text">
+                An order is considered accepted only after payment is successfully processed and a confirmation is issued. PurCurie reserves the right to cancel or refuse any order due to stock unavailability, pricing errors, suspected fraud or other operational reasons.
+              </p>
+            </div>
+
+            {/* SHIPPING */}
+            <div className="info-data">
+              <h3>Shipping and Delivery</h3>
+              <p className="single-text">
+                PurCurie will make reasonable efforts to deliver products within the estimated time displayed. However, delivery timelines are not guaranteed and delays may occur due to courier, weather, or other factors beyond our control.
+              </p>
+            </div>
+
+            {/* RETURNS */}
+            <div className="info-data">
+              <h3>Returns and Refunds</h3>
+              <p className="single-text">
+                All returns, replacements and refunds are governed by the PurCurie Refund & Return Policy available on the Platform. By placing an order, you agree to be bound by that policy.
+              </p>
+            </div>
+
+            {/* USER CONDUCT */}
+            <div className="info-data">
+              <h3>User Conduct</h3>
+              <p className="single-text">
+                You agree not to use the Platform for unlawful, harmful or fraudulent activities, including but not limited to attempting to gain unauthorized access, misusing offers, or providing false information.
+              </p>
+            </div>
+
+            {/* IP */}
+            <div className="info-data">
+              <h3>Intellectual Property</h3>
+              <p className="single-text">
+                All content on the Platform, including text, images, logos, graphics and design, is the property of PurCurie and is protected by applicable intellectual property laws. You may not copy, reproduce or use any content without prior written permission.
+              </p>
+            </div>
+
+            {/* LIABILITY */}
             <div className="info-data">
               <h3>Limitation of Liability</h3>
-              <div className="data-wrap">
-                <p>
-                  Scelerisque nulla gravida sed tortor congue mauris varius. Interdum tincidunt et magna bibendum proin iaculis sit. In id integer elit sagittis. Eu adipiscing proin amet in pretium. Pretium mauris tristique et hendrerit aliquam. Quis eget massa interdum pellentesque volutpat. Adipiscing dolor netus tellus tincidunt in. Id nisl cursus magna aliquam eu magna. Semper justo dignissim sollicitudin in senectus sit neque ullamcorper. Ultricies arcu etiam dui neque nibh lacus massa varius aliquam.
-                </p>
-                <p className="single-text">
-                  Consectetur rhoncus et in lectus eget facilisis tellus rhoncus condimentum. Magna quam nunc vehicula etiam auctor tortor nunc. Iaculis pretium imperdiet purus iaculis volutpat. Rhoncus est laoreet auctor facilisis libero interdum amet. Pellentesque ornare viverra condimentum consectetur egestas. Rhoncus tristique integer tellus netus amet nam. In in quis scelerisque egestas a enim quis. Tincidunt in tincidunt sit senectus diam sed faucibus ridiculus.
-                </p>
-              </div>
-            </div>
-            <div className="info-data">
-              <h3>Changes to This Policy</h3>
               <p className="single-text">
-                Pretium aenean adipiscing facilisi fermentum nulla adipiscing. Ultrices odio aliquam in nulla pulvinar tempus mauris id vestibulum. Urna at et sed at dolor laoreet. Pharetra tortor dolor mauris venenatis orci ac nunc ut dictum. Sed semper volutpat vestibulum tellus ante sit. Sed cursus lorem non odio habitant id. Mi aenean elit cras tempus sed pharetra. Eu erat risus quam adipiscing volutpat id in nec. Cras semper feugiat porttitor ac.
+                PurCurie shall not be liable for any indirect, incidental or consequential damages arising from the use of the Platform or products purchased, except as required under applicable law.
               </p>
             </div>
+
+            {/* TERMINATION */}
             <div className="info-data">
-              <h3>Compliance with Laws</h3>
+              <h3>Termination</h3>
               <p className="single-text">
-                Tristique ipsum nam tincidunt in ut in sodales risus. Tristique placerat gravida purus eu nulla. Odio euismod eros ipsum aliquam justo faucibus facilisi congue. Magna fames congue fringilla magna elit tristique bibendum. Pellentesque sit luctus morbi dictum pharetra. Magna nibh nibh leo lectus senectus molestie arcu. Facilisis nunc viverra platea aenean aliquam in in iaculis eu. Adipiscing pretium risus molestie viverra. Lectus faucibus interdum adipiscing laoreet risus elit fringilla.
+                PurCurie reserves the right to suspend or terminate your account or access to the Platform at any time for violation of these Terms or any unlawful activity.
               </p>
             </div>
+
+            {/* LAW */}
+            <div className="info-data">
+              <h3>Governing Law and Jurisdiction</h3>
+              <p className="single-text">
+                These Terms shall be governed by and interpreted in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts of India.
+              </p>
+            </div>
+
+            {/* CONTACT */}
+            <div className="info-data">
+              <h3>Contact Us</h3>
+              <p className="single-text">
+                For any questions or concerns regarding these Terms, you may contact:
+                <br /><br />
+                <strong>PurCurie Customer Support</strong><br />
+                Email: support@purcurie.com
+              </p>
+            </div>
+
+            {/* CHANGES */}
+            <div className="info-data">
+              <h3>Changes to These Terms</h3>
+              <p className="single-text">
+                PurCurie reserves the right to modify these Terms at any time. Any changes will be posted on this page and your continued use of the Platform will be deemed acceptance of the updated Terms.
+              </p>
+            </div>
+
           </div>
         </div>
       </div>
