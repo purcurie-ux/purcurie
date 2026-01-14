@@ -155,7 +155,7 @@ function ContactSection() {
           </div>
         </div>
       </section>
-      <section id="store" className="store">
+      {/* <section id="store" className="store"> 
         <div className="w-layout-blockcontainer container w-container">
           <div className="store-inner">
             <div
@@ -323,7 +323,7 @@ function ContactSection() {
             </div>
           </div>
         </div>
-      </section>
+      {/* </section> */}
       <section className="faq">
         <div className="w-layout-blockcontainer container w-container">
           <div className="overflow-hidden">
