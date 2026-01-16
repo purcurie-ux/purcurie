@@ -172,7 +172,7 @@ export default async function Product({ searchParams }: Props) {
       id: e.node.id,
       name: e.node.title,
       slug: e.node.handle,
-      price: `$ ${e.node.priceRange.minVariantPrice.amount} ${e.node.priceRange.minVariantPrice.currencyCode}`,
+      price: `₹ ${e.node.priceRange.minVariantPrice.amount} ${e.node.priceRange.minVariantPrice.currencyCode}`,
       image: image?.url || "",
       srcset: image?.url || "",
     };

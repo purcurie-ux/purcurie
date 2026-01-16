@@ -51,7 +51,7 @@ export function mapProductDetail(shopifyProduct: any) {
     mainImageSrcset: images[0]?.url || "",
     moreImages: images.map((img: any) => ({ url: img.url })),
     title: shopifyProduct.title,
-    price: `$ ${parseFloat(variant?.price.amount).toFixed(2)} ${
+    price: `₹ ${parseFloat(variant?.price.amount).toFixed(2)} ${
       variant?.price.currencyCode
     }`,
     description: shopifyProduct.description,

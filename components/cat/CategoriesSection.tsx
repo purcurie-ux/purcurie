@@ -686,7 +686,7 @@ async function CategoriesSection() {
                                   {product.title}
                                 </h5>
                                 <div>
-                                  $ {product.priceRange.minVariantPrice.amount}{" "}
+                                  ₹ {product.priceRange.minVariantPrice.amount}{" "}
                                   {
                                     product.priceRange.minVariantPrice
                                       .currencyCode

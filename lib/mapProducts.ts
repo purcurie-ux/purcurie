@@ -6,7 +6,7 @@ export function mapProducts(products: any[]) {
       id: p.id,
       name: p.title,
       slug: p.handle,
-      price: `$ ${p.priceRange.minVariantPrice.amount} ${p.priceRange.minVariantPrice.currencyCode}`,
+      price: `₹ ${p.priceRange.minVariantPrice.amount} ${p.priceRange.minVariantPrice.currencyCode}`,
       image: image?.url,
       srcset: image?.url,
     };

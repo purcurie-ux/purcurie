@@ -177,7 +177,7 @@ export default async function CategoryProductsPage({ params }: Props) {
                       <div className="product-bottom">
                         <h5 className="product-heading">{product.title}</h5>
                         <div>
-                          ${product.priceRange.minVariantPrice.amount}{" "}
+                          ₹{product.priceRange.minVariantPrice.amount}{" "}
                           {product.priceRange.minVariantPrice.currencyCode}
                         </div>
                       </div>

@@ -417,7 +417,7 @@ export default async function HomePage() {
                               {bestSeller.title}
                             </h5>
                             <div>
-                              $ {bestSeller.priceRange.minVariantPrice.amount}{" "}
+                              ₹ {bestSeller.priceRange.minVariantPrice.amount}{" "}
                               {
                                 bestSeller.priceRange.minVariantPrice
                                   .currencyCode
@@ -594,7 +594,7 @@ export default async function HomePage() {
                       <div className="product-bottom">
                         <h5 className="product-heading">{product.title}</h5>
                         <div>
-                          $ {product.priceRange.minVariantPrice.amount}{" "}
+                          ₹ {product.priceRange.minVariantPrice.amount}{" "}
                           {product.priceRange.minVariantPrice.currencyCode}
                         </div>
                       </div>
