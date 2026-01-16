@@ -24,7 +24,7 @@ export function Hero() {
           loading="lazy"
           style={{ opacity: 0 }}
           data-w-id="9061418a-ae45-c063-4c32-479d42553da4"
-          alt="Glamz beauty"
+          alt="PurCurie beauty"
           className="glamz-svg"
         />
           </section>

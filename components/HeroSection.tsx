@@ -36,7 +36,7 @@ export function HeroSection() {
             <a
               href="/categories"
               data-w-id="0def259f-6aae-fc59-5c88-249c9263c6fd"
-              style={{ opacity: 0 }}
+              style={{ opacity: 0, position: "relative", zIndex: 10}}
               className="primary-button w-inline-block"
             >
               <div className="arrow-wrap">
@@ -99,6 +99,8 @@ export function HeroSection() {
           <div
             data-w-id="ed5272db-fb2c-7901-e8a8-851f1fa539d0"
             className="hero-img"
+            // ADD pointerEvents: "none" here so clicks go through the image
+            style={{ pointerEvents: "none" }} 
           >
             <div
               style={{

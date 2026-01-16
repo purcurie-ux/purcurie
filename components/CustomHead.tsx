@@ -13,8 +13,8 @@ interface GlamzHeadProps {
 }
 
 export default function GlamzHead({
-  title = "Glamz - Webflow Ecommerce Website Template",
-  description = "Glamz is a clean webflow template made for beauty, skincare, and cosmetics brands to showcase products, tell your story, and grow your online sales.",
+  title = "PurCurie",
+  description = "Pure Care For Skin",
   ogImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
   twitterImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
   faviconSmall = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99e437b3c6dbe2d349ac_favicon-small.jpg",

@@ -44,8 +44,8 @@ import { CartProvider } from "@/context/CartContext";
 
 
 export const metadata: Metadata = {
-  title: "Glamz - Webflow Ecommerce Website Template",
-  description: "Glamz template running on Next.js",
+  title: "PurCurie",
+  description: "Pure Care For Skin",
 };
 
 export default function RootLayout({
