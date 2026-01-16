@@ -2217,7 +2217,7 @@ function CartModal() {
                   >
                     <div>Subtotal</div>
                     <div className="w-commerce-commercecartordervalue">
-                      $ {subtotal} USD
+                      ₹ {subtotal} INR
                     </div>
                   </div>
                   <div>

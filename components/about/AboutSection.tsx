@@ -702,7 +702,7 @@ function AboutPage() {
                   <div className="review-right">
                     <div className="review-wrap">
                       <p className="single-text">
-                        Every order I've placed with PurCuriehas arrived quickly
+                        Every order I&apos;ve placed with PurCuriehas arrived quickly
                         and beautifully packaged. The customer support team is
                         friendly and helpful, always making sure I have a great
                         experience.
@@ -739,7 +739,7 @@ function AboutPage() {
                         From the stunning colors to the lightweight and
                         comfortable formulas, PurCurie products are simply perfect.
                         The makeup looks flawless, feels amazing on my skin,
-                        &amp; lasts all day. I'm officially obsessed!
+                        &amp; lasts all day. I&apos;m officially obsessed!
                       </p>
                       <div>
                         <div className="review-text">Dianne Russell</div>
@@ -839,7 +839,7 @@ function AboutPage() {
                     <div className="review-wrap">
                       <p className="single-text">
                         I have super sensitive skin, and PurCurie is one of the few
-                        brands that don't cause irritation. The skincare-infused
+                        brands that don&apos;t cause irritation. The skincare-infused
                         formulas keep my skin healthy while delivering beautiful
                         results!
                       </p>

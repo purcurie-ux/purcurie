@@ -3637,7 +3637,10 @@ blockquote {
   padding: 9px 16px;
   font-size: 14px;
   line-height: 130%;
-  display: flex
+  display: flex;
+  pointer-events: auto !important;
+  z-index: 10
+  
 }
 
 .nav-right {

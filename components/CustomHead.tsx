@@ -17,8 +17,8 @@ export default function GlamzHead({
   description = "Pure Care For Skin",
   ogImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
   twitterImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
-  faviconSmall = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99e437b3c6dbe2d349ac_favicon-small.jpg",
-  faviconLarge = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99e65721d3c404cb7f34_favicon-big.jpg",
+  faviconSmall = "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_L_fav.jpg?v=1768595835",
+  faviconLarge = "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846",
   cssUrl = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/css/glamz-template.webflow.shared.2b171c674.min.css",
 }: GlamzHeadProps) {
   return (

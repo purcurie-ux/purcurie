@@ -75,7 +75,7 @@ export function mapProductDetail(shopifyProduct: any) {
           id: node.id,
           slug: node.handle,
           title: node.title,
-          price: `$ ${parseFloat(price.amount).toFixed(2)} ${
+          price: `₹ ${parseFloat(price.amount).toFixed(2)} ${
             price.currencyCode
           }`,
           image: img?.url || "",

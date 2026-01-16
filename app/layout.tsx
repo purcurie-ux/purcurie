@@ -56,6 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       data-wf-domain="glamz-template.webflow.io"
       // data-wf-page="686f439ee34b78f814ae2df2"
       data-wf-site="686f439ee34b78f814ae2de2"

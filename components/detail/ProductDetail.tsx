@@ -1255,7 +1255,7 @@ const defaultSimilarProducts: SimilarProduct[] = [
     id: "1",
     slug: "hydrating-rose-water-mist",
     title: "Hydrating Rose Water Mist",
-    price: "$ 34.99 USD",
+    price: "₹ 34.99 USD",
     image:
       "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
     srcset:
@@ -1329,7 +1329,7 @@ function ProductDetail({
   }));
 
   console.log(product, 'this is product')
-
+// carousal styles
   return (
     <div className="page-wrap">
       <style jsx>{`
