@@ -373,7 +373,8 @@ function AboutPage() {
                 <div className="body-small">Co-founder</div>
               </div>
             </div>
-            <div
+            {/* team 3 manoj */}
+            {/* <div
               data-w-id="a8c72e85-7fb9-8a4c-873a-f949fd52d73d"
               style={{ opacity: 0 }}
               className="team-block"
@@ -395,8 +396,9 @@ function AboutPage() {
                 <div className="team-text">Darlene Robertson</div>
                 <div className="body-small">Creative Director</div>
               </div>
-            </div>
-            <div
+            </div> */}
+            {/* teams edit saurabh */}
+            {/* <div
               data-w-id="a8c72e85-7fb9-8a4c-873a-f949fd52d745"
               style={{ opacity: 0 }}
               className="team-block"
@@ -418,7 +420,7 @@ function AboutPage() {
                 <div className="team-text">Saurabh Mehta</div>
                 <div className="body-small">CTO</div>
               </div>
-            </div>
+            </div> */} 
           </div>
         </div>
       </section>

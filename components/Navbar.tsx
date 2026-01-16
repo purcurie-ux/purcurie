@@ -1993,9 +1993,9 @@ export function Navbar() {
             <a href="/product" className="nav-link">
               Shop
             </a>
-            <a href="/blogs" className="nav-link">
+            {/* <a href="/blogs" className="nav-link">
               Blogs
-            </a>
+            </a> */}
             <a href="/contact" className="nav-link last">
               Contact us
             </a>
