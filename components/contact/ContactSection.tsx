@@ -501,7 +501,7 @@ function ContactSection() {
     const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;   // Paste the key from Account > API Keys
     // ----------------------------
 
-    if (form.current && SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
+    if (form.current) {
       emailjs.sendForm( SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
         .then((result) => {
             console.log("Email sent!", result.text);
@@ -697,7 +697,7 @@ function ContactSection() {
                   {/* RIGHT SIDE WITH ANIMATION 18. jan*/}
             <div className="contact-right">
               <div className="contact-img">
-              
+                
                 {/* ✅ 2. APPLIED ANIMATION CLASS HERE */}
                 {/* Removed the inline 'style' that hid the image */}
                 <div className="section-img animate-on-load">
