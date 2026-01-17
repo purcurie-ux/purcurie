@@ -22,7 +22,7 @@ function PageTitle() {
             </h1>
           </div>
           <p className="title-info">
-            Contact our team and we'll get back to you as soon as
+            Contact our team and we&apos;ll get back to you as soon as
             possible.
           </p>
         </div>

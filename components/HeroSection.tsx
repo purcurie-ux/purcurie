@@ -101,7 +101,7 @@ export function HeroSection() {
             className="hero-img"
             // ADD pointerEvents: "none" here so clicks go through the image
             style={{ pointerEvents: "none" }} 
-          >
+            >
             <div
               style={{
                 WebkitTransform:
