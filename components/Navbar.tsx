@@ -1878,7 +1878,11 @@ import { useCart } from "@/context/CartContext";
 
 export function Navbar() {
   const { openCart, items } = useCart();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const navLeft = document.querySelector(".nav-left");
     const webflowButton = document.querySelector(".menu-button.w-nav-button");
@@ -1956,8 +1960,8 @@ export function Navbar() {
                   href="#"
                   onClick={handleCartClick}
                 >
-                  <div
-                    style={{ display: cartCount > 0 ? "block" : "none" }}
+                 <div
+                    style={{ display: mounted && cartCount > 0 ? "block" : "none" }} // ✅ NEW
                     data-count-hide-rule="empty"
                     className="w-commerce-commercecartopenlinkcount cart-quantity"
                   >
@@ -1969,7 +1973,7 @@ export function Navbar() {
                     alt="Cart Icon"
                   />
                 </a>
-                <CartModal />
+                
               </div>
               <div
                 data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164ae"
@@ -2018,8 +2022,8 @@ export function Navbar() {
                 href="#"
                 onClick={handleCartClick}
               >
-                <div
-                  style={{ display: cartCount > 0 ? "block" : "none" }}
+                 <div
+                  style={{ display: mounted && cartCount > 0 ? "block" : "none" }} // ✅ NEW
                   data-count-hide-rule="empty"
                   className="w-commerce-commercecartopenlinkcount cart-quantity"
                 >
@@ -2032,7 +2036,7 @@ export function Navbar() {
                   className="cart-icon"
                 />
               </a>
-              <CartModal />
+              
             </div>
             <div className="menu-button w-nav-button">
               <div className="top-line"></div>
@@ -2042,7 +2046,10 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      {/* ✅ PASTE IT HERE (Only Once) */}
+      <CartModal />
     </div>
+    
   );
 }
 
@@ -2151,62 +2158,9 @@ function CartModal() {
                   data-wf-collection="database.commerceOrder.userItems"
                   data-wf-template-id="wf-template-d3adb6d7-cc56-c118-6985-cf7153b1648a"
                 >
+                  {/* NEW CODE: Use the component we just made */}
                   {items.map((item) => (
-                    <div
-                      key={item.variantId}
-                      className="w-commerce-commercecartitem"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-commerce-commercecartitemimage"
-                      />
-                      <div className="w-commerce-commercecartiteminfo">
-                        <div className="w-commerce-commercecartproductname">
-                          {item.title}
-                        </div>
-                        <div>{item.price}</div>
-                        <ul className="w-commerce-commercecartoptionlist">
-                          <li>
-                            <span>SKU</span>
-                            <span>: </span>
-                            <span>{item.sku}</span>
-                          </li>
-                        </ul>
-                        <a
-                          href="#"
-                          role="button"
-                          className="w-inline-block"
-                          data-wf-cart-action="remove-item"
-                          data-commerce-sku-id={item.variantId}
-                          aria-label="Remove item from cart"
-                          style={{ cursor: "pointer" }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            removeFromCart(item.variantId);
-                          }}
-                        >
-                          <div>Remove</div>
-                        </a>
-                      </div>
-                      <input
-                        aria-label="Update quantity"
-                        className="w-commerce-commercecartquantity"
-                        required
-                        pattern="^[0-9]+$"
-                        inputMode="numeric"
-                        type="number"
-                        name="quantity"
-                        autoComplete="off"
-                        data-wf-cart-action="update-item-quantity"
-                        data-commerce-sku-id={item.variantId}
-                        value={item.quantity}
-                        min="0"
-                        onChange={(e) => {
-                          handleQuantityChange(item.variantId, e.target.value);
-                        }}
-                      />
-                    </div>
+                    <CartItem key={item.variantId} item={item} />
                   ))}
                 </div>
                 <div className="w-commerce-commercecartfooter">
@@ -2361,5 +2315,72 @@ function CartModal() {
     </>
   );
 }
+// --- NEW COMPONENT: Paste this at the bottom of your file ---
+function CartItem({ item }: { item: any }) {
+  const { updateQuantity, removeFromCart } = useCart();
+  
+  // 1. Local state allows typing "empty string" without forcing it to 1
+  const [localQuantity, setLocalQuantity] = useState<string | number>(item.quantity);
 
+  // 2. Sync with real cart data if it changes outside this component
+  useEffect(() => {
+    setLocalQuantity(item.quantity);
+  }, [item.quantity]);
+
+  // 3. Handle Typing (Allows empty "")
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (val === "") {
+      setLocalQuantity(""); 
+      return;
+    }
+    const parsed = parseInt(val);
+    if (!isNaN(parsed)) {
+      setLocalQuantity(parsed);
+    }
+  };
+
+  // 4. Handle "Clicking Away" (Saves the data)
+  const handleBlur = () => {
+    const qty = Number(localQuantity);
+
+    // 1. If user typed "0", REMOVE the item
+    if (qty === 0) {
+      removeFromCart(item.variantId);
+    } 
+    // 2. If user left it empty or negative (invalid), REVERT to old value
+    else if (localQuantity === "" || qty < 0) {
+      setLocalQuantity(item.quantity);
+    } 
+    // 3. Otherwise, UPDATE the cart with the new number
+    else {
+      updateQuantity(item.variantId, qty);
+    }
+  };
+
+  return (
+    <div className="w-commerce-commercecartitem">
+      <img src={item.image} alt={item.title} className="w-commerce-commercecartitemimage" />
+      <div className="w-commerce-commercecartiteminfo">
+        <div className="w-commerce-commercecartproductname">{item.title}</div>
+        <div>{item.price}</div>
+        <ul className="w-commerce-commercecartoptionlist">
+          <li><span>SKU: </span><span>{item.sku}</span></li>
+        </ul>
+        <a href="#" className="w-inline-block" onClick={(e) => { e.preventDefault(); removeFromCart(item.variantId); }}>
+          <div>Remove</div>
+        </a>
+      </div>
+      {/* The Magic Input */}
+      <input
+        className="w-commerce-commercecartquantity"
+        type="number"
+        value={localQuantity}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+    </div>
+  );
+}
 export default CartModal;
+

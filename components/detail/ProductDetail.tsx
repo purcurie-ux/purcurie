@@ -1288,16 +1288,19 @@ function ProductDetail({
   similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
   const { addToCart } = useCart();
-  const [quantity, setQuantity] = useState(1);
+ const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Combine main image with more images for carousel
   const allImages = [product.mainImage, ...product.moreImages.map(img => img.url)];
 
-  const handleAddToCart = (e: React.FormEvent) => {
+ const handleAddToCart = (e: React.FormEvent) => {
     e.preventDefault();
 
-    for (let i = 0; i < quantity; i++) {
+    // Ensure we have a valid number (fallback to 1 if empty)
+    const finalQuantity = typeof quantity === 'number' ? quantity : 1;
+
+    for (let i = 0; i < finalQuantity; i++) {
       addToCart({
         variantId: product.skuId,
         productId: product.productId,
@@ -1329,6 +1332,30 @@ function ProductDetail({
   }));
 
   console.log(product, 'this is product')
+  // 1. Handle typing (allows empty field)
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    
+    // If user clears the input, let it be empty
+    if (val === "") {
+      setQuantity("");
+      return;
+    }
+
+    // Otherwise, set the number
+    const parsed = parseInt(val);
+    if (!isNaN(parsed)) {
+      setQuantity(parsed);
+    }
+  };
+
+  // 2. Handle "Blur" (when user leaves the field)
+  // If left empty or 0, reset to 1
+  const handleBlur = () => {
+    if (quantity === "" || Number(quantity) < 1) {
+      setQuantity(1);
+    }
+  };
 // carousal styles
   return (
     <div className="page-wrap">
@@ -1608,11 +1635,12 @@ function ProductDetail({
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
                 >
-                  <input
+                 <input
                     type="number"
                     min="1"
                     value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                    onChange={handleQuantityChange} // Use new handler
+                    onBlur={handleBlur}             // Add safety check
                     className="w-commerce-commerceaddtocartquantityinput quantity"
                   />
 

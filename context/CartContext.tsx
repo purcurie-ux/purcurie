@@ -417,7 +417,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prevItems, { ...item, quantity: 1 }];
     });
-    setIsOpen(true);
+    // setIsOpen(true); - removed for pop up cart behavior
   };
 
   const removeFromCart = (variantId: string) => {

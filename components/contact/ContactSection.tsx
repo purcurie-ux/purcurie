@@ -483,7 +483,7 @@ function ContactSection() {
     
     // Use Time (Hours + Minutes + Seconds) to make it unique and increasing
     const time = now.getHours().toString().padStart(2, '0') + 
-                 now.getMinutes().toString().padStart(2, '0') ;
+                 now.getMinutes().toString().padStart(2, '0') 
                  
     // Result Example: "260117-194512"
     const smartID = `${year}${month}${day}-${time}`;
@@ -501,7 +501,7 @@ function ContactSection() {
     const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;   // Paste the key from Account > API Keys
     // ----------------------------
 
-    if (form.current) {
+    if (form.current && SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
       emailjs.sendForm( SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
         .then((result) => {
             console.log("Email sent!", result.text);
@@ -520,7 +520,28 @@ function ContactSection() {
 
   return (
     <div className="page-wrap">
+
       <section className="contact">
+        {/* ✅ ANIMATION STYLE UPDATED: NOW SLIDES DOWN 18 jan */} 
+      <style jsx>{`
+        @keyframes fadeInDown {
+          from {
+            opacity: 0;
+            /* Starts -40px (Higher up) */
+            transform: translateY(-40px); 
+          }
+          to {
+            opacity: 1;
+            /* Lands at 0 (Normal position) */
+            transform: translateY(0); 
+          }
+        }
+
+        .animate-on-load {
+          /* Runs the 'fadeInDown' animation for 1.2 seconds */
+          animation: fadeInDown 1.2s ease-out forwards;
+        }
+      `}</style>
         <div className="w-layout-blockcontainer container w-container">
           <div className="contact-inner">
             <div
@@ -629,7 +650,7 @@ function ContactSection() {
 
               </div>
             </div>
-            <div className="contact-right">
+            {/* <div className="contact-right">
               <div
                 data-w-id="7a5bf802-07d1-f4e9-c1e5-fd13fc51572c"
                 className="contact-img"
@@ -668,6 +689,28 @@ function ContactSection() {
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact-p-800.webp   800w,
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact-p-1080.webp 1080w,
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact.webp        1236w
+                      "
+                    className="section-image"
+                  /> */}
+
+
+                  {/* RIGHT SIDE WITH ANIMATION 18. jan*/}
+            <div className="contact-right">
+              <div className="contact-img">
+              
+                {/* ✅ 2. APPLIED ANIMATION CLASS HERE */}
+                {/* Removed the inline 'style' that hid the image */}
+                <div className="section-img animate-on-load">
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-yankrukov-8867374.jpg?v=1768357108"
+                    loading="lazy"
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                    alt="Contact Image"
+                    srcSet="
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-yankrukov-8867374.jpg?v=1768357108   500w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-yankrukov-8867374.jpg?v=1768357108   800w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-yankrukov-8867374.jpg?v=1768357108 1080w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-yankrukov-8867374.jpg?v=1768357108        1236w
                       "
                     className="section-image"
                   />
