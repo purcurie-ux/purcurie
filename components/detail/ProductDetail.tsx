@@ -1183,10 +1183,557 @@
 
 
 
+// "use client";
+
+// import { useState } from "react";
+// import { useCart } from "@/context/CartContext";
+// import { ChevronLeft, ChevronRight, Star } from "lucide-react"; // ✅ Added Icons
+
+// interface MoreImage {
+//   url: string;
+// }
+
+// interface ProductDetailData {
+//   mainImage: string;
+//   mainImageSrcset: string;
+//   moreImages: MoreImage[];
+//   title: string;
+//   price: string;
+//   description: string;
+//   category: string;
+//   sku: string;
+//   tag: string;
+//   skuId: string;
+//   productId: string;
+// }
+
+// interface SimilarProduct {
+//   id: string;
+//   slug: string;
+//   title: string;
+//   price: string;
+//   image: string;
+//   srcset: string;
+// }
+
+// interface ProductDetailProps {
+//   product?: ProductDetailData;
+//   similarProducts?: SimilarProduct[];
+// }
+
+// const defaultProduct: ProductDetailData = {
+//   mainImage:
+//     "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
+//   mainImageSrcset:
+//     "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
+//   moreImages: [
+//     {
+//       url: "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
+//     },
+//     {
+//       url: "https://i.postimg.cc/pXvN2L30/Chat-GPT-Image-Jan-6-2026-02-45-38-PM-(1).png",
+//     },
+//     {
+//       url: "https://i.postimg.cc/rpK3h0Rv/Remove-Dark-spots.png",
+//     },
+//     {
+//       url: "https://i.postimg.cc/cCNz4Fk0/Gemini-Generated-Image-rytbn6rytbn6rytb.png",
+//     },
+//   ],
+//   title: "Argan Oil Repair Shampoo",
+//   price: "$ 22.99 USD",
+//   description:
+//     "Revitalize your hair with Argan Oil Repair Shampoo, nourishing formula designed to restore strength, moisture, and shine. Enriched with pure argan oil, keratin, and botanical extracts, this shampoo deeply hydrates while repairing damaged strands.",
+//   category: "Organic Beauty",
+//   sku: "AORS-007",
+//   tag: "Strengthening",
+//   skuId: "6871dbd8aa48a044cd83e93b",
+//   productId: "6871dbd877f454c5d99bff7c",
+// };
+
+// const defaultSimilarProducts: SimilarProduct[] = [
+//   {
+//     id: "1",
+//     slug: "hydrating-rose-water-mist",
+//     title: "Hydrating Rose Water Mist",
+//     price: "₹ 34.99 USD",
+//     image:
+//       "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
+//     srcset:
+//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-800.webp 800w, https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png 824w",
+//   },
+//   {
+//     id: "2",
+//     slug: "euphoria-bloom-eau-de-parfum",
+//     title: "Euphoria Bloom Eau de Parfum",
+//     price: "$ 49.99 USD",
+//     image:
+//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp",
+//     srcset:
+//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp 824w",
+//   },
+//   {
+//     id: "3",
+//     slug: "vitamin-c-brightening-toner",
+//     title: "Vitamin C Brightening Toner",
+//     price: "$ 21.99 USD",
+//     image:
+//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp",
+//     srcset:
+//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp 824w",
+//   },
+// ];
+
+// function ProductDetail({
+//   product = defaultProduct,
+//   similarProducts = defaultSimilarProducts,
+// }: ProductDetailProps) {
+//   const { addToCart } = useCart();
+//  const [quantity, setQuantity] = useState<number | string>(1);
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+//   // Combine main image with more images for carousel
+//   const allImages = [product.mainImage, ...product.moreImages.map(img => img.url)];
+
+//  const handleAddToCart = (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     // Ensure we have a valid number (fallback to 1 if empty)
+//     const finalQuantity = typeof quantity === 'number' ? quantity : 1;
+
+//     for (let i = 0; i < finalQuantity; i++) {
+//       addToCart({
+//         variantId: product.skuId,
+//         productId: product.productId,
+//         title: product.title,
+//         price: product.price,
+//         image: product.mainImage,
+//         sku: product.sku,
+//       });
+//     }
+
+//     setQuantity(1);
+//   };
+
+//   const goToPrevious = () => {
+//     setCurrentImageIndex((prev) => 
+//       prev === 0 ? allImages.length - 1 : prev - 1
+//     );
+//   };
+
+//   const goToNext = () => {
+//     setCurrentImageIndex((prev) => 
+//       prev === allImages.length - 1 ? 0 : prev + 1
+//     );
+//   };
+
+//   const lightboxItems = product.moreImages.map((img) => ({
+//     url: img.url,
+//     type: "image",
+//   }));
+
+//   console.log(product, 'this is product')
+//   // 1. Handle typing (allows empty field)
+//   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const val = e.target.value;
+    
+//     // If user clears the input, let it be empty
+//     if (val === "") {
+//       setQuantity("");
+//       return;
+//     }
+
+//     // Otherwise, set the number
+//     const parsed = parseInt(val);
+//     if (!isNaN(parsed)) {
+//       setQuantity(parsed);
+//     }
+//   };
+
+//   // 2. Handle "Blur" (when user leaves the field)
+//   // If left empty or 0, reset to 1
+//   const handleBlur = () => {
+//     if (quantity === "" || Number(quantity) < 1) {
+//       setQuantity(1);
+//     }
+//   };
+// // carousal styles
+//   return (
+//     <div className="page-wrap">
+//       {/* ✅ UPGRADED CAROUSEL STYLES */}
+//       <style jsx>{`
+//         .carousel-container {
+//           position: relative;
+//           width: 100%;
+//           overflow: hidden;
+//           border-radius: 4px;
+//         }
+
+//         .carousel-main {
+//           position: relative;
+//           width: 100%;
+//           padding-bottom: 100%; /* Square aspect ratio */
+//           background: #f9f9f9;
+//         }
+
+//         .carousel-image {
+//           position: absolute;
+//           top: 0;
+//           left: 0;
+//           width: 100%;
+//           height: 100%;
+//           object-fit: cover;
+//           opacity: 0;
+//           transition: opacity 0.5s ease-in-out; /* Smooth Fade */
+//         }
+
+//         .carousel-image.active {
+//           opacity: 1;
+//           z-index: 1;
+//         }
+
+//         /* ✨ NEW: PRO ARROWS */
+//         .carousel-nav {
+//           position: absolute;
+//           top: 50%;
+//           transform: translateY(-50%);
+//           background: rgba(255, 255, 255, 0.9);
+//           border: 1px solid rgba(0,0,0,0.05);
+//           width: 44px;
+//           height: 44px;
+//           border-radius: 50%;
+//           cursor: pointer;
+//           display: flex;
+//           align-items: center;
+//           justify-content: center;
+//           color: #111;
+//           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+//           z-index: 10;
+//           transition: all 0.2s ease;
+//           opacity: 0; /* Hidden by default */
+//         }
+
+//         /* Show arrows when hovering the image */
+//         .carousel-main:hover .carousel-nav {
+//           opacity: 1;
+//         }
+
+//         .carousel-nav:hover {
+//           background: #fff;
+//           transform: translateY(-50%) scale(1.05);
+//           box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+//         }
+
+//         .carousel-nav.prev {
+//           left: 16px;
+//         }
+
+//         .carousel-nav.next {
+//           right: 16px;
+//         }
+
+//         /* ✨ NEW: DOTS */
+//         .carousel-dots {
+//           position: absolute;
+//           bottom: 20px;
+//           left: 50%;
+//           transform: translateX(-50%);
+//           display: flex;
+//           gap: 8px;
+//           z-index: 10;
+//           padding: 6px 12px;
+//           background: rgba(0,0,0,0.3); /* Subtle background for contrast */
+//           border-radius: 20px;
+//           backdrop-filter: blur(4px);
+//         }
+
+//         .carousel-dot {
+//           width: 8px;
+//           height: 8px;
+//           border-radius: 50%;
+//           background: rgba(255, 255, 255, 0.5);
+//           border: none;
+//           cursor: pointer;
+//           transition: all 0.2s;
+//         }
+
+//         .carousel-dot.active {
+//           background: #fff;
+//           transform: scale(1.2);
+//         }
+
+//         /* ✨ NEW: THUMBNAILS */
+//         .carousel-thumbnails {
+//           display: grid;
+//           grid-template-columns: repeat(5, 1fr); /* Clean Grid Layout */
+//           gap: 12px;
+//           margin-top: 16px;
+//         }
+
+//         .carousel-thumbnail {
+//           position: relative;
+//           width: 100%;
+//           padding-bottom: 100%; /* Square thumbnails */
+//           cursor: pointer;
+//           border: 2px solid transparent;
+//           border-radius: 6px;
+//           overflow: hidden;
+//           transition: all 0.2s;
+//         }
+
+//         /* Active Thumbnail has Black Border like video */
+//         .carousel-thumbnail.active {
+//           border-color: #000;
+//         }
+
+//         .carousel-thumbnail img {
+//           position: absolute;
+//           top: 0;
+//           left: 0;
+//           width: 100%;
+//           height: 100%;
+//           object-fit: cover;
+//         }
+
+//         @media (max-width: 768px) {
+//           .carousel-nav {
+//             opacity: 1; /* Always show arrows on mobile */
+//             width: 36px;
+//             height: 36px;
+//           }
+//           .carousel-nav.prev { left: 8px; }
+//           .carousel-nav.next { right: 8px; }
+          
+//           .carousel-thumbnails {
+//             gap: 8px;
+//             overflow-x: auto; /* Scrollable on mobile */
+//             display: flex;
+//           }
+//           .carousel-thumbnail {
+//             width: 70px;
+//             height: 70px;
+//             flex-shrink: 0;
+//             padding-bottom: 0;
+//           }
+//         }
+//       `}</style>
+
+//       <section className="product-main">
+//         <div className="w-layout-blockcontainer container w-container">
+//           <div className="product-inner">
+//             {/* LEFT */}
+//             <div
+//               data-w-id="3cd436bc-9bb5-9108-0a0e-9f3b288b18d6"
+//               className="product-left"
+//             >
+//               <div className="product-main-img">
+//                 <div className="carousel-container">
+//                   <div className="carousel-main">
+//                     {allImages.map((img, index) => (
+//                       <img
+//                         key={index}
+//                         loading="lazy"
+//                         src={img}
+//                         srcSet={index === 0 ? product.mainImageSrcset : undefined}
+//                         className={`product-main-image carousel-image ${
+//                           index === currentImageIndex ? 'active' : ''
+//                         }`}
+//                         alt=""
+//                       />
+//                     ))}
+                    
+//                     {allImages.length > 1 && (
+//                       <>
+//                         <button 
+//                           className="carousel-nav prev" 
+//                           onClick={goToPrevious}
+//                           aria-label="Previous image"
+//                         >
+//                           ‹
+//                         </button>
+//                         <button 
+//                           className="carousel-nav next" 
+//                           onClick={goToNext}
+//                           aria-label="Next image"
+//                         >
+//                           ›
+//                         </button>
+
+//                         <div className="carousel-dots">
+//                           {allImages.map((_, index) => (
+//                             <button
+//                               key={index}
+//                               className={`carousel-dot ${
+//                                 index === currentImageIndex ? 'active' : ''
+//                               }`}
+//                               onClick={() => setCurrentImageIndex(index)}
+//                               aria-label={`Go to image ${index + 1}`}
+//                             />
+//                           ))}
+//                         </div>
+//                       </>
+//                     )}
+//                   </div>
+//                 </div>
+
+//                 <a href="#" className="similar-icon w-inline-block w-lightbox">
+//                   <img
+//                     src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/687107bcf6bae39589bdb1ad_ic-plus.svg"
+//                     loading="lazy"
+//                     alt="Plus Icon"
+//                     className="ic-similar"
+//                   />
+
+//                   <script type="application/json" className="w-json">
+//                     {JSON.stringify({
+//                       items: lightboxItems,
+//                       group: "Group",
+//                     })}
+//                   </script>
+//                 </a>
+//               </div>
+
+//               <div className="more-image w-dyn-list">
+//                 <div role="list" className="ma-list w-dyn-items">
+//                   <div className="carousel-thumbnails">
+//                     {allImages.map((image, index) => (
+//                       <div
+//                         key={index}
+//                         role="listitem"
+//                         className="ma-item w-dyn-item"
+//                       >
+//                         <div 
+//                           className={`ma-img carousel-thumbnail ${
+//                             index === currentImageIndex ? 'active' : ''
+//                           }`}
+//                           onClick={() => setCurrentImageIndex(index)}
+//                         >
+//                           <img
+//                             loading="lazy"
+//                             src={image}
+//                             className="ma-image"
+//                             alt=""
+//                           />
+//                         </div>
+//                       </div>
+//                     ))}
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* RIGHT */}
+//             <div className="product-right">
+//               <div>
+//                 <h2 className="product-main-heading">{product.title}</h2>
+
+//                 <div className="product-price">{product.price}</div>
+//               </div>
+
+//               <div className="product-wrapper">
+//                 <p className="single-text">{product.description}</p>
+
+//                 {/* ADD TO CART FORM */}
+//                 <form
+//                   className="w-commerce-commerceaddtocartform default-state"
+//                   onSubmit={handleAddToCart}
+//                 >
+//                  <input
+//                   type="number"
+//                   min="1"
+//                   value={quantity}
+//                   onChange={handleQuantityChange} // Use new handler
+//                   onBlur={handleBlur}             // Add safety check
+//                   className="w-commerce-commerceaddtocartquantityinput quantity"
+//                 />
+
+//                   <input
+//                     type="submit"
+//                     value="Add to Cart"
+//                     className="w-commerce-commerceaddtocartbutton add-to-cart-button"
+//                   />
+//                 </form>
+
+//                 {/* INFO */}
+//                 <div className="product-main-data">
+//                   <div className="product-info top">
+//                     <div className="square"></div>
+//                     <div className="product-data">
+//                       <div className="product-text">Category:</div>
+//                       <div>{product.category}</div>
+//                     </div>
+//                   </div>
+
+//                   <div className="product-info">
+//                     <div className="square"></div>
+//                     <div className="product-data">
+//                       <div className="product-text">SKU:</div>
+//                       <div>{product.sku}</div>
+//                     </div>
+//                   </div>
+
+//                   <div className="product-info last">
+//                     <div className="square"></div>
+//                     <div className="product-data">
+//                       <div className="product-text">Tag:</div>
+//                       <div>{product.tag}</div>
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 {/* BADGES */}
+//                 <div className="product-info-wrap">
+//                   <div className="product-main-info">
+//                     <div>High-Quality Beauty</div>
+//                   </div>
+//                   <div className="product-main-info">
+//                     <div>Exclusive Launches</div>
+//                   </div>
+//                   <div className="product-main-info">
+//                     <div>Easy Shopping</div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* SIMILAR PRODUCTS */}
+//       <section className="products">
+//         <div className="w-layout-blockcontainer container w-container">
+//           <h2>Similar Products</h2>
+
+//           <div className="product-list">
+//             {similarProducts.map((product) => (
+//               <div className="product-item" key={product.id}>
+//                 <a href={`/product/${product.slug}`} className="product-block">
+//                   <img
+//                     src={product.image}
+//                     alt={product.title}
+//                     className="product-image"
+//                   />
+
+//                   <h5>{product.title}</h5>
+//                   <div>{product.price}</div>
+//                 </a>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+//     </div>
+//   );
+// }
+
+// export default ProductDetail;
+
+
 "use client";
 
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface MoreImage {
   url: string;
@@ -1238,6 +1785,12 @@ const defaultProduct: ProductDetailData = {
     {
       url: "https://i.postimg.cc/cCNz4Fk0/Gemini-Generated-Image-rytbn6rytbn6rytb.png",
     },
+    {
+      url: "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-500.webp",
+    },
+    {
+      url: "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp",
+    },
   ],
   title: "Argan Oil Repair Shampoo",
   price: "$ 22.99 USD",
@@ -1288,16 +1841,13 @@ function ProductDetail({
   similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
   const { addToCart } = useCart();
- const [quantity, setQuantity] = useState<number | string>(1);
+  const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Combine main image with more images for carousel
   const allImages = [product.mainImage, ...product.moreImages.map(img => img.url)];
 
- const handleAddToCart = (e: React.FormEvent) => {
+  const handleAddToCart = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Ensure we have a valid number (fallback to 1 if empty)
     const finalQuantity = typeof quantity === 'number' ? quantity : 1;
 
     for (let i = 0; i < finalQuantity; i++) {
@@ -1310,7 +1860,6 @@ function ProductDetail({
         sku: product.sku,
       });
     }
-
     setQuantity(1);
   };
 
@@ -1326,51 +1875,48 @@ function ProductDetail({
     );
   };
 
-  const lightboxItems = product.moreImages.map((img) => ({
-    url: img.url,
-    type: "image",
-  }));
-
-  console.log(product, 'this is product')
-  // 1. Handle typing (allows empty field)
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    
-    // If user clears the input, let it be empty
     if (val === "") {
       setQuantity("");
       return;
     }
-
-    // Otherwise, set the number
     const parsed = parseInt(val);
     if (!isNaN(parsed)) {
       setQuantity(parsed);
     }
   };
 
-  // 2. Handle "Blur" (when user leaves the field)
-  // If left empty or 0, reset to 1
   const handleBlur = () => {
     if (quantity === "" || Number(quantity) < 1) {
       setQuantity(1);
     }
   };
-// carousal styles
+
   return (
     <div className="page-wrap">
       <style jsx>{`
         .carousel-container {
           position: relative;
           width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .carousel-main-wrapper {
+          flex: 1;
+          position: relative;
+          border-radius: 8px;
           overflow: hidden;
+          background: #fff;
+          border: 1px solid #eee;
         }
 
         .carousel-main {
           position: relative;
           width: 100%;
-          padding-bottom: 100%;
-          background: #f5f5f5;
+          padding-bottom: 100%; /* Square aspect ratio frame */
         }
 
         .carousel-image {
@@ -1379,271 +1925,193 @@ function ProductDetail({
           left: 0;
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain; /* Fit whole image without crop */
           opacity: 0;
-          transition: opacity 0.3s ease-in-out;
+          transition: opacity 0.4s ease-in-out;
+          padding: 10px; /* Slight padding inside frame */
         }
 
         .carousel-image.active {
           opacity: 1;
+          z-index: 1;
         }
 
         .carousel-nav {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.9);
+          background: none;
           border: none;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 20px;
-          transition: background 0.2s;
-          z-index: 2;
+          color: #333;
+          transition: all 0.2s ease;
+          padding: 8px;
+          border-radius: 50%;
         }
 
         .carousel-nav:hover {
-          background: rgba(255, 255, 255, 1);
+          background: #f0f0f0;
+          color: #000;
         }
 
-        .carousel-nav.prev {
-          left: 10px;
+        .carousel-nav:disabled {
+          color: #ccc;
+          cursor: not-allowed;
         }
 
-        .carousel-nav.next {
-          right: 10px;
-        }
-
-        .carousel-dots {
-          position: absolute;
-          bottom: 15px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 8px;
-          z-index: 2;
-        }
-
-        .carousel-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.5);
-          border: none;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-
-        .carousel-dot.active {
-          background: rgba(255, 255, 255, 1);
-        }
-
+        /* ✨ THUMBNAIL STRIP STYLES */
         .carousel-thumbnails {
           display: flex;
-          gap: 10px;
-          margin-top: 15px;
-          overflow-x: auto;
-          padding: 5px 0;
+          gap: 12px;
+          margin-top: 24px;
+          overflow-x: auto; /* Horizontal Scroll */
+          padding-bottom: 12px; /* Space for scrollbar */
+          
+          /* Firefox Scrollbar */
+          scrollbar-width: thin;
+          scrollbar-color: #ccc #f5f5f5;
+        }
+
+        /* Chrome/Safari/Edge Scrollbar */
+        .carousel-thumbnails::-webkit-scrollbar {
+          height: 8px;
+          background-color: #f5f5f5;
+          border-radius: 4px;
+        }
+
+        .carousel-thumbnails::-webkit-scrollbar-thumb {
+          background-color: #ccc;
+          border-radius: 4px;
+        }
+
+        .carousel-thumbnails::-webkit-scrollbar-thumb:hover {
+          background-color: #999;
         }
 
         .carousel-thumbnail {
-          flex-shrink: 0;
-          width: 80px;
+          position: relative;
+          flex: 0 0 80px; /* Fixed size */
           height: 80px;
           cursor: pointer;
-          border: 2px solid transparent;
-          border-radius: 4px;
+          border: 2px solid transparent; /* Default border */
+          border-radius: 6px;
           overflow: hidden;
-          transition: border-color 0.2s;
+          transition: all 0.2s;
+          background: #f9f9f9;
         }
 
+        /* ✅ ACTIVE STATE: Black border like reference */
         .carousel-thumbnail.active {
-          border-color: #333;
+          border-color: #000;
         }
 
         .carousel-thumbnail img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain; /* Fit thumbnail images perfectly */
+          padding: 4px;
         }
 
         @media (max-width: 768px) {
-          .carousel-nav {
-            width: 35px;
-            height: 35px;
-            font-size: 18px;
-          }
-
-          .carousel-nav.prev {
-            left: 5px;
-          }
-
-          .carousel-nav.next {
-            right: 5px;
-          }
-
-          .carousel-thumbnail {
-            width: 60px;
-            height: 60px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .carousel-nav {
-            width: 30px;
-            height: 30px;
-            font-size: 16px;
-          }
-
-          .carousel-thumbnail {
-            width: 50px;
-            height: 50px;
-          }
-
-          .carousel-dots {
-            bottom: 10px;
-          }
-
-          .carousel-dot {
-            width: 8px;
-            height: 8px;
-          }
+          .carousel-container { gap: 8px; }
+          .carousel-nav { padding: 4px; }
+          .carousel-image { padding: 5px; }
+          .carousel-thumbnails { gap: 8px; margin-top: 16px; }
+          .carousel-thumbnail { flex: 0 0 60px; height: 60px; }
         }
       `}</style>
 
       <section className="product-main">
         <div className="w-layout-blockcontainer container w-container">
           <div className="product-inner">
-            {/* LEFT */}
-            <div
-              data-w-id="3cd436bc-9bb5-9108-0a0e-9f3b288b18d6"
-              className="product-left"
-            >
+            {/* LEFT SIDE - IMAGES */}
+            <div className="product-left">
               <div className="product-main-img">
                 <div className="carousel-container">
-                  <div className="carousel-main">
-                    {allImages.map((img, index) => (
-                      <img
-                        key={index}
-                        loading="lazy"
-                        src={img}
-                        srcSet={index === 0 ? product.mainImageSrcset : undefined}
-                        className={`product-main-image carousel-image ${
-                          index === currentImageIndex ? 'active' : ''
-                        }`}
-                        alt=""
-                      />
-                    ))}
-                    
-                    {allImages.length > 1 && (
-                      <>
-                        <button 
-                          className="carousel-nav prev" 
-                          onClick={goToPrevious}
-                          aria-label="Previous image"
-                        >
-                          ‹
-                        </button>
-                        <button 
-                          className="carousel-nav next" 
-                          onClick={goToNext}
-                          aria-label="Next image"
-                        >
-                          ›
-                        </button>
+                  
+                  {/* Left Arrow */}
+                  <button 
+                    className="carousel-nav prev" 
+                    onClick={goToPrevious}
+                    disabled={allImages.length <= 1}
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={32} strokeWidth={2} />
+                  </button>
 
-                        <div className="carousel-dots">
-                          {allImages.map((_, index) => (
-                            <button
-                              key={index}
-                              className={`carousel-dot ${
-                                index === currentImageIndex ? 'active' : ''
-                              }`}
-                              onClick={() => setCurrentImageIndex(index)}
-                              aria-label={`Go to image ${index + 1}`}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                <a href="#" className="similar-icon w-inline-block w-lightbox">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/687107bcf6bae39589bdb1ad_ic-plus.svg"
-                    loading="lazy"
-                    alt="Plus Icon"
-                    className="ic-similar"
-                  />
-
-                  <script type="application/json" className="w-json">
-                    {JSON.stringify({
-                      items: lightboxItems,
-                      group: "Group",
-                    })}
-                  </script>
-                </a>
-              </div>
-
-              <div className="more-image w-dyn-list">
-                <div role="list" className="ma-list w-dyn-items">
-                  <div className="carousel-thumbnails">
-                    {allImages.map((image, index) => (
-                      <div
-                        key={index}
-                        role="listitem"
-                        className="ma-item w-dyn-item"
-                      >
-                        <div 
-                          className={`ma-img carousel-thumbnail ${
+                  <div className="carousel-main-wrapper">
+                    <div className="carousel-main">
+                      {/* Images */}
+                      {allImages.map((img, index) => (
+                        <img
+                          key={index}
+                          loading="lazy"
+                          src={img}
+                          srcSet={index === 0 ? product.mainImageSrcset : undefined}
+                          className={`product-main-image carousel-image ${
                             index === currentImageIndex ? 'active' : ''
                           }`}
-                          onClick={() => setCurrentImageIndex(index)}
-                        >
-                          <img
-                            loading="lazy"
-                            src={image}
-                            className="ma-image"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    ))}
+                          alt={product.title}
+                        />
+                      ))}
+                    </div>
                   </div>
+
+                  {/* Right Arrow */}
+                  <button 
+                    className="carousel-nav next" 
+                    onClick={goToNext}
+                    disabled={allImages.length <= 1}
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={32} strokeWidth={2} />
+                  </button>
+
                 </div>
+              </div>
+
+              {/* Thumbnails Row (Scrollable Strip) */}
+              <div className="carousel-thumbnails">
+                {allImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`carousel-thumbnail ${
+                      index === currentImageIndex ? 'active' : ''
+                    }`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <img
+                      loading="lazy"
+                      src={image}
+                      alt={`Thumbnail ${index + 1}`}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* RIGHT */}
+            {/* RIGHT SIDE - DETAILS */}
             <div className="product-right">
               <div>
                 <h2 className="product-main-heading">{product.title}</h2>
-
                 <div className="product-price">{product.price}</div>
               </div>
 
               <div className="product-wrapper">
                 <p className="single-text">{product.description}</p>
 
-                {/* ADD TO CART FORM */}
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
                 >
-                 <input
+                  <input
                     type="number"
                     min="1"
                     value={quantity}
-                    onChange={handleQuantityChange} // Use new handler
-                    onBlur={handleBlur}             // Add safety check
+                    onChange={handleQuantityChange}
+                    onBlur={handleBlur}
                     className="w-commerce-commerceaddtocartquantityinput quantity"
                   />
-
                   <input
                     type="submit"
                     value="Add to Cart"
@@ -1651,7 +2119,6 @@ function ProductDetail({
                   />
                 </form>
 
-                {/* INFO */}
                 <div className="product-main-data">
                   <div className="product-info top">
                     <div className="square"></div>
@@ -1678,17 +2145,10 @@ function ProductDetail({
                   </div>
                 </div>
 
-                {/* BADGES */}
                 <div className="product-info-wrap">
-                  <div className="product-main-info">
-                    <div>High-Quality Beauty</div>
-                  </div>
-                  <div className="product-main-info">
-                    <div>Exclusive Launches</div>
-                  </div>
-                  <div className="product-main-info">
-                    <div>Easy Shopping</div>
-                  </div>
+                  <div className="product-main-info"><div>High-Quality Beauty</div></div>
+                  <div className="product-main-info"><div>Exclusive Launches</div></div>
+                  <div className="product-main-info"><div>Easy Shopping</div></div>
                 </div>
               </div>
             </div>
@@ -1700,7 +2160,6 @@ function ProductDetail({
       <section className="products">
         <div className="w-layout-blockcontainer container w-container">
           <h2>Similar Products</h2>
-
           <div className="product-list">
             {similarProducts.map((product) => (
               <div className="product-item" key={product.id}>
@@ -1710,7 +2169,6 @@ function ProductDetail({
                     alt={product.title}
                     className="product-image"
                   />
-
                   <h5>{product.title}</h5>
                   <div>{product.price}</div>
                 </a>
