@@ -710,6 +710,7 @@ async function CategoriesSection() {
                     className="primary-button outline w-inline-block"
                     style={{ marginTop: "20px" }}
                   >
+                    
                     <div>View More</div>
                   </a>
                 </div>

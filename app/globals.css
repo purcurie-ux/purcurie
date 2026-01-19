@@ -8407,3 +8407,16 @@ blockquote {
 .maplibregl-ctrl-attrib {
   display: none !important;
 }
+
+.brand img {
+  max-height: 45px; /* Adjust this number to scale the logo */
+  width: auto;
+  display: block;
+}
+
+/* For Mobile specifically if needed */
+@media (max-width: 479px) {
+  .brand img {
+    max-height: 35px;
+  }
+}
