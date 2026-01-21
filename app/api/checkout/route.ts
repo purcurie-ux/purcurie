@@ -222,7 +222,7 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      throw new Error(⁠ Shopify API error: ${response.status} ⁠);
+      throw new Error(`Shopify API error: ${response.status}`);
     }
 
     const data = await response.json();
