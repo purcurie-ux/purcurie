@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"; // ✅ Added Icons
-
+import Link from "next/link";
 interface MoreImage {
   url: string;
 }
@@ -106,9 +106,65 @@ function ProductDetail({
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  // ✅ 1. ADDED: Cursor Tracking State
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
-  // Combine main image with more images for carousel
-  const allImages = [product.mainImage, ...product.moreImages.map(img => img.url)];
+  // ✅ MOBILE SWIPE STATE
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const allImages = Array.from(new Set([product.mainImage, ...product.moreImages.map(img => img.url)]));
+
+  // const goToPrevious = () => setCurrentImageIndex((prev) => prev === 0 ? allImages.length - 1 : prev - 1);
+  // const goToNext = () => setCurrentImageIndex((prev) => prev === allImages.length - 1 ? 0 : prev + 1);
+
+    
+  
+  // ✅ 2. ADDED: Mouse Listener
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // ✅ KEYBOARD & MOUSE EFFECTS
+  useEffect(() => {
+    setMounted(true);
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") goToPrevious();
+      if (e.key === "ArrowRight") goToNext();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [allImages.length]);
+
+
+// ✅ SWIPE HANDLERS
+  const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) goToNext();
+    if (distance < -50) goToPrevious();
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
 
   const handleAddToCart = (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,7 +266,7 @@ function ProductDetail({
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
           z-index: 10;
           transition: all 0.2s ease;
-          opacity: 0; /* Hidden by default */
+          opacity: 1; /* Hidden by default */
         }
 
         /* Show arrows when hovering the image */
@@ -219,7 +275,8 @@ function ProductDetail({
         }
 
         .carousel-nav:hover {
-          background: #fff;
+          background: #1D2C34;
+          color:#CDDFE7;
           transform: translateY(-50%) scale(1.05);
           box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
@@ -268,7 +325,8 @@ function ProductDetail({
             margin-top: 16px;
             overflow-x: auto;      /* enables scrolling */
             scroll-behavior: smooth;
-            padding-bottom: 8px;   /* space for scrollbar */
+            padding-bottom: 8px;
+            display:none   /* space for scrollbar */
           }
 
           .carousel-thumbnails::-webkit-scrollbar {
@@ -333,7 +391,46 @@ function ProductDetail({
             padding-bottom: 0;
           }
         }
+          .custom-detail-cursor {
+          position: fixed;
+          width: 80px;
+          height: 80px;
+          background-color: #1d2c34; /* Dark slate color */
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 14px;
+          font-weight: 500;
+          pointer-events: none; /* Let clicks pass through to the product link */
+          z-index: 9999;
+          transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+          white-space: nowrap;
+        }
+
+        .product-block:hover {
+          cursor: none; /* Hide default mouse when over products */
+        }
+
+        @media (max-width: 991px) {
+          .custom-detail-cursor { display: none; } /* Hide on touch devices */
+        }
+      
       `}</style>
+
+      {/* ✅ 4. ADDED: The Follow-Cursor Element */}
+      <div 
+        className="custom-detail-cursor"
+        style={{
+          left: `${mousePos.x}px`,
+          top: `${mousePos.y}px`,
+          opacity: isHovering ? 1 : 0,
+          transform: `translate(-50%, -50%) scale(${isHovering ? 1 : 0.5})`
+        }}
+      >
+        <div>Detail</div>
+      </div>
 
       <section className="product-main">
         <div className="w-layout-blockcontainer container w-container">
@@ -341,7 +438,7 @@ function ProductDetail({
             {/* LEFT SIDE - IMAGES */}
             <div className="product-left">
               <div className="product-main-img">
-                <div className="carousel-container">
+                <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                   <div className="carousel-main">
                     {/* Images */}
                     {allImages.map((img, index) => (
@@ -480,22 +577,23 @@ function ProductDetail({
         </div>
       </section>
 
-      {/* SIMILAR PRODUCTS */}
+{/* ✅ 5. UPDATED: Add hover triggers to similar products list */}
       <section className="products">
         <div className="w-layout-blockcontainer container w-container">
           <h2>Similar Products</h2>
           <div className="product-list">
-            {similarProducts.map((product) => (
-              <div className="product-item" key={product.id}>
-                <a href={`/product/${product.slug}`} className="product-block">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="product-image"
-                  />
-                  <h5>{product.title}</h5>
-                  <div>{product.price}</div>
-                </a>
+            {similarProducts.map((p) => (
+              <div className="product-item" key={p.id}>
+                <Link
+                  href={`/product/${p.slug}`} 
+                  className="product-block"
+                  onMouseEnter={() => setIsHovering(true)}  // Show cursor
+                  onMouseLeave={() => setIsHovering(false)} // Hide cursor
+                >
+                  <img src={p.image} alt={p.title} className="product-image" />
+                  <h5>{p.title}</h5>
+                  <div>{p.price}</div>
+                </Link>
               </div>
             ))}
           </div>

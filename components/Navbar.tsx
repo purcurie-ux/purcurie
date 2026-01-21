@@ -2385,4 +2385,3 @@ function CartItem({ item }: { item: any }) {
   );
 }
 export default CartModal;
-

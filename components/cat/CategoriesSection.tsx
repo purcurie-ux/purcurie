@@ -686,7 +686,7 @@ async function CategoriesSection() {
                                   {product.title}
                                 </h5>
                                 <div>
-                                  ₹ {product.priceRange.minVariantPrice.amount}{" "}
+                                  ₹  {product.priceRange.minVariantPrice.amount}{" "}
                                   {
                                     product.priceRange.minVariantPrice
                                       .currencyCode
@@ -710,7 +710,6 @@ async function CategoriesSection() {
                     className="primary-button outline w-inline-block"
                     style={{ marginTop: "20px" }}
                   >
-                    
                     <div>View More</div>
                   </a>
                 </div>
@@ -743,7 +742,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 5"
                 className="faq-wrap top w-inline-block w-tab-link w--current"
               >
-                <div>Are PurCurie products suitable for sensitive skin?</div>
+                <div>How can I find the right product for my skin type?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -755,7 +754,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 1"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>How long does shipping take?</div>
+                <div>Would you like a matching short answer too?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -767,7 +766,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 2"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>Do you offer returns or refunds?</div>
+                <div>How can I stay updated on new launches and offers?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -779,7 +778,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 3"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>How can I contact customer support?</div>
+                <div>Are your products tested for long-lasting wear?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -791,7 +790,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 4"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>How can I stay updated on new launches and offers?</div>
+                <div>Do you have a rewards or loyalty program?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -803,34 +802,38 @@ async function CategoriesSection() {
             <div className="faq-right w-tab-content">
               <div data-w-tab="Tab 5" className="w-tab-pane w--tab-active">
                 <p className="single-text">
-                  Many of our products are formulated to be gentle and skin-friendly. 
-                  We recommend checking the ingredient list on each product page and doing a patch test before full use.
+                  Check our product descriptions for skin type suitability or
+                  use our beauty quiz for personalized recommendations. You can
+                  also consult our experts for guidance.
                 </p>
               </div>
               <div data-w-tab="Tab 1" className="w-tab-pane">
                 <p className="single-text">
-                  Orders are usually processed within 1–2 business days and delivered within 3–7 business days. Visit our 
-                  <a href="/return-policy"> Returns &amp; Exchanges</a> page to start the process.
-                   
+                  You can return or exchange products within 30 days if they are
+                  unused and in original packaging. Visit our
+                  <a href="/return-policy"> Returns &amp;Exchanges</a> page to
+                  start the process.
                 </p>
               </div>
               <div data-w-tab="Tab 2" className="w-tab-pane">
                 <p className="single-text">
-                 Yes. If you receive a damaged, defective, or incorrect product, 
-                  you can request a return or refund within 48 hours of delivery. 
-                  Please refer to our Refund & Return Policy for full details.
+                  Subscribe to our newsletter and follow us on social media for
+                  the latest product launches and exclusive promotions. Stay
+                  connected for beauty tips and special offers!
                 </p>
               </div>
               <div data-w-tab="Tab 3" className="w-tab-pane">
                 <p className="single-text">
-                   You can reach us anytime at support@purcurie.com
-                   Our team is happy to assist you with orders, product questions, or concerns.
+                  Yes, our makeup products undergo rigorous testing to ensure
+                  long wear and durability. They are designed to stay flawless
+                  and fresh throughout the day.
                 </p>
               </div>
               <div data-w-tab="Tab 4" className="w-tab-pane">
                 <p className="single-text">
-                 You can follow us on social media to receive updates about new products,
-                  exclusive offers and skincare tips.
+                  Yes, we offer a loyalty program where you can earn points on
+                  every purchase. Redeem points for exclusive discounts and
+                  special rewards as a valued customer.
                 </p>
               </div>
             </div>
