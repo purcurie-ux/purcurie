@@ -45,15 +45,15 @@ import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: "PurCurie | Pure Care For Skin",
-  description: "Discover the best organic skincare products designed to support your daily routine and natural glow.",
+  description: "Discover the best skincare products designed to support your daily routine and natural glow.",
   openGraph: {
     title: "PurCurie | Pure Care For Skin",
-    description: "Discover the best organic skincare products designed to support your daily routine and natural glow.",
-    url: "https://purcurie.com", // ✅ Replace with your actual domain
+    description: "Discover the best skincare products designed to support your daily routine and natural glow.",
+    url: "https://www.purcurie.com/", // ✅ Replace with your actual domain
     siteName: "PurCurie",
     images: [
       {
-        url: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1768757461", // ✅ Using your logo as the preview image
+        url: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_23_2026_10_19_18_AM_-_Edited.png?v=1769143874", // ✅ Using your logo as the preview image
         width: 1200,
         height: 630,
         alt: "PurCurie - Pure Care For Skin",
@@ -65,8 +65,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PurCurie | Pure Care For Skin",
-    description: "Discover the best organic skincare products designed to support your daily routine and natural glow.",
-    images: ["https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1768757461"], // ✅ Twitter preview image
+    description: "Discover the best skincare products designed to support your daily routine and natural glow.",
+    images: ["https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_23_2026_10_19_18_AM_-_Edited.png?v=1769143874"], // ✅ Twitter preview image
   },
   icons: {
     icon: "/favicon.ico", // Ensure you have a favicon in your public folder
