@@ -3364,8 +3364,8 @@ blockquote {
 
 .primary-button {
   grid-column-gap: 10px;
-  /* background-color: var(--primary); */
-  color: var(--primary);
+  background-color: var(--primary);
+  color: var(--white);
   text-transform: uppercase;
   border: 1px solid #000;
   border-radius: 50px;

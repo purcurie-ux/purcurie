@@ -373,8 +373,8 @@ function ProductDetail({
         @media (max-width: 768px) {
           .carousel-nav {
             opacity: 1; /* Always show arrows on mobile */
-            width: 36px;
-            height: 36px;
+            width: 25px;
+            height: 25px;
           }
           .carousel-nav.prev { left: 8px; }
           .carousel-nav.next { right: 8px; }
