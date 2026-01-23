@@ -7,6 +7,7 @@ export async function getProductByHandle(handle: string) {
         id
         title
         description
+        descriptionHtml
         tags
         images(first: 10) {
           edges {

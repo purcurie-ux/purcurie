@@ -68,8 +68,11 @@ export const metadata: Metadata = {
     description: "Discover the best skincare products designed to support your daily routine and natural glow.",
     images: ["https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_23_2026_10_19_18_AM_-_Edited.png?v=1769143874"], // ✅ Twitter preview image
   },
+// 👇 UPDATED ICONS SECTION
   icons: {
-    icon: "/favicon.ico", // Ensure you have a favicon in your public folder
+    icon: "icon.svg", // ✅ Main Favicon
+    shortcut: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846", // ✅ Shortcut Icon
+    apple: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846", // ✅ Apple Touch Icon (iPhone/iPad home screen)
   },
 };
 
@@ -90,6 +93,8 @@ export default function RootLayout({
       {/*         HEAD AREA          */}
       {/* ------------------------- */}
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
         <GlamzHead />
 
         {/* Webflow Touch Detection */}

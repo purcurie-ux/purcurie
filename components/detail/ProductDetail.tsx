@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react"; // ✅ Added Icons
+import { ChevronLeft, ChevronRight, Star, Award, Gem, Truck } from "lucide-react";
 import Link from "next/link";
+
 interface MoreImage {
   url: string;
 }
@@ -15,6 +16,7 @@ interface ProductDetailData {
   title: string;
   price: string;
   description: string;
+  descriptionHtml?: string; // ✅ ADD THIS LINE HERE
   category: string;
   sku: string;
   tag: string;
@@ -416,7 +418,44 @@ function ProductDetail({
         @media (max-width: 991px) {
           .custom-detail-cursor { display: none; } /* Hide on touch devices */
         }
-      
+        /* ✅ FORCE EMOJI BULLETS & SPACING */
+        .product-description-content {
+          font-size: 16px;
+          line-height: 1.7;
+          color: #333;
+          margin-bottom: 24px;
+        }
+
+        /* 1. Target the list items specifically */
+        .product-description-content ul {
+          list-style: none !important; /* Turn off default black dots */
+          padding-left: 0 !important;
+          margin-left: 0 !important;
+          margin-bottom: 16px;
+        }
+
+        .product-description-content li {
+          position: relative;
+          padding-left: px; /* Make space for the emoji */
+          margin-bottom: 12px;
+          display: block; /* Ensures they stack correctly */
+        }
+
+        /* 2. INJECT THE EMOJI AUTOMATICALLY */
+        .product-description-content li::before {
+          content: "✨";  /* 👈 CHANGE THIS EMOJI to anything (🌿, 💧, ✅) */
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-size: 14px; /* Adjust size if needed */
+        }
+
+        /* 3. Style Bold Text */
+        .product-description-content strong,
+        .product-description-content b {
+          font-weight: 700;
+          color: #1a1a1a;
+        }
       `}</style>
 
       {/* ✅ 4. ADDED: The Follow-Cursor Element */}
@@ -515,30 +554,45 @@ function ProductDetail({
             <div className="product-right">
               <div>
                 <h2 className="product-main-heading">{product.title}</h2>
-                <div className="product-price">{product.price}</div>
+                {/* ✅ Added marginBottom: '4px' to tighten the space below price */}
+                <div className="product-price" style={{ marginBottom: "4px" }}>
+                  {product.price}
+                </div>
               </div>
 
-              <div className="product-wrapper">
-                <p className="single-text">{product.description}</p>
-
+              {/* ✅ Added marginTop: '0px' to pull it up */}
+              <div className="product-wrapper" style={{ marginTop: "-40px" }}>
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
                 >
-                  <input
+                  {/* <input
                     type="number"
                     min="1"
                     value={quantity}
                     onChange={handleQuantityChange}
                     onBlur={handleBlur}
                     className="w-commerce-commerceaddtocartquantityinput quantity"
-                  />
+                  /> */}
                   <input
                     type="submit"
                     value="Add to Cart"
                     className="w-commerce-commerceaddtocartbutton add-to-cart-button"
                   />
                 </form>
+
+                {/* <p className="single-text">{product.description}</p> */}
+                {/* ✅ Dynamic Description Logic */}
+                  {product.descriptionHtml ? (
+                    <div 
+                      className="product-description-content"
+                      dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                    />
+                  ) : (
+                    <p className="single-text">{product.description}</p>
+                  )}
+
+                
 
                 <div className="product-main-data">
                   <div className="product-info top">
@@ -567,9 +621,22 @@ function ProductDetail({
                 </div>
 
                 <div className="product-info-wrap">
-                  <div className="product-main-info"><div>High-Quality Beauty</div></div>
-                  <div className="product-main-info"><div>Exclusive Launches</div></div>
-                  <div className="product-main-info"><div>Easy Shopping</div></div>
+                  <div className="product-info-wrap">
+                  <div className="product-main-info">
+                    <Award size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
+                    <div>High-Quality Beauty</div>
+                  </div>
+                  
+                  <div className="product-main-info">
+                    <Gem size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
+                    <div>Exclusive Launches</div>
+                  </div>
+                  
+                  <div className="product-main-info">
+                    <Truck size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
+                    <div>Easy Shopping</div>
+                  </div>
+                </div>
                 </div>
               </div>
             </div>

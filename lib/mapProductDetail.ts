@@ -55,6 +55,7 @@ export function mapProductDetail(shopifyProduct: any) {
       variant?.price.currencyCode
     }`,
     description: shopifyProduct.description,
+    descriptionHtml: shopifyProduct.descriptionHtml, // ✅ ADDED THIS LINE
     category: collection?.title || "Uncategorized",
     sku: variant?.sku || "N/A",
     tag: shopifyProduct.tags[0] || "",
