@@ -648,22 +648,12 @@ function ProductDetail({
       <section className="products">
         <div className="w-layout-blockcontainer container w-container">
           <h2>Similar Products</h2>
-          <div className="product-list">
-            {similarProducts.map((p) => (
-              <div className="product-item" key={p.id}>
-                <Link
-                  href={`/product/${p.slug}`} 
-                  className="product-block"
-                  onMouseEnter={() => setIsHovering(true)}  // Show cursor
-                  onMouseLeave={() => setIsHovering(false)} // Hide cursor
-                >
-                  <img src={p.image} alt={p.title} className="product-image" />
-                  <h5>{p.title}</h5>
-                  <div>{p.price}</div>
-                </Link>
-              </div>
-            ))}
-          </div>
+         <div className="product-list">
+              {similarProducts.map((p) => (
+                // ✅ Use the new smart component we just made
+                <SimilarProductCard key={p.id} product={p} />
+              ))}
+            </div>
         </div>
       </section>
     </div>
@@ -671,3 +661,74 @@ function ProductDetail({
 }
 
 export default ProductDetail;
+
+// ✅ PASTE THIS AT THE VERY BOTTOM OF YOUR FILE
+function SimilarProductCard({ product }: { product: SimilarProduct }) {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Calculate X/Y relative to the card, not the screen
+    const rect = e.currentTarget.getBoundingClientRect();
+    setPos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+return (
+    <div className="product-item">
+      <Link
+        href={`/product/${product.slug}`}
+        className="product-block"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onMouseMove={handleMouseMove}
+        style={{ position: "relative", overflow: "hidden", display: "block" }}
+      >
+        <img src={product.image} alt={product.title} className="product-image" />
+
+        {/* ✅ CHANGED: Text hidden by default, shows on hover */}
+        <div
+          style={{
+            opacity: isHovering ? 1 : 0,           // Hide (0) or Show (1)
+            transform: isHovering ? "translateY(0)" : "translateY(10px)", // Slide up effect
+            transition: "all 0.3s ease",           // Smooth animation
+            marginTop: "12px", 
+            textAlign: "center",
+            paddingBottom: "20px",                    // Spacing from image
+          }}
+        >
+          <h5>{product.title}</h5>
+          <div>{product.price}</div>
+        </div>
+
+        {/* The Detail Cursor Circle */}
+        <div
+          style={{
+            position: "absolute",
+            left: pos.x,
+            top: pos.y,
+            width: "60px",
+            height: "60px",
+            backgroundColor: "#1d2c34",
+            borderRadius: "50%",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "12px",
+            fontWeight: 300,
+            pointerEvents: "none",
+            transform: "translate(-50%, -50%)",
+            opacity: isHovering ? 1 : 0,
+            transition: "opacity 0.2s ease",
+            zIndex: 10,
+          }}
+        >
+          Detail
+        </div>
+      </Link>
+    </div>
+  );
+}
