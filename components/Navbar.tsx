@@ -2341,7 +2341,6 @@ function CartItem({ item }: { item: any }) {
       setLocalQuantity(parsed);
     }
   };
-  
 
   // 4. Handle "Clicking Away" (Saves the data)
   const handleBlur = () => {

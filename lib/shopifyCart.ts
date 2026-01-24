@@ -1,10 +1,10 @@
 // import { shopifyFetch } from "./shopify";
 
-// // export async function create() {
+// // export async function createCart() {
 // //   const query = `
 // //     mutation {
-// //       Create {
-// //          {
+// //       cartCreate {
+// //         cart {
 // //           id
 // //           checkoutUrl
 // //         }
@@ -12,18 +12,18 @@
 // //     }
 // //   `;
 // //   const data = await shopifyFetch(query);
-// //   return data.Create.;
+// //   return data.cartCreate.cart;
 // // }
 
-// // export async function addTo(
-// //   Id: string,
+// // export async function addToCart(
+// //   cartId: string,
 // //   variantId: string,
 // //   qty: number
 // // ) {
 // //   const query = `
-// //     mutation ($Id: ID!, $lines: [LineInput!]!) {
-// //       LinesAdd(Id: $Id, lines: $lines) {
-// //          {
+// //     mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
+// //       cartLinesAdd(cartId: $cartId, lines: $lines) {
+// //         cart {
 // //           id
 // //           checkoutUrl
 // //         }
@@ -32,7 +32,7 @@
 // //   `;
 
 // //   return shopifyFetch(query, {
-// //     Id,
+// //     cartId,
 // //     lines: [
 // //       {
 // //         merchandiseId: variantId,
@@ -45,10 +45,10 @@
 
 
 
-// export async function get(Id: string) {
+// export async function getCart(cartId: string) {
 //   const query = `
 //       query ($id: ID!) {
-//         (id: $id) {
+//         cart(id: $id) {
 //           id
 //           checkoutUrl
 //           totalQuantity
@@ -78,33 +78,33 @@
 //         }
 //       }
 //     `;
-//   return shopifyFetch(query, { id: Id });
+//   return shopifyFetch(query, { id: cartId });
 // }
 
-// export async function updateQty(Id: string, lineId: string, qty: number) {
+// export async function updateQty(cartId: string, lineId: string, qty: number) {
 //   const query = `
-//       mutation ($Id:ID!,$lines:[LineUpdateInput!]!) {
-//         LinesUpdate(Id:$Id,lines:$lines){
-//           { id }
+//       mutation ($cartId:ID!,$lines:[CartLineUpdateInput!]!) {
+//         cartLinesUpdate(cartId:$cartId,lines:$lines){
+//           cart{ id }
 //         }
 //       }
 //     `;
 //   return shopifyFetch(query, {
-//     Id,
+//     cartId,
 //     lines: [{ id: lineId, quantity: qty }],
 //   });
 // }
 
-// export async function removeItem(Id: string, lineId: string) {
+// export async function removeItem(cartId: string, lineId: string) {
 //   const query = `
-//       mutation ($Id:ID!,$lineIds:[ID!]!) {
-//         LinesRemove(Id:$Id,lineIds:$lineIds){
-//           { id }
+//       mutation ($cartId:ID!,$lineIds:[ID!]!) {
+//         cartLinesRemove(cartId:$cartId,lineIds:$lineIds){
+//           cart{ id }
 //         }
 //       }
 //     `;
 //   return shopifyFetch(query, {
-//     Id,
+//     cartId,
 //     lineIds: [lineId],
 //   });
 // }
@@ -126,13 +126,13 @@ async function shopifyFetch(query: string, variables?: any) {
   return res.json();
 }
 
-/* ---------------- CREATE  ---------------- */
+/* ---------------- CREATE CART ---------------- */
 
-export async function create() {
+export async function createCart() {
   const query = `
       mutation {
-        Create {
-           {
+        cartCreate {
+          cart {
             id
             checkoutUrl
           }
@@ -141,20 +141,20 @@ export async function create() {
     `;
 
   const res = await shopifyFetch(query);
-  return res.data.Create.;
+  return res.data.cartCreate.cart;
 }
 
-/* ---------------- ADD TO  ---------------- */
+/* ---------------- ADD TO CART ---------------- */
 
-export async function addTo(
-  Id: string,
+export async function addToCart(
+  cartId: string,
   variantId: string,
   quantity: number
 ) {
   const query = `
-      mutation ($Id: ID!, $lines: [LineInput!]!) {
-        LinesAdd(Id: $Id, lines: $lines) {
-           {
+      mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
+        cartLinesAdd(cartId: $cartId, lines: $lines) {
+          cart {
             id
           }
         }
@@ -162,7 +162,7 @@ export async function addTo(
     `;
 
   return shopifyFetch(query, {
-    Id,
+    cartId,
     lines: [
       {
         merchandiseId: variantId,
@@ -172,12 +172,12 @@ export async function addTo(
   });
 }
 
-/* ---------------- GET  ---------------- */
+/* ---------------- GET CART ---------------- */
 
-export async function get(Id: string) {
+export async function getCart(cartId: string) {
   const query = `
         query ($id: ID!) {
-          (id: $id) {
+          cart(id: $id) {
             id
             checkoutUrl
             totalQuantity
@@ -207,37 +207,37 @@ export async function get(Id: string) {
           }
         }
       `;
-  return shopifyFetch(query, { id: Id });
+  return shopifyFetch(query, { id: cartId });
 }
 
 /* ---------------- UPDATE QTY ---------------- */
 
-export async function updateQty(Id: string, lineId: string, qty: number) {
+export async function updateQty(cartId: string, lineId: string, qty: number) {
   const query = `
-        mutation ($Id:ID!,$lines:[LineUpdateInput!]!) {
-          LinesUpdate(Id:$Id,lines:$lines){
-            { id }
+        mutation ($cartId:ID!,$lines:[CartLineUpdateInput!]!) {
+          cartLinesUpdate(cartId:$cartId,lines:$lines){
+            cart{ id }
           }
         }
       `;
   return shopifyFetch(query, {
-    Id,
+    cartId,
     lines: [{ id: lineId, quantity: qty }],
   });
 }
 
 /* ---------------- REMOVE ITEM ---------------- */
 
-export async function removeItem(Id: string, lineId: string) {
+export async function removeItem(cartId: string, lineId: string) {
   const query = `
-        mutation ($Id:ID!,$lineIds:[ID!]!) {
-          LinesRemove(Id:$Id,lineIds:$lineIds){
-            { id }
+        mutation ($cartId:ID!,$lineIds:[ID!]!) {
+          cartLinesRemove(cartId:$cartId,lineIds:$lineIds){
+            cart{ id }
           }
         }
       `;
   return shopifyFetch(query, {
-    Id,
+    cartId,
     lineIds: [lineId],
   });
 }
