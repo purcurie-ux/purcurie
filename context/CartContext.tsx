@@ -2,7 +2,7 @@
 
 // // import React, { createContext, useContext, useState } from "react";
 
-// // interface Item {
+// // interface CartItem {
 // //   variantId: string;
 // //   productId: string;
 // //   title: string;
@@ -12,27 +12,27 @@
 // //   sku: string;
 // // }
 
-// // interface ContextType {
-// //   items: Item[];
+// // interface CartContextType {
+// //   items: CartItem[];
 // //   isOpen: boolean;
-// //   addTo: (item: Omit<Item, "quantity">) => void;
-// //   removeFrom: (variantId: string) => void;
+// //   addToCart: (item: Omit<CartItem, "quantity">) => void;
+// //   removeFromCart: (variantId: string) => void;
 // //   updateQuantity: (variantId: string, quantity: number) => void;
-// //   open: () => void;
-// //   close: () => void;
+// //   openCart: () => void;
+// //   closeCart: () => void;
 // //   subtotal: string;
 // //   checkoutUrl: string | null;
 // //   createCheckout: () => Promise<void>;
 // // }
 
-// // const Context = createContext<ContextType | undefined>(undefined);
+// // const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// // export function Provider({ children }: { children: React.ReactNode }) {
-// //   const [items, setItems] = useState<Item[]>([]);
+// // export function CartProvider({ children }: { children: React.ReactNode }) {
+// //   const [items, setItems] = useState<CartItem[]>([]);
 // //   const [isOpen, setIsOpen] = useState(false);
 // //   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
 
-// //   const addTo = (item: Omit<Item, "quantity">) => {
+// //   const addToCart = (item: Omit<CartItem, "quantity">) => {
 // //     setItems((prevItems) => {
 // //       const existingItem = prevItems.find(
 // //         (i) => i.variantId === item.variantId
@@ -49,13 +49,13 @@
 // //     setIsOpen(true);
 // //   };
 
-// //   const removeFrom = (variantId: string) => {
+// //   const removeFromCart = (variantId: string) => {
 // //     setItems((prevItems) => prevItems.filter((i) => i.variantId !== variantId));
 // //   };
 
 // //   const updateQuantity = (variantId: string, quantity: number) => {
 // //     if (quantity <= 0) {
-// //       removeFrom(variantId);
+// //       removeFromCart(variantId);
 // //       return;
 // //     }
 // //     setItems((prevItems) =>
@@ -63,8 +63,8 @@
 // //     );
 // //   };
 
-// //   const open = () => setIsOpen(true);
-// //   const close = () => setIsOpen(false);
+// //   const openCart = () => setIsOpen(true);
+// //   const closeCart = () => setIsOpen(false);
 
 // //   const subtotal = items
 // //     .reduce((acc, item) => {
@@ -100,29 +100,29 @@
 // //   };
 
 // //   return (
-// //     <Context.Provider
+// //     <CartContext.Provider
 // //       value={{
 // //         items,
 // //         isOpen,
-// //         addTo,
-// //         removeFrom,
+// //         addToCart,
+// //         removeFromCart,
 // //         updateQuantity,
-// //         open,
-// //         close,
+// //         openCart,
+// //         closeCart,
 // //         subtotal,
 // //         checkoutUrl,
 // //         createCheckout,
 // //       }}
 // //     >
 // //       {children}
-// //     </Context.Provider>
+// //     </CartContext.Provider>
 // //   );
 // // }
 
-// // export function use() {
-// //   const context = useContext(Context);
+// // export function useCart() {
+// //   const context = useContext(CartContext);
 // //   if (context === undefined) {
-// //     throw new Error("use must be used within a Provider");
+// //     throw new Error("useCart must be used within a CartProvider");
 // //   }
 // //   return context;
 // // }
@@ -134,7 +134,7 @@
 
 // import React, { createContext, useContext, useState, useEffect } from "react";
 
-// interface Item {
+// interface CartItem {
 //   variantId: string;
 //   productId: string;
 //   title: string;
@@ -144,43 +144,43 @@
 //   sku: string;
 // }
 
-// interface ContextType {
-//   items: Item[];
+// interface CartContextType {
+//   items: CartItem[];
 //   isOpen: boolean;
-//   addTo: (item: Omit<Item, "quantity">) => void;
-//   removeFrom: (variantId: string) => void;
+//   addToCart: (item: Omit<CartItem, "quantity">) => void;
+//   removeFromCart: (variantId: string) => void;
 //   updateQuantity: (variantId: string, quantity: number) => void;
-//   open: () => void;
-//   close: () => void;
+//   openCart: () => void;
+//   closeCart: () => void;
 //   subtotal: string;
 //   checkoutUrl: string | null;
 //   createCheckout: () => Promise<void>;
 //   isCheckoutLoading: boolean;
 // }
 
-// const Context = createContext<ContextType | undefined>(undefined);
+// const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// const _STORAGE_KEY = "shopping--items";
+// const CART_STORAGE_KEY = "shopping-cart-items";
 
 // // Storage helper functions
-// const saveToStorage = (items: Item[]) => {
+// const saveToStorage = (items: CartItem[]) => {
 //   try {
 //     if (typeof window !== "undefined") {
-//       localStorage.setItem(_STORAGE_KEY, JSON.stringify(items));
-//       console.log(" saved:", items);
+//       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+//       console.log("Cart saved:", items);
 //     }
 //   } catch (error) {
 //     console.error("Error saving to storage:", error);
 //   }
 // };
 
-// const loadFromStorage = (): Item[] => {
+// const loadFromStorage = (): CartItem[] => {
 //   try {
 //     if (typeof window !== "undefined") {
-//       const saved = localStorage.getItem(_STORAGE_KEY);
+//       const saved = localStorage.getItem(CART_STORAGE_KEY);
 //       if (saved) {
 //         const parsed = JSON.parse(saved);
-//         console.log(" loaded:", parsed);
+//         console.log("Cart loaded:", parsed);
 //         return parsed;
 //       }
 //     }
@@ -190,14 +190,14 @@
 //   return [];
 // };
 
-// export function Provider({ children }: { children: React.ReactNode }) {
-//   const [items, setItems] = useState<Item[]>([]);
+// export function CartProvider({ children }: { children: React.ReactNode }) {
+//   const [items, setItems] = useState<CartItem[]>([]);
 //   const [isOpen, setIsOpen] = useState(false);
 //   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
 //   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 //   const [isHydrated, setIsHydrated] = useState(false);
 
-//   // Load  from storage on mount (client-side only)
+//   // Load cart from storage on mount (client-side only)
 //   useEffect(() => {
 //     setIsHydrated(true);
 //     const savedItems = loadFromStorage();
@@ -207,14 +207,14 @@
 //     }
 //   }, []);
 
-//   // Save  to storage whenever items change (after hydration)
+//   // Save cart to storage whenever items change (after hydration)
 //   useEffect(() => {
 //     if (isHydrated) {
 //       saveToStorage(items);
 //     }
 //   }, [items, isHydrated]);
 
-//   const addTo = (item: Omit<Item, "quantity">) => {
+//   const addToCart = (item: Omit<CartItem, "quantity">) => {
 //     setItems((prevItems) => {
 //       const existingItem = prevItems.find(
 //         (i) => i.variantId === item.variantId
@@ -231,13 +231,13 @@
 //     setIsOpen(true);
 //   };
 
-//   const removeFrom = (variantId: string) => {
+//   const removeFromCart = (variantId: string) => {
 //     setItems((prevItems) => prevItems.filter((i) => i.variantId !== variantId));
 //   };
 
 //   const updateQuantity = (variantId: string, quantity: number) => {
 //     if (quantity <= 0) {
-//       removeFrom(variantId);
+//       removeFromCart(variantId);
 //       return;
 //     }
 //     setItems((prevItems) =>
@@ -245,8 +245,8 @@
 //     );
 //   };
 
-//   const open = () => setIsOpen(true);
-//   const close = () => setIsOpen(false);
+//   const openCart = () => setIsOpen(true);
+//   const closeCart = () => setIsOpen(false);
 
 //   const subtotal = items
 //     .reduce((acc, item) => {
@@ -285,15 +285,15 @@
 //   };
 
 //   return (
-//     <Context.Provider
+//     <CartContext.Provider
 //       value={{
 //         items,
 //         isOpen,
-//         addTo,
-//         removeFrom,
+//         addToCart,
+//         removeFromCart,
 //         updateQuantity,
-//         open,
-//         close,
+//         openCart,
+//         closeCart,
 //         subtotal,
 //         checkoutUrl,
 //         createCheckout,
@@ -301,14 +301,14 @@
 //       }}
 //     >
 //       {children}
-//     </Context.Provider>
+//     </CartContext.Provider>
 //   );
 // }
 
-// export function use() {
-//   const context = useContext(Context);
+// export function useCart() {
+//   const context = useContext(CartContext);
 //   if (context === undefined) {
-//     throw new Error("use must be used within a Provider");
+//     throw new Error("useCart must be used within a CartProvider");
 //   }
 //   return context;
 // }
@@ -321,7 +321,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-interface Item {
+interface CartItem {
   variantId: string;
   productId: string;
   title: string;
@@ -331,43 +331,43 @@ interface Item {
   sku: string;
 }
 
-interface ContextType {
-  items: Item[];
+interface CartContextType {
+  items: CartItem[];
   isOpen: boolean;
-  addTo: (item: Omit<Item, "quantity">) => void;
-  removeFrom: (variantId: string) => void;
+  addToCart: (item: Omit<CartItem, "quantity">) => void;
+  removeFromCart: (variantId: string) => void;
   updateQuantity: (variantId: string, quantity: number) => void;
-  open: () => void;
-  close: () => void;
+  openCart: () => void;
+  closeCart: () => void;
   subtotal: string;
   checkoutUrl: string | null;
   createCheckout: () => Promise<void>;
   isCheckoutLoading: boolean;
 }
 
-const Context = createContext<ContextType | undefined>(undefined);
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const _STORAGE_KEY = "shopping--items";
+const CART_STORAGE_KEY = "shopping-cart-items";
 
 // Storage helper functions
-const saveToStorage = (items: Item[]) => {
+const saveToStorage = (items: CartItem[]) => {
   try {
     if (typeof window !== "undefined") {
-      localStorage.setItem(_STORAGE_KEY, JSON.stringify(items));
-      console.log(" saved to localStorage:", items);
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+      console.log("Cart saved to localStorage:", items);
     }
   } catch (error) {
     console.error("Error saving to storage:", error);
   }
 };
 
-const loadFromStorage = (): Item[] => {
+const loadFromStorage = (): CartItem[] => {
   try {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem(_STORAGE_KEY);
+      const saved = localStorage.getItem(CART_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        console.log(" loaded from localStorage:", parsed);
+        console.log("Cart loaded from localStorage:", parsed);
         return parsed;
       }
     }
@@ -379,7 +379,7 @@ const loadFromStorage = (): Item[] => {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   // Initialize with a function to avoid hydration mismatch
-  const [items, setItems] = useState<Item[]>(() => {
+  const [items, setItems] = useState<CartItem[]>(() => {
     // Only load from storage on client side
     if (typeof window !== "undefined") {
       return loadFromStorage();
@@ -396,14 +396,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setIsMounted(true);
   }, []);
 
-  // Save  to storage whenever items change
+  // Save cart to storage whenever items change
   useEffect(() => {
     if (isMounted) {
       saveToStorage(items);
     }
   }, [items, isMounted]);
 
-  const addTo = (item: Omit<Item, "quantity">) => {
+  const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find(
         (i) => i.variantId === item.variantId
@@ -417,16 +417,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prevItems, { ...item, quantity: 1 }];
     });
-    // setIsOpen(true); - removed for pop up  behavior
+    // setIsOpen(true); - removed for pop up cart behavior
   };
 
-  const removeFrom = (variantId: string) => {
+  const removeFromCart = (variantId: string) => {
     setItems((prevItems) => prevItems.filter((i) => i.variantId !== variantId));
   };
 
   const updateQuantity = (variantId: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFrom(variantId);
+      removeFromCart(variantId);
       return;
     }
     setItems((prevItems) =>
@@ -434,8 +434,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const openCart = () => setIsOpen(true);
+  const closeCart = () => setIsOpen(false);
 
   const subtotal = items
     .reduce((acc, item) => {
@@ -474,15 +474,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Context.Provider
+    <CartContext.Provider
       value={{
         items,
         isOpen,
-        addTo,
-        removeFrom,
+        addToCart,
+        removeFromCart,
         updateQuantity,
-        open,
-        close,
+        openCart,
+        closeCart,
         subtotal,
         checkoutUrl,
         createCheckout,
@@ -490,14 +490,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-    </Context.Provider>
+    </CartContext.Provider>
   );
 }
 
 export function useCart() {
-  const context = useContext(Context);
+  const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error("use must be used within a Provider");
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 }
