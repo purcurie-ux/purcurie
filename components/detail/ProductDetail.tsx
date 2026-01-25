@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
-import { ChevronLeft, ChevronRight, Star, Award, Gem, Truck } from "lucide-react";
+import { ChevronLeft, ChevronRight, Award, Gem, Truck } from "lucide-react";
 import Link from "next/link";
 
 interface MoreImage {
@@ -16,7 +16,7 @@ interface ProductDetailData {
   title: string;
   price: string;
   description: string;
-  descriptionHtml?: string; // ✅ ADD THIS LINE HERE
+  descriptionHtml?: string;
   category: string;
   sku: string;
   tag: string;
@@ -109,22 +109,21 @@ function ProductDetail({
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-  // ✅ 1. ADDED: Cursor Tracking State
+  
+  // ✅ 1. Cursor Tracking State
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
-  // ✅ MOBILE SWIPE STATE
+  // ✅ 2. Notification State
+  const [showNotification, setShowNotification] = useState(false);
+
+  // ✅ 3. Mobile Swipe State
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const allImages = Array.from(new Set([product.mainImage, ...product.moreImages.map(img => img.url)]));
 
-  // const goToPrevious = () => setCurrentImageIndex((prev) => prev === 0 ? allImages.length - 1 : prev - 1);
-  // const goToNext = () => setCurrentImageIndex((prev) => prev === allImages.length - 1 ? 0 : prev + 1);
-
-    
-  
-  // ✅ 2. ADDED: Mouse Listener
+  // ✅ Effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -133,7 +132,6 @@ function ProductDetail({
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // ✅ KEYBOARD & MOUSE EFFECTS
   useEffect(() => {
     setMounted(true);
     
@@ -142,20 +140,11 @@ function ProductDetail({
       if (e.key === "ArrowRight") goToNext();
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [allImages.length]);
 
-
-// ✅ SWIPE HANDLERS
+  // ✅ Handlers
   const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
   const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
@@ -167,6 +156,17 @@ function ProductDetail({
     setTouchEnd(null);
   };
 
+  const goToPrevious = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? allImages.length - 1 : prev - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((prev) => 
+      prev === allImages.length - 1 ? 0 : prev + 1
+    );
+  };
 
   const handleAddToCart = (e: React.FormEvent) => {
     e.preventDefault();
@@ -183,18 +183,13 @@ function ProductDetail({
       });
     }
     setQuantity(1);
-  };
-
-  const goToPrevious = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? allImages.length - 1 : prev - 1
-    );
-  };
-
-  const goToNext = () => {
-    setCurrentImageIndex((prev) => 
-      prev === allImages.length - 1 ? 0 : prev + 1
-    );
+    
+    // ✅ TRIGGER NOTIFICATION
+    setShowNotification(true);
+    
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -242,7 +237,6 @@ function ProductDetail({
           object-fit: contain;
           opacity: 0;
           transition: opacity 0.5s ease-in-out; /* Smooth Fade */
-          
         }
 
         .carousel-image.active {
@@ -250,7 +244,6 @@ function ProductDetail({
           z-index: 1;
         }
 
-        /* ✨ NEW: PRO ARROWS */
         .carousel-nav {
           position: absolute;
           top: 50%;
@@ -271,7 +264,6 @@ function ProductDetail({
           opacity: 1; /* Hidden by default */
         }
 
-        /* Show arrows when hovering the image */
         .carousel-main:hover .carousel-nav {
           opacity: 1;
         }
@@ -283,15 +275,9 @@ function ProductDetail({
           box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
 
-        .carousel-nav.prev {
-          left: 16px;
-        }
+        .carousel-nav.prev { left: 16px; }
+        .carousel-nav.next { right: 16px; }
 
-        .carousel-nav.next {
-          right: 16px;
-        }
-
-        /* ✨ NEW: DOTS */
         .carousel-dots {
           position: absolute;
           bottom: 20px;
@@ -301,7 +287,7 @@ function ProductDetail({
           gap: 8px;
           z-index: 10;
           padding: 6px 12px;
-          background: rgba(0,0,0,0.3); /* Subtle background for contrast */
+          background: rgba(0,0,0,0.3);
           border-radius: 20px;
           backdrop-filter: blur(4px);
         }
@@ -322,59 +308,56 @@ function ProductDetail({
         }
 
         .carousel-thumbnails {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-            overflow-x: auto;      /* enables scrolling */
-            scroll-behavior: smooth;
-            padding-bottom: 8px;
-            display:none   /* space for scrollbar */
-          }
+          display: flex;
+          gap: 12px;
+          margin-top: 16px;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          padding-bottom: 8px;
+          display:none;
+        }
 
-          .carousel-thumbnails::-webkit-scrollbar {
-            height: 6px;
-          }
+        .carousel-thumbnails::-webkit-scrollbar {
+          height: 6px;
+        }
 
-          .carousel-thumbnails::-webkit-scrollbar-track {
-            background: #e5e5e5;
-            border-radius: 4px;
-          }
+        .carousel-thumbnails::-webkit-scrollbar-track {
+          background: #e5e5e5;
+          border-radius: 4px;
+        }
 
-          .carousel-thumbnails::-webkit-scrollbar-thumb {
-            background: #b5b5b5;
-            border-radius: 4px;
-          }
+        .carousel-thumbnails::-webkit-scrollbar-thumb {
+          background: #b5b5b5;
+          border-radius: 4px;
+        }
 
+        .carousel-thumbnail {
+          position: relative;
+          width: 90px;
+          height: 90px;
+          cursor: pointer;
+          border: 2px solid transparent;
+          border-radius: 6px;
+          overflow: hidden;
+          transition: all 0.2s;
+        }
 
-            .carousel-thumbnail {
-              position: relative;
-              width: 90px;        /* fixed width */
-              height: 90px; 
-              
-              cursor: pointer;
-              border: 2px solid transparent;
-              border-radius: 6px;
-              overflow: hidden;
-              transition: all 0.2s;
-            }
+        .carousel-thumbnail.active {
+          border-color: #CEDFE7;
+        }
 
-            /* Active Thumbnail has Black Border like video */
-            .carousel-thumbnail.active {
-              border-color: #CEDFE7;
-            }
-
-            .carousel-thumbnail img {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
+        .carousel-thumbnail img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
 
         @media (max-width: 768px) {
           .carousel-nav {
-            opacity: 1; /* Always show arrows on mobile */
+            opacity: 1;
             width: 25px;
             height: 25px;
           }
@@ -383,7 +366,7 @@ function ProductDetail({
           
           .carousel-thumbnails {
             gap: 8px;
-            overflow-x: auto; /* Scrollable on mobile */
+            overflow-x: auto;
             display: flex;
           }
           .carousel-thumbnail {
@@ -393,11 +376,12 @@ function ProductDetail({
             padding-bottom: 0;
           }
         }
-          .custom-detail-cursor {
+
+        .custom-detail-cursor {
           position: fixed;
           width: 80px;
           height: 80px;
-          background-color: #1d2c34; /* Dark slate color */
+          background-color: #1d2c34;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -405,20 +389,21 @@ function ProductDetail({
           color: white;
           font-size: 14px;
           font-weight: 500;
-          pointer-events: none; /* Let clicks pass through to the product link */
+          pointer-events: none;
           z-index: 9999;
           transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
           white-space: nowrap;
         }
 
         .product-block:hover {
-          cursor: none; /* Hide default mouse when over products */
+          cursor: none;
         }
 
         @media (max-width: 991px) {
-          .custom-detail-cursor { display: none; } /* Hide on touch devices */
+          .custom-detail-cursor { display: none; }
         }
-        /* ✅ FORCE EMOJI BULLETS & SPACING */
+
+        /* ✅ Description Styles */
         .product-description-content {
           font-size: 16px;
           line-height: 1.7;
@@ -426,9 +411,8 @@ function ProductDetail({
           margin-bottom: 24px;
         }
 
-        /* 1. Target the list items specifically */
         .product-description-content ul {
-          list-style: none !important; /* Turn off default black dots */
+          list-style: none !important;
           padding-left: 0 !important;
           margin-left: 0 !important;
           margin-bottom: 16px;
@@ -436,29 +420,77 @@ function ProductDetail({
 
         .product-description-content li {
           position: relative;
-          padding-left: px; /* Make space for the emoji */
+          padding-left: px;
           margin-bottom: 12px;
-          display: block; /* Ensures they stack correctly */
+          display: block;
         }
 
-        /* 2. INJECT THE EMOJI AUTOMATICALLY */
         .product-description-content li::before {
-          content: "✨";  /* 👈 CHANGE THIS EMOJI to anything (🌿, 💧, ✅) */
+          content: "✨";
           position: absolute;
           left: 0;
           top: 0;
-          font-size: 14px; /* Adjust size if needed */
+          font-size: 14px;
         }
 
-        /* 3. Style Bold Text */
         .product-description-content strong,
         .product-description-content b {
           font-weight: 700;
           color: #1a1a1a;
         }
+
+        /* ✅ FIXED CSS: Added the dot before notification-toast */
+        .notification-toast {
+          position: fixed;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%) translateY(100px);
+          background: #1D2C34;
+          color: #fff;
+          padding: 12px 24px;
+          border-radius: 50px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          z-index: 2147483647;
+          opacity: 0;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          pointer-events: none;
+        }
+
+        .notification-toast.show {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
+
+        .toast-content {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .toast-icon {
+          background: #4CAF50;
+          color: white;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          font-weight: bold;
+        }
+
+        .toast-message {
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+        }
       `}</style>
 
-      {/* ✅ 4. ADDED: The Follow-Cursor Element */}
+      {/* ✅ 4. Follow-Cursor Element */}
       <div 
         className="custom-detail-cursor"
         style={{
@@ -530,7 +562,6 @@ function ProductDetail({
                 </div>
               </div>
 
-              {/* Thumbnails Row */}
               <div className="carousel-thumbnails">
                 {allImages.map((image, index) => (
                   <div
@@ -554,26 +585,16 @@ function ProductDetail({
             <div className="product-right">
               <div>
                 <h2 className="product-main-heading">{product.title}</h2>
-                {/* ✅ Added marginBottom: '4px' to tighten the space below price */}
                 <div className="product-price" style={{ marginBottom: "4px" }}>
                   {product.price}
                 </div>
               </div>
 
-              {/* ✅ Added marginTop: '0px' to pull it up */}
               <div className="product-wrapper" style={{ marginTop: "-40px" }}>
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
                 >
-                  {/* <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    onBlur={handleBlur}
-                    className="w-commerce-commerceaddtocartquantityinput quantity"
-                  /> */}
                   <input
                     type="submit"
                     value="Add to Cart"
@@ -581,18 +602,15 @@ function ProductDetail({
                   />
                 </form>
 
-                {/* <p className="single-text">{product.description}</p> */}
-                {/* ✅ Dynamic Description Logic */}
-                  {product.descriptionHtml ? (
-                    <div 
-                      className="product-description-content"
-                      dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-                    />
-                  ) : (
-                    <p className="single-text">{product.description}</p>
-                  )}
-
-                
+                {product.descriptionHtml ? (
+                  <div 
+                    className="product-description-content"
+                    dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                    style={{ marginTop: "-50px" }}
+                  />
+                ) : (
+                  <p className="single-text">{product.description}</p>
+                )}
 
                 <div className="product-main-data">
                   <div className="product-info top">
@@ -602,7 +620,6 @@ function ProductDetail({
                       <div>{product.category}</div>
                     </div>
                   </div>
-
                   <div className="product-info">
                     <div className="square"></div>
                     <div className="product-data">
@@ -610,7 +627,6 @@ function ProductDetail({
                       <div>{product.sku}</div>
                     </div>
                   </div>
-
                   <div className="product-info last">
                     <div className="square"></div>
                     <div className="product-data">
@@ -621,22 +637,18 @@ function ProductDetail({
                 </div>
 
                 <div className="product-info-wrap">
-                  <div className="product-info-wrap">
                   <div className="product-main-info">
                     <Award size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
                     <div>High-Quality Beauty</div>
                   </div>
-                  
                   <div className="product-main-info">
                     <Gem size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
                     <div>Exclusive Launches</div>
                   </div>
-                  
                   <div className="product-main-info">
                     <Truck size={24} strokeWidth={1.5} style={{ marginBottom: "8px" }} />
                     <div>Easy Shopping</div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
@@ -644,31 +656,36 @@ function ProductDetail({
         </div>
       </section>
 
-{/* ✅ 5. UPDATED: Add hover triggers to similar products list */}
       <section className="products">
         <div className="w-layout-blockcontainer container w-container">
           <h2>Similar Products</h2>
          <div className="product-list">
               {similarProducts.map((p) => (
-                // ✅ Use the new smart component we just made
                 <SimilarProductCard key={p.id} product={p} />
               ))}
             </div>
         </div>
       </section>
+
+      {/* ✅ 6. NOTIFICATION HTML (Moved inside Return) */}
+      <div className={`notification-toast ${showNotification ? 'show' : ''}`}>
+        <div className="toast-content">
+          <div className="toast-icon">✓</div>
+          <div className="toast-message">Product added to cart</div>
+        </div>
+      </div>
+
     </div>
   );
 }
 
 export default ProductDetail;
 
-// ✅ PASTE THIS AT THE VERY BOTTOM OF YOUR FILE
 function SimilarProductCard({ product }: { product: SimilarProduct }) {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Calculate X/Y relative to the card, not the screen
     const rect = e.currentTarget.getBoundingClientRect();
     setPos({
       x: e.clientX - rect.left,
@@ -676,7 +693,7 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
     });
   };
 
-return (
+  return (
     <div className="product-item">
       <Link
         href={`/product/${product.slug}`}
@@ -687,23 +704,20 @@ return (
         style={{ position: "relative", overflow: "hidden", display: "block" }}
       >
         <img src={product.image} alt={product.title} className="product-image" />
-
-        {/* ✅ CHANGED: Text hidden by default, shows on hover */}
         <div
           style={{
-            opacity: isHovering ? 1 : 0,           // Hide (0) or Show (1)
-            transform: isHovering ? "translateY(0)" : "translateY(10px)", // Slide up effect
-            transition: "all 0.3s ease",           // Smooth animation
+            opacity: isHovering ? 1 : 0,
+            transform: isHovering ? "translateY(0)" : "translateY(10px)",
+            transition: "all 0.3s ease",
             marginTop: "12px", 
             textAlign: "center",
-            paddingBottom: "20px",                    // Spacing from image
+            paddingBottom: "20px",
           }}
         >
           <h5>{product.title}</h5>
           <div>{product.price}</div>
         </div>
 
-        {/* The Detail Cursor Circle */}
         <div
           style={{
             position: "absolute",

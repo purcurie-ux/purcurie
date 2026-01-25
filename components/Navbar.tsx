@@ -15,7 +15,7 @@
 //       (webflowButton as HTMLElement).click();
 //     };
 
-//     navLeft.addEventListener("click", handleClick);
+//     navLeft.("click", handleClick);
 
 //     return () => {
 //       navLeft.removeEventListener("click", handleClick);
@@ -2317,71 +2317,176 @@ function CartModal() {
     </>
   );
 }
-// --- NEW COMPONENT: Paste this at the bottom of your file ---
+// ✅ PASTE THIS AT THE BOTTOM OF YOUR FILE (Replaces the old CartItem)
 function CartItem({ item }: { item: any }) {
   const { updateQuantity, removeFromCart } = useCart();
-  
-  // 1. Local state allows typing "empty string" without forcing it to 1
-  const [localQuantity, setLocalQuantity] = useState<string | number>(item.quantity);
+  const [localQuantity, setLocalQuantity] = useState<number>(item.quantity);
 
-  // 2. Sync with real cart data if it changes outside this component
+  // Sync with global cart state
   useEffect(() => {
     setLocalQuantity(item.quantity);
   }, [item.quantity]);
 
-  // 3. Handle Typing (Allows empty "")
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    if (val === "") {
-      setLocalQuantity(""); 
-      return;
-    }
-    const parsed = parseInt(val);
-    if (!isNaN(parsed)) {
-      setLocalQuantity(parsed);
+  const increment = () => {
+    const newQty = localQuantity + 1;
+    setLocalQuantity(newQty);
+    updateQuantity(item.variantId, newQty);
+  };
+
+  const decrement = () => {
+    if (localQuantity > 1) {
+      const newQty = localQuantity - 1;
+      setLocalQuantity(newQty);
+      updateQuantity(item.variantId, newQty);
+    } else {
+      removeFromCart(item.variantId);
     }
   };
 
-  // 4. Handle "Clicking Away" (Saves the data)
-  const handleBlur = () => {
-    const qty = Number(localQuantity);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    const parsed = parseInt(val);
+    
+    if (val === "") {
+      // @ts-ignore
+      setLocalQuantity(""); 
+      return;
+    }
 
-    // 1. If user typed "0", REMOVE the item
-    if (qty === 0) {
-      removeFromCart(item.variantId);
-    } 
-    // 2. If user left it empty or negative (invalid), REVERT to old value
-    else if (localQuantity === "" || qty < 0) {
-      setLocalQuantity(item.quantity);
-    } 
-    // 3. Otherwise, UPDATE the cart with the new number
-    else {
-      updateQuantity(item.variantId, qty);
+    if (!isNaN(parsed) && parsed > 0) {
+      setLocalQuantity(parsed);
+      updateQuantity(item.variantId, parsed);
     }
   };
 
   return (
     <div className="w-commerce-commercecartitem">
-      <img src={item.image} alt={item.title} className="w-commerce-commercecartitemimage" />
+      {/* CSS to hide input spinners */}
+      <style jsx global>{`
+        .no-spinner::-webkit-inner-spin-button, 
+        .no-spinner::-webkit-outer-spin-button { 
+          -webkit-appearance: none; 
+          margin: 0; 
+        }
+        .no-spinner {
+          -moz-appearance: textfield;
+        }
+      `}</style>
+
+      <img
+        src={item.image}
+        alt={item.title}
+        className="w-commerce-commercecartitemimage"
+      />
+      
       <div className="w-commerce-commercecartiteminfo">
         <div className="w-commerce-commercecartproductname">{item.title}</div>
         <div>{item.price}</div>
         <ul className="w-commerce-commercecartoptionlist">
-          <li><span>SKU: </span><span>{item.sku}</span></li>
+          <li>
+            <span>SKU: </span>
+            <span>{item.sku}</span>
+          </li>
         </ul>
-        <a href="#" className="w-inline-block" onClick={(e) => { e.preventDefault(); removeFromCart(item.variantId); }}>
-          <div>Remove</div>
-        </a>
+        
+        {/* 🗑️ UPDATED: Remove Button with bigger font (14px) */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            removeFromCart(item.variantId);
+          }}
+          style={{
+            background: "none",
+            border: "none",
+            padding: "0",
+            marginTop: "8px",
+            fontSize: "14px", // 👈 Changed from 12px to 14px
+            textDecoration: "underline",
+            color: "#555",
+            cursor: "pointer",
+            textAlign: "left"
+          }}
+        >
+          Remove
+        </button>
       </div>
-      {/* The Magic Input */}
-      <input
-        className="w-commerce-commercecartquantity"
-        type="number"
-        value={localQuantity}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
+
+      {/* Quantity Selector */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          border: "1px solid #e5e7eb",
+          borderRadius: "50px",
+          padding: "4px 8px",
+          gap: "8px",
+          height: "36px",
+          backgroundColor: "#fff",
+        }}
+      >
+        <button
+          type="button"
+          onClick={decrement}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            padding: "4px",
+          }}
+        >
+          {localQuantity === 1 ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          )}
+        </button>
+
+        <input
+          className="no-spinner"
+          type="number"
+          value={localQuantity}
+          onChange={handleInputChange}
+          style={{
+            width: "30px",
+            textAlign: "center",
+            border: "none",
+            padding: "0",
+            margin: "0",
+            fontSize: "14px",
+            fontWeight: "600",
+            outline: "none",
+            background: "transparent",
+          }}
+        />
+
+        <button
+          type="button"
+          onClick={increment}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            padding: "4px",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
+
 export default CartModal;
