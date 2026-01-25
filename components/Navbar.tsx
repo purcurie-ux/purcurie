@@ -1876,6 +1876,9 @@
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 
+// =========================================
+// 1. NAVBAR COMPONENT
+// =========================================
 export function Navbar() {
   const { openCart, items } = useCart();
   const [mounted, setMounted] = useState(false);
@@ -1883,6 +1886,7 @@ export function Navbar() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   useEffect(() => {
     const navLeft = document.querySelector(".nav-left");
     const webflowButton = document.querySelector(".menu-button.w-nav-button");
@@ -1928,8 +1932,7 @@ export function Navbar() {
               src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1768757461"
               loading="lazy"
               alt="PurCurie"
-              // 👇 ADD THIS STYLE
-            style={{ height: "40px", width: "auto", objectFit: "contain" }}
+              style={{ height: "40px", width: "auto", objectFit: "contain" }}
             />
           </a>
           <div className="nav-menu-wrap">
@@ -1946,10 +1949,6 @@ export function Navbar() {
             </div>
             <div className="nav-right">
               <div
-                data-open-product=""
-                data-wf-cart-type="modal"
-                data-wf-cart-query=""
-                data-wf-page-link-href-prefix=""
                 className="w-commerce-commercecartwrapper"
                 data-node-type="commerce-cart-wrapper"
               >
@@ -1958,12 +1957,13 @@ export function Navbar() {
                   role="button"
                   aria-haspopup="dialog"
                   aria-label="Open cart"
-                  data-node-type="commerce-cart-open-link"
                   href="#"
                   onClick={handleCartClick}
                 >
-                 <div
-                    style={{ display: mounted && cartCount > 0 ? "block" : "none" }} // ✅ NEW
+                  <div
+                    style={{
+                      display: mounted && cartCount > 0 ? "block" : "none",
+                    }}
                     data-count-hide-rule="empty"
                     className="w-commerce-commercecartopenlinkcount cart-quantity"
                   >
@@ -1975,7 +1975,6 @@ export function Navbar() {
                     alt="Cart Icon"
                   />
                 </a>
-                
               </div>
               <div
                 data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164ae"
@@ -1999,19 +1998,12 @@ export function Navbar() {
             <a href="/product" className="nav-link">
               Shop
             </a>
-            {/* <a href="/blogs" className="nav-link">
-              Blogs
-            </a> */}
             <a href="/contact" className="nav-link last">
               Contact us
             </a>
           </nav>
           <div className="nav-right-mobile">
             <div
-              data-open-product=""
-              data-wf-cart-type="modal"
-              data-wf-cart-query=""
-              data-wf-page-link-href-prefix=""
               className="w-commerce-commercecartwrapper"
               data-node-type="commerce-cart-wrapper"
             >
@@ -2020,12 +2012,13 @@ export function Navbar() {
                 role="button"
                 aria-haspopup="dialog"
                 aria-label="Open cart"
-                data-node-type="commerce-cart-open-link"
                 href="#"
                 onClick={handleCartClick}
               >
-                 <div
-                  style={{ display: mounted && cartCount > 0 ? "block" : "none" }} // ✅ NEW
+                <div
+                  style={{
+                    display: mounted && cartCount > 0 ? "block" : "none",
+                  }}
                   data-count-hide-rule="empty"
                   className="w-commerce-commercecartopenlinkcount cart-quantity"
                 >
@@ -2038,7 +2031,6 @@ export function Navbar() {
                   className="cart-icon"
                 />
               </a>
-              
             </div>
             <div className="menu-button w-nav-button">
               <div className="top-line"></div>
@@ -2048,21 +2040,21 @@ export function Navbar() {
           </div>
         </div>
       </div>
-      {/* ✅ PASTE IT HERE (Only Once) */}
+      
+      {/* CART MODAL */}
       <CartModal />
     </div>
-    
   );
 }
 
-
+// =========================================
+// 2. CART MODAL COMPONENT (Sticky Footer Fixed)
+// =========================================
 function CartModal() {
   const {
     items,
     isOpen,
     closeCart,
-    removeFromCart,
-    updateQuantity,
     subtotal,
     createCheckout,
     isCheckoutLoading,
@@ -2074,30 +2066,13 @@ function CartModal() {
     setMounted(true);
   }, []);
 
-  const handleQuantityChange = (variantId: string, newValue: string) => {
-    const quantity = parseInt(newValue);
-    if (!isNaN(quantity) && quantity >= 0) {
-      updateQuantity(variantId, quantity);
-    }
-  };
-
-  const handleCheckoutClick = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleCheckoutClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
     await createCheckout();
   };
 
-  // Don't render anything during SSR
-  if (!mounted) {
-    return (
-      <div
-        style={{ display: "none" }}
-        className="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal"
-      ></div>
-    );
-  }
+  if (!mounted) return null;
 
   return (
     <>
@@ -2105,10 +2080,7 @@ function CartModal() {
         <div
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            top: 0, left: 0, right: 0, bottom: 0,
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             zIndex: 9998,
           }}
@@ -2119,25 +2091,21 @@ function CartModal() {
       <div
         style={{ display: isOpen ? "flex" : "none", zIndex: 9999 }}
         className="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal"
-        data-node-type="commerce-cart-container-wrapper"
-        data-open={isOpen}
       >
         <div
           data-node-type="commerce-cart-container"
           role="dialog"
           className="w-commerce-commercecartcontainer"
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
         >
-          <div className="w-commerce-commercecartheader">
+          {/* Header */}
+          <div className="w-commerce-commercecartheader" style={{ flexShrink: 0 }}>
             <h4 className="w-commerce-commercecartheading">Your Cart</h4>
             <a
               className="w-commerce-commercecartcloselink w-inline-block"
               role="button"
               aria-label="Close cart"
-              data-node-type="commerce-cart-close-link"
-              onClick={(e) => {
-                e.preventDefault();
-                closeCart();
-              }}
+              onClick={(e) => { e.preventDefault(); closeCart(); }}
               style={{ cursor: "pointer" }}
             >
               <svg width="16px" height="16px" viewBox="0 0 16 16">
@@ -2149,144 +2117,49 @@ function CartModal() {
               </svg>
             </a>
           </div>
-          <div className="w-commerce-commercecartformwrapper">
+
+          {/* Wrapper */}
+          <div
+            className="w-commerce-commercecartformwrapper"
+            style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}
+          >
             {items.length > 0 ? (
               <div
                 className="w-commerce-commercecartform"
                 data-node-type="commerce-cart-form"
+                style={{ height: "100%", display: "flex", flexDirection: "column" }}
               >
+                {/* List - Scrolls */}
                 <div
                   className="w-commerce-commercecartlist"
-                  data-wf-collection="database.commerceOrder.userItems"
-                  data-wf-template-id="wf-template-d3adb6d7-cc56-c118-6985-cf7153b1648a"
+                  style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}
                 >
-                  {/* NEW CODE: Use the component we just made */}
                   {items.map((item) => (
                     <CartItem key={item.variantId} item={item} />
                   ))}
                 </div>
-                <div className="w-commerce-commercecartfooter">
-                  <div
-                    aria-atomic="true"
-                    aria-live="polite"
-                    className="w-commerce-commercecartlineitem"
-                  >
+
+                {/* Footer - Sticky */}
+                <div
+                  className="w-commerce-commercecartfooter"
+                  style={{
+                    flexShrink: 0,
+                    backgroundColor: "#fff",
+                    borderTop: "1px solid #f5f5f5",
+                    position: "relative",
+                    zIndex: 10,
+                  }}
+                >
+                  <div className="w-commerce-commercecartlineitem">
                     <div>Subtotal</div>
                     <div className="w-commerce-commercecartordervalue">
                       ₹ {subtotal} INR
                     </div>
                   </div>
                   <div>
-                    <div
-                      data-node-type="commerce-cart-quick-checkout-actions"
-                      style={{ display: "none" }}
-                    >
-                      <a
-                        data-node-type="commerce-cart-apple-pay-button"
-                        role="button"
-                        aria-label="Apple Pay"
-                        aria-haspopup="dialog"
-                        style={{
-                          backgroundImage:
-                            "-webkit-named-image(apple-pay-logo-white)",
-                          backgroundSize: "100% 50%",
-                          backgroundPosition: "50% 50%",
-                          backgroundRepeat: "no-repeat",
-                        }}
-                        className="w-commerce-commercecartapplepaybutton"
-                        tabIndex={0}
-                      >
-                        <div></div>
-                      </a>
-                      <a
-                        data-node-type="commerce-cart-quick-checkout-button"
-                        role="button"
-                        tabIndex={0}
-                        aria-haspopup="dialog"
-                        style={{ display: "none" }}
-                        className="w-commerce-commercecartquickcheckoutbutton"
-                      >
-                        <svg
-                          className="w-commerce-commercequickcheckoutgoogleicon"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlnsXlink="http://www.w3.org/1999/xlink"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                        >
-                          <defs>
-                            <polygon
-                              id="google-mark-a"
-                              points="0 .329 3.494 .329 3.494 7.649 0 7.649"
-                            ></polygon>
-                            <polygon
-                              id="google-mark-c"
-                              points=".894 0 13.169 0 13.169 6.443 .894 6.443"
-                            ></polygon>
-                          </defs>
-                          <g fill="none" fillRule="evenodd">
-                            <path
-                              fill="#4285F4"
-                              d="M10.5967,12.0469 L10.5967,14.0649 L13.1167,14.0649 C14.6047,12.6759 15.4577,10.6209 15.4577,8.1779 C15.4577,7.6339 15.4137,7.0889 15.3257,6.5559 L7.8887,6.5559 L7.8887,9.6329 L12.1507,9.6329 C11.9767,10.6119 11.4147,11.4899 10.5967,12.0469"
-                            ></path>
-                            <path
-                              fill="#34A853"
-                              d="M7.8887,16 C10.0137,16 11.8107,15.289 13.1147,14.067 C13.1147,14.066 13.1157,14.065 13.1167,14.064 L10.5967,12.047 C10.5877,12.053 10.5807,12.061 10.5727,12.067 C9.8607,12.556 8.9507,12.833 7.8887,12.833 C5.8577,12.833 4.1387,11.457 3.4937,9.605 L0.8747,9.605 L0.8747,11.648 C2.2197,14.319 4.9287,16 7.8887,16"
-                            ></path>
-                            <g transform="translate(0 4)">
-                              <mask id="google-mark-b" fill="#fff">
-                                <use xlinkHref="#google-mark-a"></use>
-                              </mask>
-                              <path
-                                fill="#FBBC04"
-                                d="M3.4639,5.5337 C3.1369,4.5477 3.1359,3.4727 3.4609,2.4757 L3.4639,2.4777 C3.4679,2.4657 3.4749,2.4547 3.4789,2.4427 L3.4939,0.3287 L0.8939,0.3287 C0.8799,0.3577 0.8599,0.3827 0.8459,0.4117 C-0.2821,2.6667 -0.2821,5.3337 0.8459,7.5887 L0.8459,7.5997 C0.8549,7.6167 0.8659,7.6317 0.8749,7.6487 L3.4939,5.6057 C3.4849,5.5807 3.4729,5.5587 3.4639,5.5337"
-                                mask="url(#google-mark-b)"
-                              ></path>
-                            </g>
-                            <mask id="google-mark-d" fill="#fff">
-                              <use xlinkHref="#google-mark-c"></use>
-                            </mask>
-                            <path
-                              fill="#EA4335"
-                              d="M0.894,4.3291 L3.478,6.4431 C4.113,4.5611 5.843,3.1671 7.889,3.1671 C9.018,3.1451 10.102,3.5781 10.912,4.3671 L13.169,2.0781 C11.733,0.7231 9.85,-0.0219 7.889,0.0001 C4.941,0.0001 2.245,1.6791 0.894,4.3291"
-                              mask="url(#google-mark-d)"
-                            ></path>
-                          </g>
-                        </svg>
-                        <svg
-                          className="w-commerce-commercequickcheckoutmicrosofticon"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                        >
-                          <g fill="none" fillRule="evenodd">
-                            <polygon
-                              fill="#F05022"
-                              points="7 7 1 7 1 1 7 1"
-                            ></polygon>
-                            <polygon
-                              fill="#7DB902"
-                              points="15 7 9 7 9 1 15 1"
-                            ></polygon>
-                            <polygon
-                              fill="#00A4EE"
-                              points="7 15 1 15 1 9 7 9"
-                            ></polygon>
-                            <polygon
-                              fill="#FFB700"
-                              points="15 15 9 15 9 9 15 9"
-                            ></polygon>
-                          </g>
-                        </svg>
-                        <div>Pay with browser.</div>
-                      </a>
-                    </div>
                     <button
                       type="button"
                       className="w-commerce-commercecartcheckoutbutton primary-button"
-                      data-loading-text=""
-                      data-node-type="cart-checkout-button"
                       style={{
                         cursor: isCheckoutLoading ? "wait" : "pointer",
                         opacity: isCheckoutLoading ? 0.7 : 1,
@@ -2297,13 +2170,11 @@ function CartModal() {
                       onClick={handleCheckoutClick}
                       disabled={isCheckoutLoading}
                     >
-                      {isCheckoutLoading
-                        ? "Processing..."
-                        : "Continue to Checkout"}
+                      {isCheckoutLoading ? "Processing..." : "Continue to Checkout"}
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> // ✅ THIS CLOSING DIV WAS MISSING IN YOUR CODE!
             ) : (
               <div className="w-commerce-commercecartemptystate">
                 <div aria-label="This cart is empty" aria-live="polite">
@@ -2317,7 +2188,10 @@ function CartModal() {
     </>
   );
 }
-// ✅ PASTE THIS AT THE BOTTOM OF YOUR FILE (Replaces the old CartItem)
+
+// =========================================
+// 3. CART ITEM COMPONENT
+// =========================================
 function CartItem({ item }: { item: any }) {
   const { updateQuantity, removeFromCart } = useCart();
   const [localQuantity, setLocalQuantity] = useState<number>(item.quantity);
@@ -2346,10 +2220,10 @@ function CartItem({ item }: { item: any }) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     const parsed = parseInt(val);
-    
+
     if (val === "") {
       // @ts-ignore
-      setLocalQuantity(""); 
+      setLocalQuantity("");
       return;
     }
 
@@ -2363,10 +2237,10 @@ function CartItem({ item }: { item: any }) {
     <div className="w-commerce-commercecartitem">
       {/* CSS to hide input spinners */}
       <style jsx global>{`
-        .no-spinner::-webkit-inner-spin-button, 
-        .no-spinner::-webkit-outer-spin-button { 
-          -webkit-appearance: none; 
-          margin: 0; 
+        .no-spinner::-webkit-inner-spin-button,
+        .no-spinner::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
         .no-spinner {
           -moz-appearance: textfield;
@@ -2378,7 +2252,7 @@ function CartItem({ item }: { item: any }) {
         alt={item.title}
         className="w-commerce-commercecartitemimage"
       />
-      
+
       <div className="w-commerce-commercecartiteminfo">
         <div className="w-commerce-commercecartproductname">{item.title}</div>
         <div>{item.price}</div>
@@ -2388,8 +2262,8 @@ function CartItem({ item }: { item: any }) {
             <span>{item.sku}</span>
           </li>
         </ul>
-        
-        {/* 🗑️ UPDATED: Remove Button with bigger font (14px) */}
+
+        {/* 🗑️ Remove Button */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -2400,11 +2274,11 @@ function CartItem({ item }: { item: any }) {
             border: "none",
             padding: "0",
             marginTop: "8px",
-            fontSize: "14px", // 👈 Changed from 12px to 14px
+            fontSize: "14px",
             textDecoration: "underline",
             color: "#555",
             cursor: "pointer",
-            textAlign: "left"
+            textAlign: "left",
           }}
         >
           Remove
@@ -2437,13 +2311,31 @@ function CartItem({ item }: { item: any }) {
           }}
         >
           {localQuantity === 1 ? (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M3 6h18" />
               <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
               <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
             </svg>
           ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
           )}
@@ -2479,7 +2371,16 @@ function CartItem({ item }: { item: any }) {
             padding: "4px",
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
@@ -2488,5 +2389,3 @@ function CartItem({ item }: { item: any }) {
     </div>
   );
 }
-
-export default CartModal;

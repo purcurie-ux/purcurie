@@ -21,12 +21,12 @@ function Instagram() {
             className="instagram-img"
           >
             <img
-              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9e9596d5c6c4782859_instagram-01.webp"
+              src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_20_2026_02_06_01_PM_5d526f98-dbea-4fe2-ba42-018bc2e12696.jpg?v=1769159378"
               loading="lazy"
               sizes="100vw"
               srcSet="
                   https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9e9596d5c6c4782859_instagram-01-p-500.webp 500w,
-                  https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9e9596d5c6c4782859_instagram-01.webp       576w
+                  https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_20_2026_02_06_01_PM_5d526f98-dbea-4fe2-ba42-018bc2e12696.jpg?v=1769159378       576w
                 "
               alt="Instagram Image"
               className="instagram-image"
@@ -38,12 +38,12 @@ function Instagram() {
             className="instagram-img"
           >
             <img
-              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9f6caffd9e74a26339_instagram-02.webp"
+              src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_44g14144g14144g1.png?v=1768894588"
               loading="lazy"
               sizes="100vw"
               srcSet="
                   https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9f6caffd9e74a26339_instagram-02-p-500.webp 500w,
-                  https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874da9f6caffd9e74a26339_instagram-02.webp       576w
+                  https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_44g14144g14144g1.png?v=1768894588       576w
                 "
               alt="Instagram Image"
               className="instagram-image"

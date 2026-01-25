@@ -19,6 +19,18 @@ export default function WebflowInit() {
 
     // Needed for some Webflow components
     document.dispatchEvent(new Event("readystatechange"));
+
+    // 🔥 FIX: Force initial scroll event to trigger animations immediately
+    setTimeout(() => {
+      window.dispatchEvent(new Event("scroll"));
+      window.dispatchEvent(new Event("resize"));
+      
+      // Force Webflow to recalculate element positions
+      if (Webflow.require("ix2")) {
+        Webflow.require("ix2").store.dispatch({ type: "IX2_PAGE_UPDATE" });
+      }
+    }, 100);
+
   }, [pathname]);
 
   return null;

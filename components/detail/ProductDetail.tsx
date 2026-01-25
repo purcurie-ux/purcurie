@@ -590,7 +590,7 @@ function ProductDetail({
                 </div>
               </div>
 
-              <div className="product-wrapper" style={{ marginTop: "-40px" }}>
+              <div className="product-wrapper" style={{ marginTop: "-30px" }}>
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
