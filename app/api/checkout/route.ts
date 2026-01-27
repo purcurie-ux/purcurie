@@ -277,9 +277,12 @@ export async function POST(request: Request) {
 
     console.log("LINE ITEMS RECEIVED:", lineItems);
 
-    const domain = process.env.SHOPIFY_DOMAIN!;
-    const token = process.env.SHOPIFY_STOREFRONT_TOKEN!;
-    const version = process.env.SHOPIFY_API_VERSION!;
+    // const domain = process.env.SHOPIFY_DOMAIN!;
+    // const token = process.env.SHOPIFY_STOREFRONT_TOKEN!;
+    // const version = process.env.SHOPIFY_API_VERSION!;
+    const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
+    const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN!;
+    const version = process.env.NEXT_PUBLIC_SHOPIFY_API_VERSION!;
 
     if (!domain || !token || !version) {
       return NextResponse.json(
