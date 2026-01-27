@@ -488,6 +488,8 @@ function ProductDetail({
           font-weight: 500;
           letter-spacing: 0.5px;
         }
+
+        
       `}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
@@ -676,6 +678,7 @@ function ProductDetail({
       </div>
 
     </div>
+    
   );
 }
 
@@ -692,6 +695,7 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
       y: e.clientY - rect.top,
     });
   };
+  
 
   return (
     <div className="product-item">
@@ -717,6 +721,7 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
           <h5>{product.title}</h5>
           <div>{product.price}</div>
         </div>
+   
 
         <div
           style={{
