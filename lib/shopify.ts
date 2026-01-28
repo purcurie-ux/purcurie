@@ -61,3 +61,30 @@ export async function shopifyFetch(query: string, variables = {}) {
   const json = await res.json();
   return json.data;
 }
+// lib/shopify.ts
+
+export async function getLivePrices(variantIds: string[]) {
+  const query = `
+    query getLivePrices($ids: [ID!]!) {
+      nodes(ids: $ids) {
+        ... on ProductVariant {
+          id
+          price {
+            amount
+            currencyCode
+          }
+          product {
+            title
+            featuredImage {
+              url
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  // Ensure 'shopifyFetch' is imported or defined in this file
+  const response = await shopifyFetch(query, { ids: variantIds });
+  return response.nodes;
+}
