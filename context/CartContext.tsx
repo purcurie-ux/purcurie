@@ -320,7 +320,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getLivePrices } from "@/lib/shopify";
 
 interface CartItem {
   variantId: string;
@@ -397,48 +396,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setIsMounted(true);
   }, []);
 
-  
-  useEffect(() => {
-    async function refreshPrices() {
-      // If cart is empty, do nothing
-      if (items.length === 0) return;
-
-      // Get all variant IDs currently in the cart
-      const variantIds = items.map((item) => item.variantId);
-
-      try {
-        // Fetch the REAL data from Shopify
-        const freshData = await getLivePrices(variantIds);
-
-        // Update the state with new prices
-        setItems((currentItems) => {
-          return currentItems.map((oldItem) => {
-            // Find the matching fresh item
-            const freshItem = freshData.find((f: any) => f?.id === oldItem.variantId);
-            
-            if (freshItem) {
-              return {
-                ...oldItem,
-                price: freshItem.price.amount, // 👈 Updates the price!
-                // title: freshItem.product.title, // Optional: Update title if changed
-                // image: freshItem.product.featuredImage?.url || oldItem.image, // Optional: Update image
-              };
-            }
-            return oldItem;
-          });
-        });
-      } catch (error) {
-        console.error("Failed to refresh cart prices:", error);
-      }
-    }
-
-    if (isMounted) {
-      refreshPrices();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMounted]); 
-
-  // Save cart to storage whenever items change (This saves the NEW prices automatically)
+  // Save cart to storage whenever items change
   useEffect(() => {
     if (isMounted) {
       saveToStorage(items);
