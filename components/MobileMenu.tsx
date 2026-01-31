@@ -29,6 +29,15 @@ export function MobileMenu() {
           <a href="/contact" className="nav-link">
             Contact us
           </a>
+          <a 
+            href="https://shopify.com/98468430146/account" 
+            className="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Login
+          </a>
+
         </div>
       </div>
       <div className="nav-bottom">

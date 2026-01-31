@@ -1875,6 +1875,7 @@
 
 import { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { User } from "lucide-react";
 
 // =========================================
 // 1. NAVBAR COMPONENT
@@ -1948,6 +1949,18 @@ export function Navbar() {
               <div>Menu</div>
             </div>
             <div className="nav-right">
+              {/* Add Account/Login Icon Here */}
+      <a 
+              href="https://shopify.com/98468430146/account" 
+              className="w-commerce-commercecartopenlink cart-button desktop w-inline-block"
+              target="_blank"
+              rel="noopener noreferrer"
+                // style={{ marginRight: '0px', marginLeft: '0px' }}  // Add marginLeft here
+              >
+                <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <User size={20} strokeWidth={1.5} color="#1D2C34" />
+                </div>
+              </a>
               <div
                 className="w-commerce-commercecartwrapper"
                 data-node-type="commerce-cart-wrapper"
@@ -2000,13 +2013,34 @@ export function Navbar() {
             </a>
             <a href="/contact" className="nav-link last">
               Contact us
+            <a 
+              href="https://shopify.com/98468430146/account" 
+              className="nav-link login-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Login
+            </a>
+
             </a>
           </nav>
           <div className="nav-right-mobile">
             <div
               className="w-commerce-commercecartwrapper"
               data-node-type="commerce-cart-wrapper"
+              style={{display: 'flex', gap: '6px'}}
             >
+              <a 
+              href="https://shopify.com/98468430146/account" 
+              className="w-commerce-commercecartopenlink cart-button w-inline-block"
+              target="_blank"
+              rel="noopener noreferrer"
+                // style={{ marginRight: '0px', marginLeft: '0px' }}  // Add marginLeft here
+              >
+                <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <User size={20} strokeWidth={1.5} color="#1D2C34" />
+                </div>
+              </a>
               <a
                 className="w-commerce-commercecartopenlink cart-button w-inline-block"
                 role="button"

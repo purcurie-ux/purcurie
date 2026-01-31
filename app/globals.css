@@ -8423,3 +8423,27 @@ blockquote {
     max-height: 35px;
   }
 }
+
+@media (max-width: 991px) {
+  .w-nav-menu .nav-link {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .login-link {
+    margin-top: 20px;
+    position: relative;
+  }
+
+  .login-link::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+  }
+}
+
+
