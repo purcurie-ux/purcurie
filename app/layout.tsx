@@ -41,7 +41,7 @@ import { Navbar } from "@/components/Navbar";
 import WebflowInit from "@/components/WebflowInit";
 import WebflowPageId from "@/components/WebflowPageId";
 import { CartProvider } from "@/context/CartContext";
-
+import ScrollTrigger from "@/components/ui/ScrollTrigger";
 
 export const metadata: Metadata = {
   title: "PurCurie | Pure Care For Skin",
@@ -85,9 +85,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      data-wf-domain="glamz-template.webflow.io"
+      // data-wf-domain="glamz-template.webflow.io"
       // data-wf-page="686f439ee34b78f814ae2df2"
-      data-wf-site="686f439ee34b78f814ae2de2"
+      // data-wf-site="686f439ee34b78f814ae2de2"
     >
       {/* ------------------------- */}
       {/*         HEAD AREA          */}
@@ -112,7 +112,7 @@ export default function RootLayout({
         </Script>
 
         {/* Webflow Currency Settings */}
-        <Script id="webflow-currency" strategy="beforeInteractive">
+        {/* <Script id="webflow-currency" strategy="beforeInteractive">
           {`
             window.__WEBFLOW_CURRENCY_SETTINGS = {
               currencyCode: "USD",
@@ -125,13 +125,14 @@ export default function RootLayout({
               hideDecimalForWholeNumbers: false,
             };
           `}
-        </Script>
+        </Script> */}
       </head>
 
       {/* ------------------------- */}
       {/*         BODY AREA         */}
       {/* ------------------------- */}
       <body>
+        <ScrollTrigger />
         <WebflowPageId />
         <WebflowInit />
         <CartProvider>
