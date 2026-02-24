@@ -439,28 +439,30 @@ function ProductDetail({
           color: #1a1a1a;
         }
 
-        /* ✅ FIXED CSS: Added the dot before notification-toast */
+        /* ✅ FORCE ONE LINE CSS */
         .notification-toast {
           position: fixed;
           bottom: 30px;
           left: 50%;
-          transform: translateX(-50%) translateY(100px);
+          transform: translateX(-50%) translateY(100px); /* Start hidden below */
           background: #1D2C34;
           color: #fff;
           padding: 12px 24px;
           border-radius: 50px;
           box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-          display: flex;
-          align-items: center;
-          gap: 12px;
           z-index: 2147483647;
           opacity: 0;
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           pointer-events: none;
+          
+          /* CRITICAL FIXES FOR ONE LINE */
+          width: auto;            /* Let content define width */
+          max-width: 90%;         /* Prevent touching screen edges */
+          white-space: nowrap;    /* 1. Never let text wrap */
         }
 
         .notification-toast.show {
-          transform: translateX(-50%) translateY(0);
+          transform: translateX(-50%) translateY(0); /* Animate to visible */
           opacity: 1;
         }
 
@@ -468,28 +470,27 @@ function ProductDetail({
           display: flex;
           align-items: center;
           gap: 10px;
-        }
-
-        .toast-icon {
-          background: #4CAF50;
-          color: white;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 12px;
-          font-weight: bold;
+          flex-wrap: nowrap;      /* 2. Force items to stay in a row */
+          width: 100%;
         }
 
         .toast-message {
           font-size: 14px;
           font-weight: 500;
           letter-spacing: 0.5px;
+          white-space: nowrap;    /* 3. Double insurance for text */
         }
 
-        
+        /* Mobile Adjustment */
+        @media (max-width: 480px) {
+          .notification-toast {
+            padding: 10px 16px;   /* Reduce padding slightly on small screens */
+            bottom: 80px;         /* Move up slightly to avoid bottom bars */
+          }
+          .toast-message {
+            font-size: 13px;      /* Slightly smaller text to fit better */
+          }
+        }
       `}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
@@ -658,7 +659,8 @@ function ProductDetail({
         </div>
       </section>
 
-      <section className="products">
+ {/* similar product enable it later */}
+      {/* <section className="products">
         <div className="w-layout-blockcontainer container w-container">
           <h2>Similar Products</h2>
          <div className="product-list">
@@ -667,7 +669,7 @@ function ProductDetail({
               ))}
             </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ✅ 6. NOTIFICATION HTML (Moved inside Return) */}
       <div className={`notification-toast ${showNotification ? 'show' : ''}`}>
