@@ -593,10 +593,11 @@ function ProductDetail({
                 </div>
               </div>
 
-              <div className="product-wrapper" style={{ marginTop: "-30px" }}>
+              <div className="product-wrapper" style={{ marginTop: "1px" }}>
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
+              
                 >
                   <input
                     type="submit"
@@ -609,7 +610,8 @@ function ProductDetail({
                   <div 
                     className="product-description-content"
                     dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-                    style={{ marginTop: "-50px" }}
+                    style={{ marginTop: "1px" }}
+                    
                   />
                 ) : (
                   <p className="single-text">{product.description}</p>
