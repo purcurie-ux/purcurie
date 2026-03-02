@@ -122,6 +122,9 @@ function ProductDetail({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const allImages = Array.from(new Set([product.mainImage, ...product.moreImages.map(img => img.url)]));
+  const [coupon, setCoupon] = useState("");
+  const [couponStatus, setCouponStatus] = useState("");
+  const [isBuyNowLoading, setIsBuyNowLoading] = useState(false);
 
   // ✅ Effects
   useEffect(() => {
@@ -168,9 +171,25 @@ function ProductDetail({
     );
   };
 
-  const handleAddToCart = (e: React.FormEvent) => {
+  const handleAddToCart = async (e: React.FormEvent) => {
     e.preventDefault();
     const finalQuantity = typeof quantity === 'number' ? quantity : 1;
+
+      // 1. Apply the discount to Shopify's backend first
+    if (coupon.trim() !== "") {
+      try {
+        await fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            update: { discount: coupon.toUpperCase() }
+          })
+        });
+        localStorage.setItem('active_coupon', coupon.toUpperCase());
+      } catch (err) {
+        console.error("Failed to sync coupon", err);
+      }
+    }
 
     for (let i = 0; i < finalQuantity; i++) {
       addToCart({
@@ -594,6 +613,70 @@ function ProductDetail({
               </div>
 
               <div className="product-wrapper" style={{ marginTop: "1px" }}>
+            <div style={{ marginBottom: "1px" }}>
+            <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34", display: "block", marginBottom: "8px" }}>
+              HAVE AN INFLUENCER CODE?
+            </label>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input
+                type="text"
+                placeholder="Enter code here..."
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: "10px 12px",
+                  border: "1px solid #e5e5e5",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+                  outline: "none",
+                  textTransform: "uppercase"
+                }}
+              />
+              <button
+                type="button"
+                                // 1. Update the Apply button logic to use your Cart Context
+                onClick={() => {
+                const inputCode = coupon.trim().toUpperCase(); // Converts input to uppercase for checking
+                
+                if (!inputCode) return;
+
+                // Add your influencer codes to this list (keep them ALL CAPS here)
+                const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
+
+                setCouponStatus("Verifying...");
+
+                setTimeout(() => {
+                  if (validCodes.includes(inputCode)) {
+                    // It's a match!
+                    localStorage.setItem('active_coupon', inputCode);
+                    setCouponStatus("✅ Applied! Your discount is ready.");
+                  } else {
+                    // Not in the list
+                    setCouponStatus("❌ Invalid code. Please check and try again.");
+                    localStorage.removeItem('active_coupon'); // Clear any old codes
+                  }
+                }, 600);
+              }}
+                style={{
+                  padding: "10px 16px",
+                  backgroundColor: "#1D2C34",
+                  color: "white",
+                  borderRadius: "4px",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  cursor: "pointer"
+                }}
+              >
+                APPLY
+              </button>
+            </div>
+            {couponStatus && (
+              <p style={{ fontSize: "12px", marginTop: "6px", color: couponStatus.includes('✅') ? "green" : "red" }}>
+                {couponStatus}
+              </p>
+            )}
+          </div>
                 <form
                   className="w-commerce-commerceaddtocartform default-state"
                   onSubmit={handleAddToCart}
@@ -605,7 +688,7 @@ function ProductDetail({
                     className="w-commerce-commerceaddtocartbutton add-to-cart-button"
                   />
                 </form>
-
+                
                 {product.descriptionHtml ? (
                   <div 
                     className="product-description-content"

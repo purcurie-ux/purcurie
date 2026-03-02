@@ -461,9 +461,23 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       });
 
       const data = await response.json();
+      
       if (data.checkoutUrl) {
         setCheckoutUrl(data.checkoutUrl);
-        window.location.href = data.checkoutUrl;
+        
+        // --- NEW INFLUENCER CODE LOGIC ---
+        const savedCode = localStorage.getItem('active_coupon');
+        let finalUrl = data.checkoutUrl;
+
+        if (savedCode && savedCode.trim() !== "") {
+          // Add the discount parameter to the Shopify URL
+          const separator = finalUrl.includes('?') ? '&' : '?';
+          finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
+        }
+        
+        // Redirect to the final URL (with discount if it exists)
+        window.location.href = finalUrl;
+        // --- END LOGIC ---
       }
     } catch (error) {
       console.error("Error creating checkout:", error);
