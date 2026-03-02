@@ -343,18 +343,17 @@ interface CartContextType {
   checkoutUrl: string | null;
   createCheckout: () => Promise<void>;
   isCheckoutLoading: boolean;
+  buyNow: (item: Omit<CartItem, "quantity">) => Promise<void>;  // ✅ NEW
+  buyNowLoading: boolean;                                        // ✅ NEW
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-
 const CART_STORAGE_KEY = "shopping-cart-items";
 
-// Storage helper functions
 const saveToStorage = (items: CartItem[]) => {
   try {
     if (typeof window !== "undefined") {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-      console.log("Cart saved to localStorage:", items);
     }
   } catch (error) {
     console.error("Error saving to storage:", error);
@@ -365,11 +364,7 @@ const loadFromStorage = (): CartItem[] => {
   try {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem(CART_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        console.log("Cart loaded from localStorage:", parsed);
-        return parsed;
-      }
+      if (saved) return JSON.parse(saved);
     }
   } catch (error) {
     console.error("Error loading from storage:", error);
@@ -378,46 +373,32 @@ const loadFromStorage = (): CartItem[] => {
 };
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // Initialize with a function to avoid hydration mismatch
   const [items, setItems] = useState<CartItem[]>(() => {
-    // Only load from storage on client side
-    if (typeof window !== "undefined") {
-      return loadFromStorage();
-    }
+    if (typeof window !== "undefined") return loadFromStorage();
     return [];
   });
   const [isOpen, setIsOpen] = useState(false);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [buyNowLoading, setBuyNowLoading] = useState(false); // ✅ NEW
   const [isMounted, setIsMounted] = useState(false);
 
-  // Set mounted flag after hydration
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  useEffect(() => { setIsMounted(true); }, []);
 
-  // Save cart to storage whenever items change
   useEffect(() => {
-    if (isMounted) {
-      saveToStorage(items);
-    }
+    if (isMounted) saveToStorage(items);
   }, [items, isMounted]);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {
-      const existingItem = prevItems.find(
-        (i) => i.variantId === item.variantId
-      );
+      const existingItem = prevItems.find((i) => i.variantId === item.variantId);
       if (existingItem) {
         return prevItems.map((i) =>
-          i.variantId === item.variantId
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
+          i.variantId === item.variantId ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
       return [...prevItems, { ...item, quantity: 1 }];
     });
-    // setIsOpen(true); - removed for pop up cart behavior
   };
 
   const removeFromCart = (variantId: string) => {
@@ -425,10 +406,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQuantity = (variantId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(variantId);
-      return;
-    }
+    if (quantity <= 0) { removeFromCart(variantId); return; }
     setItems((prevItems) =>
       prevItems.map((i) => (i.variantId === variantId ? { ...i, quantity } : i))
     );
@@ -454,36 +432,58 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const response = await fetch("/api/checkout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lineItems }),
       });
 
       const data = await response.json();
-      
+
       if (data.checkoutUrl) {
         setCheckoutUrl(data.checkoutUrl);
-        
-        // --- NEW INFLUENCER CODE LOGIC ---
-        const savedCode = localStorage.getItem('active_coupon');
+        const savedCode = localStorage.getItem("active_coupon");
         let finalUrl = data.checkoutUrl;
-
         if (savedCode && savedCode.trim() !== "") {
-          // Add the discount parameter to the Shopify URL
-          const separator = finalUrl.includes('?') ? '&' : '?';
+          const separator = finalUrl.includes("?") ? "&" : "?";
           finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
         }
-        
-        // Redirect to the final URL (with discount if it exists)
         window.location.href = finalUrl;
-        // --- END LOGIC ---
       }
     } catch (error) {
       console.error("Error creating checkout:", error);
       alert("Failed to create checkout. Please try again.");
     } finally {
       setIsCheckoutLoading(false);
+    }
+  };
+
+  // ✅ NEW — Buy Now: bypasses cart, direct checkout with qty 1
+  const buyNow = async (item: Omit<CartItem, "quantity">) => {
+    setBuyNowLoading(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lineItems: [{ variantId: item.variantId, quantity: 1 }],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.checkoutUrl) {
+        const savedCode = localStorage.getItem("active_coupon");
+        let finalUrl = data.checkoutUrl;
+        if (savedCode?.trim()) {
+          const separator = finalUrl.includes("?") ? "&" : "?";
+          finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
+        }
+        window.location.href = finalUrl;
+      }
+    } catch (error) {
+      console.error("Buy Now error:", error);
+      alert("Failed to proceed. Please try again.");
+    } finally {
+      setBuyNowLoading(false);
     }
   };
 
@@ -501,6 +501,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         checkoutUrl,
         createCheckout,
         isCheckoutLoading,
+        buyNow,        // ✅ NEW
+        buyNowLoading, // ✅ NEW
       }}
     >
       {children}

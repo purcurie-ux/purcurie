@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
-import { ChevronLeft, ChevronRight, Award, Gem, Truck } from "lucide-react";
+import { ChevronLeft, ChevronRight, Award, Gem, Truck, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 interface MoreImage {
@@ -105,7 +105,7 @@ function ProductDetail({
   product = defaultProduct,
   similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
-  const { addToCart } = useCart();
+  const { addToCart, buyNow, buyNowLoading } = useCart();
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -124,7 +124,7 @@ function ProductDetail({
   const allImages = Array.from(new Set([product.mainImage, ...product.moreImages.map(img => img.url)]));
   const [coupon, setCoupon] = useState("");
   const [couponStatus, setCouponStatus] = useState("");
-  const [isBuyNowLoading, setIsBuyNowLoading] = useState(false);
+
 
   // ✅ Effects
   useEffect(() => {
@@ -134,6 +134,26 @@ function ProductDetail({
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+ const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // 1. Add the item to the cart
+    const finalQuantity = typeof quantity === 'number' ? quantity : 1;
+    for (let i = 0; i < finalQuantity; i++) {
+      addToCart({
+        variantId: product.skuId,
+        productId: product.productId,
+        title: product.title,
+        price: product.price,
+        image: product.mainImage,
+        sku: product.sku,
+      });
+    }
+
+    // 2. Immediately go to the cart page
+    window.location.href = "/cart"; 
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -510,6 +530,67 @@ function ProductDetail({
             font-size: 13px;      /* Slightly smaller text to fit better */
           }
         }
+          /* ✅ ACTION BUTTON STYLES (Sleek & Smaller) */
+        .action-buttons-container {
+          display: flex;
+          gap: 12px;
+          margin-bottom: 30px;
+          max-width: 450px; /* Prevents them from getting huge on desktop */
+        }
+
+        .btn-custom {
+          flex: 1; /* Makes both buttons equal width */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          height: 56px; /* Reduced height so it's not too big */
+          border-radius: 30px; /* Pill shape from your screenshot */
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border: none;
+        }
+
+        /* Dark "Add to Cart" Button */
+        .btn-add {
+          background-color: #1d2c34; 
+          color: white;
+        }
+        .btn-add:hover {
+          background-color: #CDDFE7;
+          color:#1d2c34;
+          border: 2px solid #1d2c34 !important;
+        }
+
+        /* Outline "Buy Now" Button */
+        .btn-buy {
+          background-color:#f6be80;
+          color: #1d2c34;
+          
+        }
+        .btn-buy:hover {
+          background-color:  #CDDFE7;
+          color:#1d2c34;
+          border: 2px solid #1d2c34 !important;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+          .action-buttons-container {
+            flex-direction: column !important; 
+            gap: 12px !important; 
+          }
+          .btn-custom {
+            width: 100% !important; 
+            flex: none !important; /* ✅ Stops flexbox from squishing the height */
+            height: 56px !important; 
+            min-height: 56px !important; /* ✅ Locks the height in place */
+            font-size: 14px !important; 
+          }
+        }
       `}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
@@ -615,7 +696,7 @@ function ProductDetail({
               <div className="product-wrapper" style={{ marginTop: "1px" }}>
             <div style={{ marginBottom: "1px" }}>
             <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34", display: "block", marginBottom: "8px" }}>
-              HAVE AN INFLUENCER CODE?
+              HAVE A DISCOUNT CODE?
             </label>
             <div style={{ display: "flex", gap: "8px" }}>
               <input
@@ -677,17 +758,35 @@ function ProductDetail({
               </p>
             )}
           </div>
-                <form
-                  className="w-commerce-commerceaddtocartform default-state"
-                  onSubmit={handleAddToCart}
-              
-                >
-                  <input
-                    type="submit"
-                    value="Add to Cart"
-                    className="w-commerce-commerceaddtocartbutton add-to-cart-button"
-                  />
-                </form>
+               {/* ✅ SLEEK ACTION BUTTONS (With Working Logic) */}
+                <div className="action-buttons-container">
+                  <button onClick={handleAddToCart} className="btn-custom btn-add">
+                    <ShoppingCart size={18} strokeWidth={2} />
+                    ADD TO CART
+                  </button>
+                  
+                  {/* 👇 FIXED: Using your exact working buyNow function */}
+                  <button 
+                    onClick={() =>
+                      buyNow({
+                        variantId: product.skuId,
+                        productId: product.productId,
+                        title: product.title,
+                        price: product.price,
+                        image: product.mainImage,
+                        sku: product.sku,
+                      })
+                    }
+                    disabled={buyNowLoading}
+                    className="btn-custom btn-buy"
+                    style={{ 
+                      cursor: buyNowLoading ? "not-allowed" : "pointer",
+                      opacity: buyNowLoading ? 0.7 : 1 
+                    }}
+                  >
+                    {buyNowLoading ? "PURCHASING..." : "BUY NOW"}
+                  </button>
+                </div>
                 
                 {product.descriptionHtml ? (
                   <div 
