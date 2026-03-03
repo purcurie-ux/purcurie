@@ -3266,6 +3266,11 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  
 
   useEffect(() => {
     setMounted(true);
@@ -3317,10 +3322,40 @@ export function Navbar() {
     };
   }, [isDesktop, isMenuOpen]);
 
+  useEffect(() => {
+  if (!isSearchOpen) return;
+
+  const handleClickOutside = (event: MouseEvent) => {
+    const searchEl = document.querySelector('.search-open') as HTMLElement;
+    if (searchEl && !searchEl.contains(event.target as Node)) {
+      closeSearch(false);
+    }
+  };
+
+  const timer = setTimeout(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+  }, 100);
+
+  return () => {
+    clearTimeout(timer);
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isSearchOpen]);
+
   const handleCartClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     openCart();
   };
+
+ const openSearch = () => {
+  setIsSearchOpen(true);
+  setTimeout(() => searchInputRef.current?.focus(), 50);
+};
+
+const closeSearch = (clearQuery = true) => {
+  setIsSearchOpen(false);
+  if (clearQuery) setSearchQuery("");
+};
 
   const cartCount = items.reduce((total, item) => total + item.quantity, 0);
 
@@ -3576,15 +3611,17 @@ export function Navbar() {
                 </div>
                 {/* Search */}
                 <div
-                  data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164ae"
-                  className="search-icon"
-                >
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
-                    loading="lazy"
-                    alt="Search Icon"
-                  />
-                </div>
+                data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164ae"
+                className="search-icon"
+                style={{ cursor: "pointer" }}
+                onClick={openSearch}
+              >
+                <img
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
+                  loading="lazy"
+                  alt="Search Icon"
+                />
+              </div>
               </div>
             </div>
             {/* Webflow's nav menu - for mobile */}
@@ -3660,6 +3697,57 @@ export function Navbar() {
             </div>
           </div>
         </div>
+
+        {/* Search Bar - mirrors Webflow's exact structure */}
+<div
+  className="search-open"
+style={{
+  display: "block",
+  transform: isSearchOpen
+    ? "translate3d(0px, 0%, 0px)"
+    : "translate3d(0px, -100%, 0px)",
+  transformStyle: "preserve-3d",
+  transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+  willChange: "transform",
+}}
+>
+  <form
+    action="/search"
+    className="searchbar w-form"
+    onSubmit={(e) => {
+      e.preventDefault();
+      if (searchQuery.trim()) {
+        window.location.href = `/search?query=${encodeURIComponent(searchQuery.trim())}`;
+        closeSearch();
+      }
+    }}
+  >
+    <input
+      ref={searchInputRef}
+      className="search-input w-input"
+      maxLength={256}
+      placeholder="Search Here..."
+      id="search"
+      required
+      type="search"
+      name="query"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+    />
+    <input className="d-none w-button" type="submit" value="Search" />
+    <div
+      data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164f9"
+      onClick={() => closeSearch(true)} // ← clears query on X button
+      style={{ cursor: "pointer" }}
+    >
+      <img
+        loading="lazy"
+        alt="Close Icon"
+        src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f7b22b344fca339adf748_ic-close.svg"
+      />
+    </div>
+  </form>
+</div>
         
         {/* CART MODAL */}
         <CartModal />
