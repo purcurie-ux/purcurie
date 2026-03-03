@@ -138,8 +138,9 @@ export default function RootLayout({
         <CartProvider>
           <Navbar />
           {children}
+          <Footer />
         </CartProvider>
-        <Footer />
+      
 
         {/* jQuery (Required by Webflow) */}
         <Script

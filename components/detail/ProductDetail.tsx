@@ -105,6 +105,7 @@ function ProductDetail({
   product = defaultProduct,
   similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
+  
   const { addToCart, buyNow, buyNowLoading } = useCart();
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -534,7 +535,7 @@ function ProductDetail({
         .action-buttons-container {
           display: flex;
           gap: 12px;
-          margin-bottom: 30px;
+          margin-bottom: 5px;
           max-width: 450px; /* Prevents them from getting huge on desktop */
         }
 
