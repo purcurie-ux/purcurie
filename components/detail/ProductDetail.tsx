@@ -5,6 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { ChevronLeft, ChevronRight, Award, Gem, Truck, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
+
 interface MoreImage {
   url: string;
 }
@@ -167,6 +168,21 @@ function ProductDetail({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [allImages.length]);
+
+useEffect(() => {
+  const refreshJunip = () => {
+    if (window.Junip && typeof window.Junip.init === 'function') {
+      window.Junip.init();
+    }
+  };
+
+  // Run immediately
+  refreshJunip();
+  
+  // Also run after a tiny delay to catch the script if it's slow
+  const timer = setTimeout(refreshJunip, 500);
+  return () => clearTimeout(timer);
+}, [product.productId]);
 
   // ✅ Handlers
   const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
@@ -689,6 +705,13 @@ function ProductDetail({
             <div className="product-right">
               <div>
                 <h2 className="product-main-heading">{product.title}</h2>
+                {/* ✅ ADD THIS: Junip Star Ratings */}
+                <div style={{ marginBottom: "12px" }}>
+                  <span 
+                    className="junip-product-summary" 
+                    data-product-id={product.productId.split('/').pop()}
+                  ></span>
+                </div>
                 <div className="product-price" style={{ marginBottom: "4px" }}>
                   {product.price}
                 </div>
@@ -855,6 +878,25 @@ function ProductDetail({
             </div>
         </div>
       </section> */}
+  
+      {/* ✅ REPLACED: Junip Review Section */}
+    <section style={{ padding: "60px 0", borderTop: "1px solid #eee" }}>
+      <div className="w-layout-blockcontainer container w-container">
+        
+        {/* 1. Required Store Key Tag */}
+        <span 
+          className="junip-store-key"
+          data-store-key={process.env.NEXT_PUBLIC_JUNIP_STORE_KEY}
+        ></span>
+          
+        {/* 2. Main Review Widget */}
+        <div 
+          className="junip-product-review" 
+          data-product-id={product.productId.split('/').pop()}
+        ></div>
+
+      </div>
+    </section>
 
       {/* ✅ 6. NOTIFICATION HTML (Moved inside Return) */}
       <div className={`notification-toast ${showNotification ? 'show' : ''}`}>
@@ -864,6 +906,7 @@ function ProductDetail({
         </div>
       </div>
 
+        
     </div>
     
   );

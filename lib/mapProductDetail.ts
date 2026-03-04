@@ -47,10 +47,12 @@ export function mapProductDetail(shopifyProduct: any) {
   const collection = shopifyProduct.collections.edges[0]?.node;
 
   const product = {
+    id: shopifyProduct.id,            // ✅ ADD THIS: Components expect 'id
     mainImage: images[0]?.url || "",
     mainImageSrcset: images[0]?.url || "",
     moreImages: images.map((img: any) => ({ url: img.url })),
     title: shopifyProduct.title,
+    handle: shopifyProduct.handle,    // ✅ Ensure this is here for routing
     price: `₹ ${parseFloat(variant?.price.amount).toFixed(2)} ${
       variant?.price.currencyCode
     }`,

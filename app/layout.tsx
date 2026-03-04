@@ -140,6 +140,12 @@ export default function RootLayout({
           {children}
           <Footer />
         </CartProvider>
+
+        {/* --- JUNIP SCRIPT --- */}
+        <Script 
+          src="https://widgets.juniphq.com/v1/junip_shopify.js" 
+          strategy="afterInteractive" 
+        />
       
 
         {/* jQuery (Required by Webflow) */}

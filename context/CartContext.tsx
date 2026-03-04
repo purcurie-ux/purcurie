@@ -554,6 +554,7 @@ interface CartContextType {
   discountedTotal: string | null;
   isValidatingCode: boolean;
   applyDiscount: () => Promise<void>;
+  removeDiscount: () => void; // ✅ ADD THIS
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -669,6 +670,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     await runValidation(discountCode, items);
+  };
+
+  // ✅ NEW: Remove Discount Function
+  const removeDiscount = () => {
+    setDiscountCode("");
+    setDiscountedTotal(null);
+    setDiscountError("");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("active_coupon");
+    }
   };
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
@@ -790,6 +801,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         discountedTotal,
         isValidatingCode,
         applyDiscount,
+        removeDiscount, // ✅ ADD THIS HERE
       }}
     >
       {children}
