@@ -171,6 +171,7 @@ function ProductDetail({
 
 useEffect(() => {
   const refreshJunip = () => {
+    const anyWindow = window as any;
     if (window.Junip && typeof window.Junip.init === 'function') {
       window.Junip.init();
     }
