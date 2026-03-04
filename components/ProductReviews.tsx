@@ -22,7 +22,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
     const script = document.createElement("script");
     script.src = "https://cdn.junip.co/embed/junip.js";
     script.async = true;
-    script.setAttribute("data-store-key", process.env.NEXT_PUBLIC_JUNIP_STORE_KEY);
+    script.setAttribute("data-store-key", "VGJJNexQKKsvYqvs4sAL5sNL");
     script.onload = () => {
       setTimeout(initJunip, 100);
     };
