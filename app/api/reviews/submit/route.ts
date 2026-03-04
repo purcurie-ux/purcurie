@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         shop_domain: process.env.NEXT_PUBLIC_JUDGEME_SHOP_DOMAIN,
         platform: "shopify",
-        id: cleanId,
+        id: numericId,
         name,
         email,
         rating,
