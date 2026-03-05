@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { User } from "lucide-react";
 
 export function Navbar() {
-  const { openCart, items, clearCart } = useCart();
+  const { openCart, items, } = useCart();
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
