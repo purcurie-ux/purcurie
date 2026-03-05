@@ -129,7 +129,7 @@ useEffect(() => {
       }
     };
 
-    const timer = setTimeout(checkOrder, 2000);
+    const timer = setTimeout(checkOrder, 1500);
     return () => clearTimeout(timer);
   } else {
     sessionStorage.removeItem("purcurie_checkout_time");
