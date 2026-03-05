@@ -18,27 +18,17 @@ export function Navbar() {
 useEffect(() => {
   if (!mounted) return;
 
-  // 1. Check for success indicators in the URL
-  const urlParams = new URLSearchParams(window.location.search);
+  // 1. Check the Referrer (The page the user just came from)
+  const previousPage = document.referrer;
   
-  // Shopify standard return parameters or a custom success path
-  const hasSuccessPath = window.location.pathname.includes("success");
-  const hasThankYouParam = urlParams.get("thank_you") === "true" || urlParams.get("status") === "success";
-  
-  // 2. Check the Referrer (Critical if parameters are missing)
-  const cameFromShopify = document.referrer.includes("checkout.shopify.com") || 
-                          document.referrer.includes("/checkout") ||
-                          document.referrer.includes("pay.shopify.com");
+  // 2. Identify if they just finished the Purcurie checkout
+  const isComingFromSuccess = previousPage.includes("/thank-you") || 
+                               previousPage.includes("/orders/");
 
-  // 3. Trigger clear for the Purcurie cart
-  if ((hasSuccessPath || hasThankYouParam || cameFromShopify) && items.length > 0) {
-    console.log("Success detected. Clearing Purcurie cart..."); // Updated name
+  // 3. Trigger clear only if they came from the success screen
+  if (isComingFromSuccess && items.length > 0) {
+    console.log("Purcurie purchase confirmed via referrer. Clearing cart...");
     clearCart();
-    
-    // 4. Clean the URL to remove the success markers
-    if (urlParams.has("thank_you") || urlParams.has("status")) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
   }
 }, [mounted, items.length, clearCart]);
 
