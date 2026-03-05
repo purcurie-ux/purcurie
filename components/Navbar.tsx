@@ -18,21 +18,31 @@ export function Navbar() {
 useEffect(() => {
   if (!mounted) return;
 
-  // 1. Check if we have the "pending" flag in session storage
+  // 1. Check for our pending checkout flag
   const isPending = sessionStorage.getItem("purcurie_pending_checkout");
 
-  // 2. If the flag exists and the cart still has items, it means they just finished!
-  if (isPending === "true" && items.length > 0) {
-    console.log("Purcurie order completion detected. Cleaning up...");
-    
-    // Clear the cart
-    clearCart();
-    
-    // REMOVE THE FLAG so it doesn't clear the cart again on the next visit
-    sessionStorage.removeItem("purcurie_pending_checkout");
+  if (isPending === "true") {
+    // 2. Check the Referrer - Did they actually reach the success page?
+    const previousPage = document.referrer;
+    const reachedSuccessPage = 
+      previousPage.includes("/thank_you") || 
+      previousPage.includes("/orders/") ||
+      window.location.search.includes("thank_you=true");
+
+    if (reachedSuccessPage) {
+      // ✅ SUCCESS: Clear the cart only because they actually paid
+      console.log("Purcurie payment confirmed. Clearing cart...");
+      clearCart();
+      sessionStorage.removeItem("purcurie_pending_checkout");
+    } else {
+      // ❌ ABANDONED: They came back without paying (clicked 'Back')
+      // We do NOT call clearCart() here. 
+      // We just remove the flag so it doesn't try to clear later.
+      console.log("User returned to Purcurie without finishing checkout.");
+      sessionStorage.removeItem("purcurie_pending_checkout");
+    }
   }
 }, [mounted, items.length, clearCart]);
-
   useEffect(() => {
     setMounted(true);
     
