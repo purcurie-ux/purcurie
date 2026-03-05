@@ -93,7 +93,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isMounted]);
 
-  // ✅ ADD THIS FUNCTION
+// ✅ ADD THIS FUNCTION
   const clearCart = () => {
     setItems([]);
     if (typeof window !== "undefined") {
@@ -102,25 +102,36 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // ✅ NEW: Check if order was confirmed after returning from Shopify
   useEffect(() => {
-  if (typeof window === "undefined") return;
+    if (!isMounted) return;
 
-  const handleMessage = (event: MessageEvent) => {
-    // Only trust messages from Shopify's checkout domain
-    if (
-      event.origin.includes("shopify.com") ||
-      event.origin.includes("shop.purcurie.com")
-    ) {
-      if (event.data?.type === "PURCURIE_ORDER_COMPLETE") {
-        console.log("✅ Order complete — clearing cart");
-        clearCart();
+    const token = sessionStorage.getItem("purcurie_checkout_token");
+    if (!token) return;
+
+    const checkOrder = async () => {
+      try {
+        const res = await fetch(`/api/check-pending-order?token=${token}`);
+        const data = await res.json();
+
+        if (data.confirmed) {
+          console.log("✅ Order confirmed — clearing cart");
+          clearCart();
+        }
+      } catch (err) {
+        console.error("Order check failed:", err);
+      } finally {
+        sessionStorage.removeItem("purcurie_checkout_token");
       }
-    }
-  };
+    };
 
-  window.addEventListener("message", handleMessage);
-  return () => window.removeEventListener("message", handleMessage);
-}, [clearCart]);
+    // 2 second delay to give webhook time to arrive
+    const timer = setTimeout(checkOrder, 2000);
+    return () => clearTimeout(timer);
+  }, [isMounted, clearCart]);
+
+  // ✅ NEW: Helper function to do the math (used automatically and manually)
+  const runValidation = async (code: string, currentItems: CartItem[]) => {
 
   // ✅ NEW: Helper function to do the math (used automatically and manually)
   const runValidation = async (code: string, currentItems: CartItem[]) => {
@@ -240,8 +251,14 @@ const createCheckout = async () => {
     const data = await response.json();
 
     if (data.checkoutUrl) {
-      // Mark that user left for checkout
-      sessionStorage.setItem("purcurie_checkout_pending", "true");
+      // Extract token from URL like: /checkouts/cn/TOKEN/en
+      const tokenMatch = data.checkoutUrl.match(/\/checkouts\/cn\/([^\/\?]+)/);
+      const checkoutToken = tokenMatch ? tokenMatch[1] : null;
+
+      if (checkoutToken) {
+        sessionStorage.setItem("purcurie_checkout_token", checkoutToken);
+      }
+
       window.location.href = data.checkoutUrl;
     }
   } catch (error) {

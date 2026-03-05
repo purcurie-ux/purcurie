@@ -28,7 +28,7 @@ export default function SuccessPage() {
         display: 'inline-block', 
         marginTop: '30px', 
         padding: '16px 32px', 
-        background: '#1D2C34', 
+        background: '#1D2C34',
         color: '#CDDFE7', 
         borderRadius: '50px',
         textDecoration: 'none',
