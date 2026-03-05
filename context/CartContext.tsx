@@ -132,9 +132,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // ✅ NEW: Helper function to do the math (used automatically and manually)
   const runValidation = async (code: string, currentItems: CartItem[]) => {
-
-  // ✅ NEW: Helper function to do the math (used automatically and manually)
-  const runValidation = async (code: string, currentItems: CartItem[]) => {
     if (!code.trim() || currentItems.length === 0) return;
     setIsValidatingCode(true);
     setDiscountError("");
