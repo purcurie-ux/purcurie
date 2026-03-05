@@ -95,12 +95,32 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // ✅ ADD THIS FUNCTION
   const clearCart = () => {
-    setItems([]); // Reset the items state to an empty array
+    setItems([]);
     if (typeof window !== "undefined") {
-      localStorage.removeItem(CART_STORAGE_KEY); // Clear the storage
-      localStorage.removeItem("active_coupon"); // Optional: Clear coupon too
+      localStorage.removeItem(CART_STORAGE_KEY);
+      localStorage.removeItem("active_coupon");
     }
   };
+
+  useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const handleMessage = (event: MessageEvent) => {
+    // Only trust messages from Shopify's checkout domain
+    if (
+      event.origin.includes("shopify.com") ||
+      event.origin.includes("shop.purcurie.com")
+    ) {
+      if (event.data?.type === "PURCURIE_ORDER_COMPLETE") {
+        console.log("✅ Order complete — clearing cart");
+        clearCart();
+      }
+    }
+  };
+
+  window.addEventListener("message", handleMessage);
+  return () => window.removeEventListener("message", handleMessage);
+}, [clearCart]);
 
   // ✅ NEW: Helper function to do the math (used automatically and manually)
   const runValidation = async (code: string, currentItems: CartItem[]) => {
