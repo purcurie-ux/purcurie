@@ -204,6 +204,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setDiscountedTotal(null);
       setDiscountError("");
       localStorage.removeItem("active_coupon");
+      window.dispatchEvent(new Event("coupon-removed"));
     };
     window.addEventListener("coupon-removed", handleCouponRemoved);
 
@@ -223,13 +224,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [isMounted,]); 
 
   // ✅ 2. Manual Apply Button Logic
-  const applyDiscount = async () => {
+    const applyDiscount = async () => {
     if (!discountCode.trim()) {
       setDiscountedTotal(null);
       localStorage.removeItem("active_coupon");
       return;
     }
-    await runValidation(discountCode, items);
+    const code = discountCode.trim().toUpperCase();
+    localStorage.setItem("active_coupon", code);
+    await runValidation(code, items);
+    window.dispatchEvent(new Event("coupon-applied"));
   };
 
   // ✅ 3. Remove Discount Logic

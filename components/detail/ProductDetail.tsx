@@ -128,6 +128,38 @@ function ProductDetail({
   const [couponStatus, setCouponStatus] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState<string | null>(null); // Add this
 
+useEffect(() => {
+    const handleCouponRemoved = () => {
+      setCoupon("");
+      setCouponStatus("");
+      setDiscountedPrice(null);
+    };
+
+    const handleCouponApplied = () => {
+      const savedCode = localStorage.getItem("active_coupon");
+      if (savedCode) {
+        const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
+        if (validCodes.includes(savedCode)) {
+          setCoupon(savedCode);
+          setCouponStatus("✅ Applied! Your discount is ready.");
+          const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
+          if (!isNaN(basePrice)) {
+            const discountAmount = savedCode.includes("100") ? 100 : 50;
+            setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("coupon-removed", handleCouponRemoved);
+    window.addEventListener("coupon-applied", handleCouponApplied);
+    return () => {
+      window.removeEventListener("coupon-removed", handleCouponRemoved);
+      window.removeEventListener("coupon-applied", handleCouponApplied);
+    };
+  }, [product.price]);
+
+
   // Restore coupon on page refresh
   useEffect(() => {
     const savedCoupon = localStorage.getItem('active_coupon');
