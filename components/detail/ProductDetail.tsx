@@ -126,8 +126,36 @@ function ProductDetail({
   const allImages = Array.from(new Set([product.mainImage, ...product.moreImages.map(img => img.url)]));
   const [coupon, setCoupon] = useState("");
   const [couponStatus, setCouponStatus] = useState("");
+  const [discountedPrice, setDiscountedPrice] = useState<string | null>(null); // Add this
 
+  // --- PASTE THIS HERE ---
+  const handleApplyCoupon = () => {
+    const inputCode = coupon.trim().toUpperCase();
+    if (!inputCode) return;
 
+    const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
+    setCouponStatus("Verifying...");
+
+    setTimeout(() => {
+      if (validCodes.includes(inputCode)) {
+        localStorage.setItem('active_coupon', inputCode);
+        setCouponStatus("✅ Applied! Your discount is ready.");
+
+        // Calculate slashed price (assuming 100 off for JAY100/SENPAI100, or 25% off)
+        // Here is a simple version that subtracts 100 if the code ends in '100'
+        const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
+        if (!isNaN(basePrice)) {
+          const discountAmount = inputCode.includes("100") ? 100 : 50; 
+          const finalPrice = basePrice - discountAmount;
+          setDiscountedPrice(`₹ ${finalPrice.toFixed(2)} INR`);
+        }
+      } else {
+        setCouponStatus("❌ Invalid code. Please check and try again.");
+        localStorage.removeItem('active_coupon');
+        setDiscountedPrice(null);
+      }
+    }, 600);
+  };
   // ✅ Effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -712,9 +740,34 @@ useEffect(() => {
                     data-product-id={product.productId.split('/').pop()}
                   ></span>
                 </div>
-                <div className="product-price" style={{ marginBottom: "4px" }}>
-                  {product.price}
-                </div>
+             <div className="product-price" style={{ marginBottom: "4px", display: "flex", alignItems: "center", gap: "8px" }}>
+              {discountedPrice ? (
+                <>
+                  {/* Slashed Price: Now smaller and slightly faded */}
+                  <span style={{ 
+                    textDecoration: "line-through", 
+                    color: "#888", 
+                    fontSize: "14px",      // Smaller than original
+                    opacity: "0.7",        // Faded effect
+                    fontWeight: "400" 
+                  }}>
+                    {product.price}
+                  </span>
+                  
+                  {/* New Price: Bold and prominent */}
+                  <span style={{ 
+                    color: "#1D2C34", 
+                    fontWeight: "700", 
+                    fontSize: "20px"        // Larger to stand out
+                  }}>
+                    {discountedPrice} <span style={{ fontSize: "16px" }}>✨⭐</span>
+                  </span>
+                </>
+              ) : (
+                // Default state when no coupon is applied
+                <span style={{ fontWeight: "600" }}>{product.price}</span>
+              )}
+            </div>
               </div>
 
               <div className="product-wrapper" style={{ marginTop: "1px" }}>
@@ -728,6 +781,13 @@ useEffect(() => {
                 placeholder="Enter code here..."
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
+                // THIS LINE ADDS THE KEYBOARD LISTENER
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); // Prevents page reload if inside a form
+                    handleApplyCoupon();
+                  }
+                }}
                 style={{
                   flex: 1,
                   padding: "10px 12px",
@@ -738,43 +798,21 @@ useEffect(() => {
                   textTransform: "uppercase"
                 }}
               />
-              <button
-                type="button"
-                                // 1. Update the Apply button logic to use your Cart Context
-                onClick={() => {
-                const inputCode = coupon.trim().toUpperCase(); // Converts input to uppercase for checking
-                
-                if (!inputCode) return;
-
-                // Add your influencer codes to this list (keep them ALL CAPS here)
-                const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
-
-                setCouponStatus("Verifying...");
-
-                setTimeout(() => {
-                  if (validCodes.includes(inputCode)) {
-                    // It's a match!
-                    localStorage.setItem('active_coupon', inputCode);
-                    setCouponStatus("✅ Applied! Your discount is ready.");
-                  } else {
-                    // Not in the list
-                    setCouponStatus("❌ Invalid code. Please check and try again.");
-                    localStorage.removeItem('active_coupon'); // Clear any old codes
-                  }
-                }, 600);
+            <button
+              type="button"
+              onClick={handleApplyCoupon} // This now runs the logic you wrote at the top!
+              style={{
+                padding: "10px 16px",
+                backgroundColor: "#1D2C34",
+                color: "white",
+                borderRadius: "4px",
+                fontSize: "12px",
+                fontWeight: "600",
+                cursor: "pointer"
               }}
-                style={{
-                  padding: "10px 16px",
-                  backgroundColor: "#1D2C34",
-                  color: "white",
-                  borderRadius: "4px",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  cursor: "pointer"
-                }}
-              >
-                APPLY
-              </button>
+            >
+              APPLY
+            </button>
             </div>
             {couponStatus && (
               <p style={{ fontSize: "12px", marginTop: "6px", color: couponStatus.includes('✅') ? "green" : "red" }}>
