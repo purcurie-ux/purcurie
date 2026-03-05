@@ -14,31 +14,39 @@ export function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-/// Inside Navbar.tsx
 useEffect(() => {
   if (!mounted) return;
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const isSuccess = urlParams.get("status") === "success";
-  const isPending = sessionStorage.getItem("purcurie_pending_checkout");
+  const checkoutId = sessionStorage.getItem("purcurie_checkout_id");
+  if (!checkoutId) return;
 
-  if (isPending === "true") {
-    if (isSuccess && items.length > 0) {
-      // ✅ SUCCESS: They paid and landed on the success URL
-      console.log("Purcurie order confirmed. Clearing cart...");
-      clearCart();
-      
-      // Clean up
-      sessionStorage.removeItem("purcurie_pending_checkout");
-      window.history.replaceState({}, document.title, "/");
-    } else if (!isSuccess) {
-      // ❌ BACK BUTTON: They returned without the success parameter
-      // We just remove the flag so it doesn't clear later
-      sessionStorage.removeItem("purcurie_pending_checkout");
-      console.log("User returned to Purcurie without completing payment.");
+  // They came back from Shopify — verify if payment was actually completed
+  const verifyOrder = async () => {
+    try {
+      const res = await fetch("/api/check-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ checkoutId }),
+      });
+      const data = await res.json();
+
+      if (data.completed) {
+        console.log("✅ Order confirmed — clearing cart");
+        clearCart();
+        sessionStorage.removeItem("purcurie_checkout_id");
+      } else {
+        // User came back without paying (back button, logo click, etc.)
+        console.log("ℹ️ Checkout not completed — keeping cart");
+        sessionStorage.removeItem("purcurie_checkout_id");
+      }
+    } catch (err) {
+      console.error("Order verification failed:", err);
+      sessionStorage.removeItem("purcurie_checkout_id");
     }
-  }
-}, [mounted, items.length, clearCart]);
+  };
+
+  verifyOrder();
+}, [mounted, clearCart]);
 
 
   useEffect(() => {

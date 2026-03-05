@@ -204,29 +204,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     .toFixed(2);
 
   const createCheckout = async () => {
-    setIsCheckoutLoading(true);
-    try {
-      const lineItems = items.map((item) => ({
-        variantId: item.variantId,
-        quantity: item.quantity,
-      }));
+  setIsCheckoutLoading(true);
+  try {
+    const lineItems = items.map((item) => ({
+      variantId: item.variantId,
+      quantity: item.quantity,
+    }));
 
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lineItems }),
-      });
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lineItems }),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-     if (data.checkoutUrl) {
-      // 1. Set the pending flag
-      sessionStorage.setItem("purcurie_pending_checkout", "true");
-      
-      // 2. Add the return parameter so your site knows the payment worked
-      // Replace yourdomain.com with shop.purcurie.com
-      const returnUrl = encodeURIComponent("https://shop.purcurie.com/?status=success");
-      window.location.href = `${data.checkoutUrl}&return_to=${returnUrl}`;
+    if (data.checkoutUrl && data.checkoutId) {
+      // Store the checkout ID so we can verify later
+      sessionStorage.setItem("purcurie_checkout_id", data.checkoutId);
+      window.location.href = data.checkoutUrl;
     }
   } catch (error) {
     console.error("Checkout error:", error);
