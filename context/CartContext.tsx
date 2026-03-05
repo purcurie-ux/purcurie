@@ -102,39 +102,38 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // ✅ NEW: Check if order was confirmed after returning from Shopify
-useEffect(() => {
-  if (!isMounted) return;
+  // Check if order was confirmed after returning from Shopify
+  useEffect(() => {
+    if (!isMounted) return;
 
-  const checkoutTime = sessionStorage.getItem("purcurie_checkout_time");
-  if (!checkoutTime) return;
+    const checkoutTime = sessionStorage.getItem("purcurie_checkout_time");
+    if (!checkoutTime) return;
 
-  const timeSinceCheckout = Date.now() - parseInt(checkoutTime);
-  
-  // If they came back within 30 minutes of starting checkout
-  if (timeSinceCheckout < 30 * 60 * 1000) {
-    const checkOrder = async () => {
-      try {
-        const res = await fetch("/api/check-latest-order");
-        const data = await res.json();
+    const timeSinceCheckout = Date.now() - parseInt(checkoutTime);
 
-        if (data.confirmed) {
-          console.log("✅ Order confirmed — clearing cart");
-          clearCart();
+    if (timeSinceCheckout < 30 * 60 * 1000) {
+      const checkOrder = async () => {
+        try {
+          const res = await fetch("/api/check-latest-order");
+          const data = await res.json();
+
+          if (data.confirmed) {
+            console.log("✅ Order confirmed — clearing cart");
+            clearCart();
+          }
+        } catch (err) {
+          console.error("Order check failed:", err);
+        } finally {
+          sessionStorage.removeItem("purcurie_checkout_time");
         }
-      } catch (err) {
-        console.error("Order check failed:", err);
-      } finally {
-        sessionStorage.removeItem("purcurie_checkout_time");
-      }
-    };
+      };
 
-    const timer = setTimeout(checkOrder,);
-    return () => clearTimeout(timer);
-  } else {
-    sessionStorage.removeItem("purcurie_checkout_time");
-  }
-}, [isMounted, clearCart]);
+      const timer = setTimeout(checkOrder, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      sessionStorage.removeItem("purcurie_checkout_time");
+    }
+  }, [isMounted, clearCart]);
 
   // ✅ NEW: Helper function to do the math (used automatically and manually)
   const runValidation = async (code: string, currentItems: CartItem[]) => {
