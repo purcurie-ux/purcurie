@@ -252,6 +252,9 @@ const createCheckout = async () => {
       const tokenMatch = data.checkoutUrl.match(/\/checkouts\/cn\/([^\/\?]+)/);
       const checkoutToken = tokenMatch ? tokenMatch[1] : null;
 
+      console.log("🛒 Checkout URL:", data.checkoutUrl);
+      console.log("🔑 Extracted token:", checkoutToken);
+      
       if (checkoutToken) {
         sessionStorage.setItem("purcurie_checkout_token", checkoutToken);
       }
