@@ -86,8 +86,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
  
 
 // ✅ ADD THIS FUNCTION
-  const clearCart = () => {
-const clearCart = useCallback(() => {
+// ✅ FIXED VERSION
+  const clearCart = useCallback(() => {
     setItems([]);
     if (typeof window !== "undefined") {
       localStorage.removeItem(CART_STORAGE_KEY);
@@ -95,6 +95,7 @@ const clearCart = useCallback(() => {
     }
   }, []);
 
+  
   // Check if order was confirmed after returning from Shopify
   useEffect(() => {
     if (!isMounted) return;
