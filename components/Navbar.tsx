@@ -14,26 +14,6 @@ export function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-useEffect(() => {
-  if (!mounted) return;
-
-  const isPending = sessionStorage.getItem("purcurie_checkout_pending");
-  if (!isPending) return;
-
-  // Check if user came back from Shopify's thank-you page
-  const referrer = document.referrer;
-  const cameFromThankYou = referrer.includes("/thank-you");
-
-  sessionStorage.removeItem("purcurie_checkout_pending");
-
-  if (cameFromThankYou) {
-    console.log("✅ Order placed — clearing cart");
-    clearCart();
-  } else {
-    console.log("ℹ️ Returned without completing — keeping cart");
-  }
-}, [mounted, clearCart]);
-
 
   useEffect(() => {
     setMounted(true);

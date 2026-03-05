@@ -83,15 +83,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     if (isMounted) saveToStorage(items);
   }, [items, isMounted]);
 
-  // ✅ NEW: Restore the text in the discount input field when changing pages
-  useEffect(() => {
-    if (isMounted) {
-      const savedCode = localStorage.getItem("active_coupon");
-      if (savedCode) {
-        setDiscountCode(savedCode);
-      }
-    }
-  }, [isMounted]);
+ 
 
 // ✅ ADD THIS FUNCTION
   const clearCart = () => {
@@ -170,18 +162,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // ✅ NEW: Automatically calculate discount on page load OR if item quantity changes!
+// Auto-apply saved discount on page load OR if item quantity changes
   useEffect(() => {
-    if (isMounted) {
-      const savedCode = localStorage.getItem("active_coupon");
-      if (savedCode && items.length > 0) {
+    if (!isMounted) return;
+
+    const savedCode = localStorage.getItem("active_coupon");
+
+    if (savedCode) {
+      setDiscountCode(savedCode);
+      if (items.length > 0) {
         runValidation(savedCode, items);
-      } else if (items.length === 0) {
+      }
+    } else {
+      if (items.length === 0) {
         setDiscountedTotal(null);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, isMounted]);
+  }, [isMounted]);
 
   // When user manually clicks "Apply"
   const applyDiscount = async () => {
@@ -202,6 +200,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       localStorage.removeItem("active_coupon");
     }
   };
+  // Listen for coupon applied from product page
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const handleCouponApplied = () => {
+      const savedCode = localStorage.getItem("active_coupon");
+      if (savedCode && items.length > 0) {
+        setDiscountCode(savedCode);
+        runValidation(savedCode, items);
+      }
+    };
+
+    window.addEventListener("coupon-applied", handleCouponApplied);
+    return () => window.removeEventListener("coupon-applied", handleCouponApplied);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMounted, items]);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {

@@ -128,6 +128,23 @@ function ProductDetail({
   const [couponStatus, setCouponStatus] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState<string | null>(null); // Add this
 
+  // Restore coupon on page refresh
+  useEffect(() => {
+    const savedCoupon = localStorage.getItem('active_coupon');
+    if (savedCoupon) {
+      const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
+      if (validCodes.includes(savedCoupon)) {
+        setCoupon(savedCoupon);
+        setCouponStatus("✅ Applied! Your discount is ready.");
+        const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
+        if (!isNaN(basePrice)) {
+          const discountAmount = savedCoupon.includes("100") ? 100 : 50;
+          setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
+        }
+      }
+    }
+  }, [product.price]);
+
   // --- PASTE THIS HERE ---
   const handleApplyCoupon = () => {
     const inputCode = coupon.trim().toUpperCase();
@@ -140,6 +157,7 @@ function ProductDetail({
       if (validCodes.includes(inputCode)) {
         localStorage.setItem('active_coupon', inputCode);
         setCouponStatus("✅ Applied! Your discount is ready.");
+         window.dispatchEvent(new Event("coupon-applied"));
 
         // Calculate slashed price (assuming 100 off for JAY100/SENPAI100, or 25% off)
         // Here is a simple version that subtracts 100 if the code ends in '100'
