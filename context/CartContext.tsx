@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 interface CartItem {
   variantId: string;
@@ -87,12 +87,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
 // ✅ ADD THIS FUNCTION
   const clearCart = () => {
+const clearCart = useCallback(() => {
     setItems([]);
     if (typeof window !== "undefined") {
       localStorage.removeItem(CART_STORAGE_KEY);
       localStorage.removeItem("active_coupon");
     }
-  };
+  }, []);
 
   // Check if order was confirmed after returning from Shopify
   useEffect(() => {
