@@ -77,6 +77,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [discountedTotal, setDiscountedTotal] = useState<string | null>(null);
   const [isValidatingCode, setIsValidatingCode] = useState(false);
 
+  const itemsRef = React.useRef(items);
+    useEffect(() => {
+      itemsRef.current = items;
+    }, [items]);
+
   useEffect(() => { setIsMounted(true); }, []);
 
   useEffect(() => {
@@ -152,7 +157,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (!res.ok) {
         setDiscountError(data.error || "Invalid code");
         setDiscountedTotal(null);
-        localStorage.removeItem("active_coupon");
       } else {
         setDiscountedTotal(data.total);
         localStorage.setItem("active_coupon", code);
@@ -162,28 +166,63 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsValidatingCode(false);
     }
-  };
+  }; 
 
 // Auto-apply saved discount on page load OR if item quantity changes
+// ... clearCart function stays the same ...
+
+  // ✅ 1. Unified Coupon & Storage Listener
   useEffect(() => {
     if (!isMounted) return;
 
-    const savedCode = localStorage.getItem("active_coupon");
-
-    if (savedCode) {
-      setDiscountCode(savedCode);
-      if (items.length > 0) {
-        runValidation(savedCode, items);
-      }
-    } else {
-      if (items.length === 0) {
+    const syncDiscount = () => {
+      const savedCode = localStorage.getItem("active_coupon");
+      if (savedCode) {
+        setDiscountCode(savedCode);
+        if (itemsRef.current.length > 0) {
+          runValidation(savedCode, itemsRef.current);
+        }
+      } else {
+        setDiscountCode("");
         setDiscountedTotal(null);
+        setDiscountError("");
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMounted]);
+    };
 
-  // When user manually clicks "Apply"
+    // Run once on mount
+    syncDiscount();
+
+    // Listen for coupon applied from product page
+   // Listen for custom event from product page
+    const handleCouponApplied = () => {
+      setTimeout(syncDiscount, 100);
+    };
+    window.addEventListener("coupon-applied", handleCouponApplied);
+
+    const handleCouponRemoved = () => {
+      setDiscountCode("");
+      setDiscountedTotal(null);
+      setDiscountError("");
+      localStorage.removeItem("active_coupon");
+    };
+    window.addEventListener("coupon-removed", handleCouponRemoved);
+
+   // Listen for storage changes across OTHER tabs only
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "active_coupon" && e.storageArea === localStorage && e.oldValue !== e.newValue) {
+        syncDiscount();
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener("coupon-applied", handleCouponApplied);
+      window.removeEventListener("coupon-removed", handleCouponRemoved);
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, [isMounted,]); 
+
+  // ✅ 2. Manual Apply Button Logic
   const applyDiscount = async () => {
     if (!discountCode.trim()) {
       setDiscountedTotal(null);
@@ -193,7 +232,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     await runValidation(discountCode, items);
   };
 
-  // ✅ NEW: Remove Discount Function
+  // ✅ 3. Remove Discount Logic
   const removeDiscount = () => {
     setDiscountCode("");
     setDiscountedTotal(null);
@@ -202,6 +241,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       localStorage.removeItem("active_coupon");
     }
   };
+
   // Listen for coupon applied from product page
   useEffect(() => {
     if (!isMounted) return;
@@ -211,13 +251,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (savedCode && items.length > 0) {
         setDiscountCode(savedCode);
         runValidation(savedCode, items);
-      }
+      } else {
+      // If code was removed
+      setDiscountCode("");
+      setDiscountedTotal(null);
+      setDiscountError("");
+    }
     };
 
     window.addEventListener("coupon-applied", handleCouponApplied);
-    return () => window.removeEventListener("coupon-applied", handleCouponApplied);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMounted, items]);
+ // Also run it once on mount to catch codes applied before cart loaded
+  handleCouponApplied(); 
+
+  return () => window.removeEventListener("coupon-applied", handleCouponApplied);
+  // Remove 'items' from dependency to avoid infinite loops, 
+  // the event will handle the update.
+}, [isMounted]);
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {

@@ -74,6 +74,11 @@ export async function POST(request: Request) {
       );
     }
 
+     const finalCheckoutUrl = cart.checkoutUrl.replace(
+      "pur-curie.myshopify.com",
+      "shop.purcurie.com"
+    );
+
     return NextResponse.json({
       checkoutUrl: cart.checkoutUrl,
       checkoutId: cart.id, 

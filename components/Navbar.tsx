@@ -591,6 +591,7 @@ function CartModal() {
     discountedTotal,
     discountError,
     isValidatingCode,
+    removeDiscount,
   } = useCart();
 
   const [mounted, setMounted] = useState(false);
@@ -599,6 +600,10 @@ function CartModal() {
     setMounted(true);
   }, []);
 
+  const handleRemoveFromCart = () => {
+    removeDiscount();
+    window.dispatchEvent(new Event("coupon-removed"));
+  };
   const handleCheckoutClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -684,37 +689,41 @@ function CartModal() {
                   {/* Discount Input UI */}
                   <div style={{ marginBottom: "20px" }}>
                     <div style={{ display: "flex", gap: "10px" }}>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
                         placeholder="Promo code"
-                        style={{ 
-                          padding: "10px 12px", 
-                          width: "100%", 
-                          border: "1px solid #e5e7eb", 
+                        disabled={!!discountedTotal}
+                        style={{
+                          padding: "10px 12px",
+                          width: "100%",
+                          border: "1px solid #e5e7eb",
                           borderRadius: "4px",
                           fontSize: "14px",
-                          outline: "none"
+                          outline: "none",
+                          backgroundColor: discountedTotal ? "#f5f5f5" : "white",
                         }}
                       />
-                      <button 
+                    <button
                         type="button"
-                        onClick={applyDiscount} 
-                        disabled={isValidatingCode || !discountCode}
-                        style={{ 
-                          padding: "10px 20px", 
-                          background: "#1D2C34", 
-                          color: "white", 
-                          cursor: isValidatingCode ? "wait" : "pointer", 
-                          borderRadius: "4px", 
+                        onClick={discountedTotal ? handleRemoveFromCart : applyDiscount}
+                        disabled={isValidatingCode || (!discountedTotal && !discountCode)}
+                        style={{
+                          padding: "10px 20px",
+                          background: discountedTotal ? "#d9534f" : "#1D2C34",
+                          color: "white",
+                          cursor: isValidatingCode ? "wait" : "pointer",
+                          borderRadius: "4px",
                           border: "none",
                           fontSize: "14px",
                           fontWeight: "500",
-                          opacity: isValidatingCode ? 0.7 : 1
+                          opacity: isValidatingCode ? 0.7 : 1,
+                          transition: "background-color 0.2s ease",
+                          whiteSpace: "nowrap",
                         }}
                       >
-                        {isValidatingCode ? "..." : "Apply"}
+                        {isValidatingCode ? "..." : discountedTotal ? "REMOVE" : "APPLY"}
                       </button>
                     </div>
                     {/* Error Message */}

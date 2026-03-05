@@ -146,6 +146,7 @@ function ProductDetail({
   }, [product.price]);
 
   // --- PASTE THIS HERE ---
+// --- Inside ProductDetail.tsx ---
   const handleApplyCoupon = () => {
     const inputCode = coupon.trim().toUpperCase();
     if (!inputCode) return;
@@ -157,10 +158,11 @@ function ProductDetail({
       if (validCodes.includes(inputCode)) {
         localStorage.setItem('active_coupon', inputCode);
         setCouponStatus("✅ Applied! Your discount is ready.");
-         window.dispatchEvent(new Event("coupon-applied"));
+        
+        // Trigger the custom event for the CartContext to hear
+        window.dispatchEvent(new Event("coupon-applied"));
 
-        // Calculate slashed price (assuming 100 off for JAY100/SENPAI100, or 25% off)
-        // Here is a simple version that subtracts 100 if the code ends in '100'
+        // Price display logic
         const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
         if (!isNaN(basePrice)) {
           const discountAmount = inputCode.includes("100") ? 100 : 50; 
@@ -171,10 +173,21 @@ function ProductDetail({
         setCouponStatus("❌ Invalid code. Please check and try again.");
         localStorage.removeItem('active_coupon');
         setDiscountedPrice(null);
+        // Dispatch even on failure to clear any old codes from the cart UI
+        window.dispatchEvent(new Event("coupon-applied"));
       }
     }, 600);
   };
-  
+
+  const handleRemoveCoupon = () => {
+    setCoupon("");
+    setCouponStatus("");
+    setDiscountedPrice(null);
+    localStorage.removeItem("active_coupon");
+    window.dispatchEvent(new Event("coupon-removed"));
+  };
+
+
   // ✅ Effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -817,20 +830,21 @@ useEffect(() => {
                   textTransform: "uppercase"
                 }}
               />
-            <button
+       <button
               type="button"
-              onClick={handleApplyCoupon} // This now runs the logic you wrote at the top!
+              onClick={couponStatus.includes('✅') ? handleRemoveCoupon : handleApplyCoupon}
               style={{
                 padding: "10px 16px",
-                backgroundColor: "#1D2C34",
+                backgroundColor: couponStatus.includes('✅') ? "#d9534f" : "#1D2C34",
                 color: "white",
                 borderRadius: "4px",
                 fontSize: "12px",
                 fontWeight: "600",
-                cursor: "pointer"
+                cursor: "pointer",
+                transition: "background-color 0.2s ease"
               }}
             >
-              APPLY
+              {couponStatus.includes('✅') ? "REMOVE" : "APPLY"}
             </button>
             </div>
             {couponStatus && (
