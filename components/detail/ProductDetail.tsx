@@ -156,6 +156,24 @@ function ProductDetail({
       }
     }, 600);
   };
+    // ✅ PERSIST DISCOUNT ON LOAD
+  useEffect(() => {
+    const savedCoupon = localStorage.getItem('active_coupon');
+    if (savedCoupon) {
+      const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10"];
+      if (validCodes.includes(savedCoupon)) {
+        setCoupon(savedCoupon);
+        setCouponStatus("✅ Applied! Your discount is ready.");
+        
+        // Re-calculate the slashed price automatically
+        const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
+        if (!isNaN(basePrice)) {
+          const discountAmount = savedCoupon.includes("100") ? 100 : 50; 
+          setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
+        }
+      }
+    }
+  }, [product.price]);
   // ✅ Effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
