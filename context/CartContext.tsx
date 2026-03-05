@@ -129,7 +129,7 @@ useEffect(() => {
       }
     };
 
-    const timer = setTimeout(checkOrder, 1500);
+    const timer = setTimeout(checkOrder,);
     return () => clearTimeout(timer);
   } else {
     sessionStorage.removeItem("purcurie_checkout_time");
@@ -238,43 +238,40 @@ useEffect(() => {
     .toFixed(2);
 
 const createCheckout = async () => {
-  setIsCheckoutLoading(true);
-  try {
-    const lineItems = items.map((item) => ({
-      variantId: item.variantId,
-      quantity: item.quantity,
-    }));
+    setIsCheckoutLoading(true);
+    try {
+      const lineItems = items.map((item) => ({
+        variantId: item.variantId,
+        quantity: item.quantity,
+      }));
 
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lineItems }),
-    });
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lineItems }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.checkoutUrl) {
-      // Extract token from URL like: /checkouts/cn/TOKEN/en
-      const tokenMatch = data.checkoutUrl.match(/\/cart\/c\/([^\/\?]+)/);
-      const checkoutToken = tokenMatch ? tokenMatch[1] : null;
-
-      console.log("🛒 Checkout URL:", data.checkoutUrl);
-      console.log("🔑 Extracted token:", checkoutToken);
-
-     if (data.checkoutUrl) {
-  // Store timestamp when user left for checkout
+      if (data.checkoutUrl) {
         sessionStorage.setItem("purcurie_checkout_time", Date.now().toString());
-        window.location.href = data.checkoutUrl;
-      }
 
-      window.location.href = data.checkoutUrl;
+        // Append discount code to checkout URL if one is applied
+        const savedCode = localStorage.getItem("active_coupon");
+        let finalUrl = data.checkoutUrl;
+        if (savedCode?.trim()) {
+          const separator = finalUrl.includes("?") ? "&" : "?";
+          finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
+        }
+
+        window.location.href = finalUrl;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+    } finally {
+      setIsCheckoutLoading(false);
     }
-  } catch (error) {
-    console.error("Checkout error:", error);
-  } finally {
-    setIsCheckoutLoading(false);
-  }
-};
+  };
 
   const buyNow = async (item: Omit<CartItem, "quantity">) => {
     setBuyNowLoading(true);
