@@ -18,17 +18,18 @@ export function Navbar() {
 useEffect(() => {
   if (!mounted) return;
 
-  // 1. Check the Referrer (The page the user just came from)
-  const previousPage = document.referrer;
-  
-  // 2. Identify if they just finished the Purcurie checkout
-  const isComingFromSuccess = previousPage.includes("/thank-you") || 
-                               previousPage.includes("/orders/");
+  // 1. Check if we have the "pending" flag in session storage
+  const isPending = sessionStorage.getItem("purcurie_pending_checkout");
 
-  // 3. Trigger clear only if they came from the success screen
-  if (isComingFromSuccess && items.length > 0) {
-    console.log("Purcurie purchase confirmed via referrer. Clearing cart...");
+  // 2. If the flag exists and the cart still has items, it means they just finished!
+  if (isPending === "true" && items.length > 0) {
+    console.log("Purcurie order completion detected. Cleaning up...");
+    
+    // Clear the cart
     clearCart();
+    
+    // REMOVE THE FLAG so it doesn't clear the cart again on the next visit
+    sessionStorage.removeItem("purcurie_pending_checkout");
   }
 }, [mounted, items.length, clearCart]);
 

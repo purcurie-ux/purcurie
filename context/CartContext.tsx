@@ -220,6 +220,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
 
       if (data.checkoutUrl) {
+        sessionStorage.setItem("purcurie_pending_checkout", "true");
         setCheckoutUrl(data.checkoutUrl);
         const savedCode = localStorage.getItem("active_coupon");
         let finalUrl = data.checkoutUrl;
