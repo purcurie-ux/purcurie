@@ -18,31 +18,29 @@ export function Navbar() {
 useEffect(() => {
   if (!mounted) return;
 
-  // 1. Check for our pending checkout flag
+  const urlParams = new URLSearchParams(window.location.search);
+  const isSuccess = urlParams.get("status") === "success";
   const isPending = sessionStorage.getItem("purcurie_pending_checkout");
 
   if (isPending === "true") {
-    // 2. Check the Referrer - Did they actually reach the success page?
-    const previousPage = document.referrer;
-    const reachedSuccessPage = 
-      previousPage.includes("/thank_you") || 
-      previousPage.includes("/orders/") ||
-      window.location.search.includes("thank_you=true");
-
-    if (reachedSuccessPage) {
-      // ✅ SUCCESS: Clear the cart only because they actually paid
-      console.log("Purcurie payment confirmed. Clearing cart...");
+    if (isSuccess && items.length > 0) {
+      // ✅ SUCCESS: They paid and landed on the success URL
+      console.log("Purcurie order confirmed. Clearing cart...");
       clearCart();
+      
+      // Clean up
       sessionStorage.removeItem("purcurie_pending_checkout");
-    } else {
-      // ❌ ABANDONED: They came back without paying (clicked 'Back')
-      // We do NOT call clearCart() here. 
-      // We just remove the flag so it doesn't try to clear later.
-      console.log("User returned to Purcurie without finishing checkout.");
+      window.history.replaceState({}, document.title, "/");
+    } else if (!isSuccess) {
+      // ❌ BACK BUTTON: They returned without the success parameter
+      // We just remove the flag so it doesn't clear later
       sessionStorage.removeItem("purcurie_pending_checkout");
+      console.log("User returned to Purcurie without completing payment.");
     }
   }
 }, [mounted, items.length, clearCart]);
+
+
   useEffect(() => {
     setMounted(true);
     

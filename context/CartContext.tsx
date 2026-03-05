@@ -219,25 +219,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json();
 
-      if (data.checkoutUrl) {
-        sessionStorage.setItem("purcurie_pending_checkout", "true");
-        setCheckoutUrl(data.checkoutUrl);
-        const savedCode = localStorage.getItem("active_coupon");
-        let finalUrl = data.checkoutUrl;
-        if (savedCode && savedCode.trim() !== "") {
-          const separator = finalUrl.includes("?") ? "&" : "?";
-          finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
-        }
-        window.location.href = finalUrl;
-      }
-    } catch (error) {
-      console.error("Error creating checkout:", error);
-      alert("Failed to create checkout. Please try again.");
-    } finally {
-      setIsCheckoutLoading(false);
+     if (data.checkoutUrl) {
+      // 1. Set the pending flag
+      sessionStorage.setItem("purcurie_pending_checkout", "true");
+      
+      // 2. Add the return parameter so your site knows the payment worked
+      // Replace yourdomain.com with shop.purcurie.com
+      const returnUrl = encodeURIComponent("https://shop.purcurie.com/?status=success");
+      window.location.href = `${data.checkoutUrl}&return_to=${returnUrl}`;
     }
-  };
-  
+  } catch (error) {
+    console.error("Checkout error:", error);
+  } finally {
+    setIsCheckoutLoading(false);
+  }
+};
+
   const buyNow = async (item: Omit<CartItem, "quantity">) => {
     setBuyNowLoading(true);
     try {
