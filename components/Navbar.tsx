@@ -17,35 +17,21 @@ export function Navbar() {
 useEffect(() => {
   if (!mounted) return;
 
-  const checkoutId = sessionStorage.getItem("purcurie_checkout_id");
-  if (!checkoutId) return;
+  const isPending = sessionStorage.getItem("purcurie_checkout_pending");
+  if (!isPending) return;
 
-  // They came back from Shopify — verify if payment was actually completed
-  const verifyOrder = async () => {
-    try {
-      const res = await fetch("/api/check-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ checkoutId }),
-      });
-      const data = await res.json();
+  // Check if user came back from Shopify's thank-you page
+  const referrer = document.referrer;
+  const cameFromThankYou = referrer.includes("/thank-you");
 
-      if (data.completed) {
-        console.log("✅ Order confirmed — clearing cart");
-        clearCart();
-        sessionStorage.removeItem("purcurie_checkout_id");
-      } else {
-        // User came back without paying (back button, logo click, etc.)
-        console.log("ℹ️ Checkout not completed — keeping cart");
-        sessionStorage.removeItem("purcurie_checkout_id");
-      }
-    } catch (err) {
-      console.error("Order verification failed:", err);
-      sessionStorage.removeItem("purcurie_checkout_id");
-    }
-  };
+  sessionStorage.removeItem("purcurie_checkout_pending");
 
-  verifyOrder();
+  if (cameFromThankYou) {
+    console.log("✅ Order placed — clearing cart");
+    clearCart();
+  } else {
+    console.log("ℹ️ Returned without completing — keeping cart");
+  }
 }, [mounted, clearCart]);
 
 

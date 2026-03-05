@@ -203,7 +203,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }, 0)
     .toFixed(2);
 
-  const createCheckout = async () => {
+const createCheckout = async () => {
   setIsCheckoutLoading(true);
   try {
     const lineItems = items.map((item) => ({
@@ -219,9 +219,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const data = await response.json();
 
-    if (data.checkoutUrl && data.checkoutId) {
-      // Store the checkout ID so we can verify later
-      sessionStorage.setItem("purcurie_checkout_id", data.checkoutId);
+    if (data.checkoutUrl) {
+      // Mark that user left for checkout
+      sessionStorage.setItem("purcurie_checkout_pending", "true");
       window.location.href = data.checkoutUrl;
     }
   } catch (error) {
