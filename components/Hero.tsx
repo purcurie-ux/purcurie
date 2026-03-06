@@ -30,7 +30,7 @@ export function Hero() {
           </section>
           
           <HomePage />
-          <Instagram />
+          {/* <Instagram /> */}
           
     </>
   );

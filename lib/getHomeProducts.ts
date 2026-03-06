@@ -32,7 +32,7 @@ export async function getHomeProducts() {
   `;
 
   const data = await shopifyFetch(query, {
-    handle: "frontpage", // ⚠️ collection handle
+    handle: "new-arrivals", // ⚠️ collection handle
   });
 
   return data.collection.products.edges.map((e: any) => e.node);

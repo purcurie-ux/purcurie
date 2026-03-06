@@ -274,12 +274,21 @@ useEffect(() => {
     }
   };
 
-  // Run immediately
   refreshJunip();
-  
-  // Also run after a tiny delay to catch the script if it's slow
   const timer = setTimeout(refreshJunip, 500);
-  return () => clearTimeout(timer);
+
+  // ✅ Re-init after review is submitted
+  const handleReviewSubmit = () => {
+    setTimeout(refreshJunip, 1000);
+    setTimeout(refreshJunip, 3000); // retry again in case of slow API
+  };
+
+  window.addEventListener("junip:review_submitted", handleReviewSubmit);
+  
+  return () => {
+    clearTimeout(timer);
+    window.removeEventListener("junip:review_submitted", handleReviewSubmit);
+  };
 }, [product.productId]);
 
   // ✅ Handlers
