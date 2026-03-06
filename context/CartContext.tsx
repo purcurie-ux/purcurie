@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 
 interface CartItem {
   variantId: string;
@@ -77,7 +77,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [discountedTotal, setDiscountedTotal] = useState<string | null>(null);
   const [isValidatingCode, setIsValidatingCode] = useState(false);
 
-  const itemsRef = React.useRef(items);
+  const itemsRef = useRef(items);
+  const isValidatingRef = useRef(false);
     useEffect(() => {
       itemsRef.current = items;
     }, [items]);
@@ -135,8 +136,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [isMounted, clearCart]);
 
   // ✅ NEW: Helper function to do the math (used automatically and manually)
-  const runValidation = async (code: string, currentItems: CartItem[]) => {
+  const runValidation = useCallback(async (code: string, currentItems: CartItem[]) => {
     if (!code.trim() || currentItems.length === 0) return;
+    if (isValidatingRef.current) return;
+    isValidatingRef.current = true;
     setIsValidatingCode(true);
     setDiscountError("");
 
@@ -159,14 +162,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setDiscountedTotal(null);
       } else {
         setDiscountedTotal(data.total);
-        localStorage.setItem("active_coupon", code);
       }
     } catch (err) {
       setDiscountError("Something went wrong.");
     } finally {
       setIsValidatingCode(false);
     }
-  }; 
+ }, []);
 
 // Auto-apply saved discount on page load OR if item quantity changes
 // ... clearCart function stays the same ...
@@ -194,8 +196,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for coupon applied from product page
    // Listen for custom event from product page
-    const handleCouponApplied = () => {
-      setTimeout(syncDiscount, 100);
+   const handleCouponApplied = () => {
+      setTimeout(() => {
+        const savedCode = localStorage.getItem("active_coupon");
+        if (savedCode) {
+          setDiscountCode(savedCode);
+          if (itemsRef.current.length > 0) {
+            runValidation(savedCode, itemsRef.current);
+          }
+        }
+      }, 200);
     };
     window.addEventListener("coupon-applied", handleCouponApplied);
 
@@ -221,10 +231,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener("coupon-removed", handleCouponRemoved);
       window.removeEventListener("storage", handleStorage);
     };
-  }, [isMounted,]); 
+  }, [isMounted]);
+
+
 
   // ✅ 2. Manual Apply Button Logic
-    const applyDiscount = async () => {
+const applyDiscount = async () => {
     if (!discountCode.trim()) {
       setDiscountedTotal(null);
       localStorage.removeItem("active_coupon");
@@ -232,6 +244,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
     const code = discountCode.trim().toUpperCase();
     localStorage.setItem("active_coupon", code);
+    
+    // Reset the guard so manual apply always works
+    isValidatingRef.current = false;
+    
     await runValidation(code, items);
     window.dispatchEvent(new Event("coupon-applied"));
   };
@@ -246,31 +262,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Listen for coupon applied from product page
-  useEffect(() => {
-    if (!isMounted) return;
-
-    const handleCouponApplied = () => {
-      const savedCode = localStorage.getItem("active_coupon");
-      if (savedCode && items.length > 0) {
-        setDiscountCode(savedCode);
-        runValidation(savedCode, items);
-      } else {
-      // If code was removed
-      setDiscountCode("");
-      setDiscountedTotal(null);
-      setDiscountError("");
-    }
-    };
-
-    window.addEventListener("coupon-applied", handleCouponApplied);
- // Also run it once on mount to catch codes applied before cart loaded
-  handleCouponApplied(); 
-
-  return () => window.removeEventListener("coupon-applied", handleCouponApplied);
-  // Remove 'items' from dependency to avoid infinite loops, 
-  // the event will handle the update.
-}, [isMounted]);
+  
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prevItems) => {
@@ -293,6 +285,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems((prevItems) =>
       prevItems.map((i) => (i.variantId === variantId ? { ...i, quantity } : i))
     );
+    // Re-validate discount when quantity changes
+    const savedCode = localStorage.getItem("active_coupon");
+    if (savedCode && discountedTotal) {
+      isValidatingRef.current = false;
+      setTimeout(() => {
+        runValidation(savedCode, itemsRef.current);
+      }, 100);
+    }
   };
 
   const openCart = () => setIsOpen(true);
@@ -338,6 +338,7 @@ const createCheckout = async () => {
       console.error("Checkout error:", error);
     } finally {
       setIsCheckoutLoading(false);
+      isValidatingRef.current = false;
     }
   };
 

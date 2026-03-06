@@ -338,12 +338,12 @@ const closeSearch = (clearQuery = true) => {
                   >
                     <div
                       style={{
-                        display: mounted && cartCount > 0 ? "block" : "none",
+                         display: mounted ? (cartCount > 0 ? "block" : "none") : "none",
                       }}
                       data-count-hide-rule="empty"
                       className="w-commerce-commercecartopenlinkcount cart-quantity"
                     >
-                      {cartCount}
+                      {mounted ? cartCount : 0}
                     </div>
                     <img
                       src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"
@@ -422,7 +422,7 @@ const closeSearch = (clearQuery = true) => {
                     data-count-hide-rule="empty"
                     className="w-commerce-commercecartopenlinkcount cart-quantity"
                   >
-                    {cartCount}
+                    {mounted ? cartCount : 0}
                   </div>
                   <img
                     src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"

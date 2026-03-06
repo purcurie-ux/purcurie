@@ -144,7 +144,7 @@ useEffect(() => {
           setCouponStatus("✅ Applied! Your discount is ready.");
           const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
           if (!isNaN(basePrice)) {
-            const discountAmount = savedCode.includes("100") ? 100 : 50;
+            const discountAmount = savedCode.includes("100") ? 100 : savedCode === "PANKAJ50" ? 50 : basePrice * 0.10;
             setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
           }
         }
@@ -170,7 +170,7 @@ useEffect(() => {
         setCouponStatus("✅ Applied! Your discount is ready.");
         const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
         if (!isNaN(basePrice)) {
-          const discountAmount = savedCoupon.includes("100") ? 100 : 50;
+          const discountAmount = savedCoupon.includes("100") ? 100 : savedCoupon === "PANKAJ50" ? 50 : basePrice * 0.10;
           setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
         }
       }
@@ -197,7 +197,7 @@ useEffect(() => {
         // Price display logic
         const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
         if (!isNaN(basePrice)) {
-          const discountAmount = inputCode.includes("100") ? 100 : 50; 
+          const discountAmount = inputCode.includes("100") ? 100 : inputCode === "PANKAJ50" ? 50 : basePrice * 0.10;
           const finalPrice = basePrice - discountAmount;
           setDiscountedPrice(`₹ ${finalPrice.toFixed(2)} INR`);
         }
@@ -206,7 +206,13 @@ useEffect(() => {
         localStorage.removeItem('active_coupon');
         setDiscountedPrice(null);
         // Dispatch even on failure to clear any old codes from the cart UI
+                // Fire once immediately
         window.dispatchEvent(new Event("coupon-applied"));
+
+        // Fire again after delay to ensure CartContext catches it
+        setTimeout(() => {
+          window.dispatchEvent(new Event("coupon-applied"));
+        }, 300);
       }
     }, 600);
   };
@@ -330,11 +336,19 @@ useEffect(() => {
         sku: product.sku,
       });
     }
-    setQuantity(1);
-    
-    // ✅ TRIGGER NOTIFICATION
+   setQuantity(1);
+
+    // Fire coupon event so CartContext picks up discount after item is added
+    if (coupon.trim() !== "") {
+      setTimeout(() => {
+        window.dispatchEvent(new Event("coupon-applied"));
+      }, 200);
+      setTimeout(() => {
+        window.dispatchEvent(new Event("coupon-applied"));
+      }, 600);
+    }
+
     setShowNotification(true);
-    
     setTimeout(() => {
       setShowNotification(false);
     }, 3000);
