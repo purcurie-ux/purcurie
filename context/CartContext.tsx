@@ -349,14 +349,14 @@ const createCheckout = async () => {
     }
   };
 
-  const buyNow = async (item: Omit<CartItem, "quantity">) => {
+  const buyNow = async (item: Omit<CartItem, "quantity">, buyQuantity: number = 1) => {
     setBuyNowLoading(true);
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          lineItems: [{ variantId: item.variantId, quantity: quantity }],
+        lineItems: [{ variantId: item.variantId, quantity: buyQuantity }],
         }),
       });
 
