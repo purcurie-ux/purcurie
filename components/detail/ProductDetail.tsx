@@ -238,9 +238,8 @@ useEffect(() => {
 
  const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
-    
-    // 1. Add the item to the cart
-   addToCart({
+    const finalQuantity = typeof quantity === 'number' ? quantity : 1;
+    addToCart({
       variantId: product.skuId,
       productId: product.productId,
       title: product.title,
@@ -249,7 +248,6 @@ useEffect(() => {
       sku: product.sku,
     }, finalQuantity);
 
-    // 2. Immediately go to the cart page
     window.location.href = "/cart"; 
   };
 
@@ -297,7 +295,7 @@ useEffect(() => {
     document.head.appendChild(script);
   };
 
-  
+
   // ✅ Multiple retries to catch slow script + slow navigation
   refreshJunip();
   const t1 = setTimeout(refreshJunip, 300);
@@ -374,6 +372,7 @@ useEffect(() => {
         price: product.price,
         image: product.mainImage,
         sku: product.sku,
+        
       });
     }
    setQuantity(1);
