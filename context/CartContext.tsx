@@ -85,8 +85,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => { setIsMounted(true); }, []);
 
-  useEffect(() => {
-    if (isMounted) saveToStorage(items);
+useEffect(() => {
+    if (isMounted) {
+      saveToStorage(items);
+      // ✅ After items save, re-sync itemsRef immediately
+      itemsRef.current = items;
+    }
   }, [items, isMounted]);
 
  
@@ -196,17 +200,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for coupon applied from product page
    // Listen for custom event from product page
-   const handleCouponApplied = () => {
-      setTimeout(() => {
-        const savedCode = localStorage.getItem("active_coupon");
-        if (savedCode) {
-          setDiscountCode(savedCode);
-          if (itemsRef.current.length > 0) {
-            runValidation(savedCode, itemsRef.current);
-          }
+  const handleCouponApplied = () => {
+    // ✅ Wait longer so itemsRef.current has the latest cart state
+    setTimeout(() => {
+      const savedCode = localStorage.getItem("active_coupon");
+      if (savedCode) {
+        setDiscountCode(savedCode);
+        if (itemsRef.current.length > 0) {
+          // ✅ Reset guard so validation always runs fresh
+          isValidatingRef.current = false;
+          runValidation(savedCode, itemsRef.current);
         }
-      }, 200);
-    };
+      }
+    }, 800); // ✅ Increased from 200ms to 800ms
+  };
     window.addEventListener("coupon-applied", handleCouponApplied);
 
     const handleCouponRemoved = () => {

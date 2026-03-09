@@ -269,24 +269,35 @@ useEffect(() => {
 
 useEffect(() => {
   const refreshJunip = () => {
-    if (window.Junip && typeof window.Junip.init === 'function') {
-      window.Junip.init();
+    if (typeof window !== "undefined" && window.Junip) {
+      if (typeof window.Junip.init === "function") {
+        window.Junip.init();
+      }
+      // ✅ Also try load() which re-scans DOM for new widgets
+      if (typeof window.Junip.load === "function") {
+        window.Junip.load();
+      }
     }
   };
 
+  // ✅ Multiple retries to catch slow script + slow navigation
   refreshJunip();
-  const timer = setTimeout(refreshJunip, 500);
+  const t1 = setTimeout(refreshJunip, 300);
+  const t2 = setTimeout(refreshJunip, 800);
+  const t3 = setTimeout(refreshJunip, 1500); // final fallback
 
   // ✅ Re-init after review is submitted
   const handleReviewSubmit = () => {
     setTimeout(refreshJunip, 1000);
-    setTimeout(refreshJunip, 3000); // retry again in case of slow API
+    setTimeout(refreshJunip, 3000);
   };
 
   window.addEventListener("junip:review_submitted", handleReviewSubmit);
-  
+
   return () => {
-    clearTimeout(timer);
+    clearTimeout(t1);
+    clearTimeout(t2);
+    clearTimeout(t3);
     window.removeEventListener("junip:review_submitted", handleReviewSubmit);
   };
 }, [product.productId]);
