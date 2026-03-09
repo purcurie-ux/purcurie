@@ -9,6 +9,7 @@ import WebflowInit from "@/components/WebflowInit";
 import WebflowPageId from "@/components/WebflowPageId";
 import { CartProvider } from "@/context/CartContext";
 import ScrollTrigger from "@/components/ui/ScrollTrigger";
+import ClientInit from "@/components/ClientInit";
 
 export const metadata: Metadata = {
   title: "PurCurie | Pure Care For Skin",
@@ -99,6 +100,7 @@ export default function RootLayout({
       {/*         BODY AREA         */}
       {/* ------------------------- */}
       <body>
+        <ClientInit />
         <ScrollTrigger />
         <WebflowPageId />
         <WebflowInit />
@@ -138,4 +140,5 @@ export default function RootLayout({
       </body>
     </html>
   );
+  
 }
