@@ -24,7 +24,7 @@ interface CartContextType {
   checkoutUrl: string | null;
   createCheckout: () => Promise<void>;
   isCheckoutLoading: boolean;
-  buyNow: (item: Omit<CartItem, "quantity">, quantity?: number) => Promise<void>;
+  buyNow: (item: Omit<CartItem, "quantity">, buyQuantity?: number) => Promise<void>;
   buyNowLoading: boolean;
   discountCode: string;
   setDiscountCode: React.Dispatch<React.SetStateAction<string>>;
