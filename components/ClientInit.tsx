@@ -9,10 +9,11 @@ export default function ClientInit() {
     checkAndClearCache();
 
     // ✅ Junip init — runs after script loads
-    const initJunip = () => {
+  const initJunip = () => {
       if (typeof window !== "undefined" && window.Junip) {
-        if (typeof window.Junip.init === "function") window.Junip.init();
-        if (typeof window.Junip.load === "function") window.Junip.load();
+        const junip = window.Junip as any; // ✅ bypasses TypeScript strict check
+        if (typeof junip.init === "function") junip.init();
+        if (typeof junip.load === "function") junip.load();
       }
     };
 

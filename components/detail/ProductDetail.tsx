@@ -270,16 +270,11 @@ useEffect(() => {
 useEffect(() => {
   const refreshJunip = () => {
     if (typeof window !== "undefined" && window.Junip) {
-      if (typeof window.Junip.init === "function") {
-        window.Junip.init();
-      }
-      // ✅ Also try load() which re-scans DOM for new widgets
-      if (typeof window.Junip.load === "function") {
-        window.Junip.load();
-      }
+      const junip = window.Junip as any; // ✅ bypasses TypeScript strict check
+      if (typeof junip.init === "function") junip.init();
+      if (typeof junip.load === "function") junip.load();
     }
   };
-
   // ✅ Multiple retries to catch slow script + slow navigation
   refreshJunip();
   const t1 = setTimeout(refreshJunip, 300);
