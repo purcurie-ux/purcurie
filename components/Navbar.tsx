@@ -182,30 +182,30 @@ const closeSearch = (clearQuery = true) => {
           color: #fff !important;
         }
 
-        /* Mobile only: Target screen widths below 991px */
+   /* Mobile only: Target screen widths below 991px */
         @media screen and (max-width: 991px) {
-          /* 1. Reduce the gap between Contact Us and Login */
-          .nav-menu .nav-link {
-            padding-top: 10px !important;    /* Shrinks top space */
-            padding-bottom: 0px !important;  /* Shrinks bottom space */
-            margin-bottom: 0 !important;     /* Removes extra margin */
-          }
-
-          /* 2. Style the specific divider line */
-          .nav-link.login-link {
-            border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
-            margin-top: 10px !important;       /* Small gap above the line */
-            padding-top: 10px !important;    /* Space between line and 'Login' text */
-            display: block !important;
-            width: 90% !important;           /* Makes the line wider */
-            margin-left: auto !important;    /* Centers the wider line */
-            margin-right: auto !important;   /* Centers the wider line */
-          }
-
-          /* Ensure Contact us doesn't have a competing line */
-          .nav-menu .nav-link:nth-of-type(4) {
-            border-bottom: none !important;
+          /* 1. Global Reset for all links to remove double lines */
+          .nav-menu .nav-link,
+          .menu-wrap .nav-link {
+            padding-top: 15px !important;
             padding-bottom: 15px !important;
+            margin: 0 !important;
+            border: none !important; /* Kill all default borders first */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; /* Force single bottom line */
+            width: 100% !important;
+            display: block !important;
+          }
+
+          /* 2. Remove the line from the item BEFORE login (Contact Us) */
+          .nav-menu .nav-link:nth-of-type(4),
+          .menu-wrap .nav-link:nth-of-type(4) {
+            border-bottom: none !important;
+          }
+
+          /* 3. Ensure Login has its line on top to bridge the gap correctly */
+          .nav-link.login-link,
+          .menu-wrap .nav-link.login-link {
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
           }
         }
 
