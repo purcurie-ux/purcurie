@@ -24,7 +24,7 @@ interface CartContextType {
   checkoutUrl: string | null;
   createCheckout: () => Promise<void>;
   isCheckoutLoading: boolean;
-  buyNow: (item: Omit<CartItem, "quantity">) => Promise<void>;
+  buyNow: (item: Omit<CartItem, "quantity">, quantity?: number) => Promise<void>;
   buyNowLoading: boolean;
   discountCode: string;
   setDiscountCode: React.Dispatch<React.SetStateAction<string>>;
@@ -356,7 +356,7 @@ const createCheckout = async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          lineItems: [{ variantId: item.variantId, quantity: 1 }],
+          lineItems: [{ variantId: item.variantId, quantity: quantity }],
         }),
       });
 

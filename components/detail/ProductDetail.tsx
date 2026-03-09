@@ -922,8 +922,10 @@ useEffect(() => {
                   </button>
                   
                   {/* 👇 FIXED: Using your exact working buyNow function */}
-                  <button 
-                    onClick={() =>
+                 <button 
+                    onClick={() => {
+                      const finalQty = typeof quantity === 'number' ? quantity : 1;
+                      setQuantity(1); // ✅ Reset to 1 after click
                       buyNow({
                         variantId: product.skuId,
                         productId: product.productId,
@@ -931,8 +933,8 @@ useEffect(() => {
                         price: product.price,
                         image: product.mainImage,
                         sku: product.sku,
-                      })
-                    }
+                      }, finalQty);
+                    }}
                     disabled={buyNowLoading}
                     className="btn-custom btn-buy"
                     style={{ 
