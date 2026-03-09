@@ -15,7 +15,7 @@ interface CartItem {
 interface CartContextType {
   items: CartItem[];
   isOpen: boolean;
-  addToCart: (item: Omit<CartItem, "quantity">) => void;
+  addToCart: (item: Omit<CartItem, "quantity">, qty?: number) => void;
   removeFromCart: (variantId: string) => void;
   updateQuantity: (variantId: string, quantity: number) => void;
   openCart: () => void;
@@ -271,15 +271,15 @@ const applyDiscount = async () => {
 
   
 
-  const addToCart = (item: Omit<CartItem, "quantity">) => {
+  const addToCart = (item: Omit<CartItem, "quantity">, qty: number = 1) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.variantId === item.variantId);
       if (existingItem) {
         return prevItems.map((i) =>
-          i.variantId === item.variantId ? { ...i, quantity: i.quantity + 1 } : i
+          i.variantId === item.variantId ? { ...i, quantity: i.quantity + qty } : i
         );
       }
-      return [...prevItems, { ...item, quantity: 1 }];
+      return [...prevItems, { ...item, quantity: qty }];
     });
   };
 

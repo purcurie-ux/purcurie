@@ -107,7 +107,7 @@ function ProductDetail({
   similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
   
-  const { addToCart, buyNow, buyNowLoading } = useCart();
+  const { addToCart, buyNow, buyNowLoading, openCart } = useCart();
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -118,6 +118,7 @@ function ProductDetail({
 
   // ✅ 2. Notification State
   const [showNotification, setShowNotification] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   // ✅ 3. Mobile Swipe State
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -239,17 +240,14 @@ useEffect(() => {
     e.preventDefault();
     
     // 1. Add the item to the cart
-    const finalQuantity = typeof quantity === 'number' ? quantity : 1;
-    for (let i = 0; i < finalQuantity; i++) {
-      addToCart({
-        variantId: product.skuId,
-        productId: product.productId,
-        title: product.title,
-        price: product.price,
-        image: product.mainImage,
-        sku: product.sku,
-      });
-    }
+   addToCart({
+      variantId: product.skuId,
+      productId: product.productId,
+      title: product.title,
+      price: product.price,
+      image: product.mainImage,
+      sku: product.sku,
+    }, finalQuantity);
 
     // 2. Immediately go to the cart page
     window.location.href = "/cart"; 
@@ -269,12 +267,37 @@ useEffect(() => {
 
 useEffect(() => {
   const refreshJunip = () => {
-    if (typeof window !== "undefined" && window.Junip) {
-      const junip = window.Junip as any; // ✅ bypasses TypeScript strict check
+    if (typeof window === "undefined") return;
+
+    // ✅ If Junip already loaded, re-init
+    if (window.Junip) {
+      const junip = window.Junip as any;
       if (typeof junip.init === "function") junip.init();
       if (typeof junip.load === "function") junip.load();
+      if (typeof junip.render === "function") junip.render();
+      return;
     }
+
+    // ✅ If Junip not loaded (client-side nav), remove old script and re-inject
+    const existingScript = document.querySelector(
+      'script[src*="juniphq.com"]'
+    );
+    if (existingScript) existingScript.remove();
+
+    const script = document.createElement("script");
+    script.src = "https://widgets.juniphq.com/v1/junip_shopify.js";
+    script.async = true;
+    script.onload = () => {
+      const junip = (window as any).Junip;
+      if (junip) {
+        if (typeof junip.init === "function") junip.init();
+        if (typeof junip.load === "function") junip.load();
+      }
+    };
+    document.head.appendChild(script);
   };
+
+  
   // ✅ Multiple retries to catch slow script + slow navigation
   refreshJunip();
   const t1 = setTimeout(refreshJunip, 300);
@@ -323,6 +346,8 @@ useEffect(() => {
 
   const handleAddToCart = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isAddingToCart) return; // 🔒 Block rapid clicks
+    setIsAddingToCart(true);
     const finalQuantity = typeof quantity === 'number' ? quantity : 1;
 
       // 1. Apply the discount to Shopify's backend first
@@ -363,10 +388,15 @@ useEffect(() => {
       }, 600);
     }
 
-    setShowNotification(true);
+  setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
     }, 3000);
+
+    setTimeout(() => {
+      openCart();
+      setIsAddingToCart(false); // 🔓 Unlock after cart opens
+    }, 400);
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -914,6 +944,59 @@ useEffect(() => {
               </p>
             )}
           </div>
+               {/* ✅ SLEEK ACTION BUTTONS (With Working Logic) */}
+                {/* ✅ QUANTITY SELECTOR */}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+                  <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34" }}>QTY</label>
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #e5e5e5",
+                    borderRadius: "50px",
+                    padding: "4px 8px",
+                    gap: "8px",
+                    height: "40px",
+                    backgroundColor: "#fff",
+                  }}>
+                    {/* Minus */}
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(prev => Math.max(1, Number(prev) - 1))}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+
+                    {/* Number */}
+                    <input
+                      type="number"
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      onBlur={handleBlur}
+                      style={{
+                        width: "36px",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "0",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        outline: "none",
+                        background: "transparent",
+                        MozAppearance: "textfield",
+                      }}
+                    />
+
+                    {/* Plus */}
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(prev => Number(prev) + 1)}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                  </div>
+                </div>
+
                {/* ✅ SLEEK ACTION BUTTONS (With Working Logic) */}
                 <div className="action-buttons-container">
                   <button onClick={handleAddToCart} className="btn-custom btn-add">

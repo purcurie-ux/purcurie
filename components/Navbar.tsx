@@ -615,26 +615,44 @@ function CartModal() {
   return (
     <>
       {isOpen && (
-        <div
+     <div
           style={{
             position: "fixed",
             top: 0, left: 0, right: 0, bottom: 0,
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             zIndex: 9998,
+            opacity: isOpen ? 1 : 0,
+            visibility: isOpen ? "visible" : "hidden",
+            transition: "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s",
           }}
           onClick={closeCart}
         />
       )}
 
       <div
-        style={{ display: isOpen ? "flex" : "none", zIndex: 9999 }}
+        style={{
+          display: "flex",
+          zIndex: 9999,
+          visibility: isOpen ? "visible" : "hidden",
+          pointerEvents: isOpen ? "auto" : "none",
+        }}
         className="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal"
       >
         <div
-          data-node-type="commerce-cart-container"
+        data-node-type="commerce-cart-container"
           role="dialog"
           className="w-commerce-commercecartcontainer"
-          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            transform: isOpen ? "translateX(0)" : "translateX(100%)",
+            transition: isOpen 
+              ? "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)" 
+              : "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+            willChange: "transform",
+            boxShadow: isOpen ? "-10px 0 50px rgba(0,0,0,0.15)" : "none",
+          }}
         >
           <div className="w-commerce-commercecartheader" style={{ flexShrink: 0 }}>
             <h4 className="w-commerce-commercecartheading">Your Cart</h4>
@@ -693,6 +711,12 @@ function CartModal() {
                         type="text"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !discountedTotal) {
+                            e.preventDefault();
+                            applyDiscount();
+                          }
+                        }}
                         placeholder="Promo code"
                         disabled={!!discountedTotal}
                         style={{
