@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
-import { ChevronLeft, ChevronRight, Award, Gem, Truck, ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, Award, Gem, Truck, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 
@@ -111,6 +111,7 @@ function ProductDetail({
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [openSection, setOpenSection] = useState<string | null>(null);
   
   // ✅ 1. Cursor Tracking State
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -128,6 +129,13 @@ function ProductDetail({
   const [coupon, setCoupon] = useState("");
   const [couponStatus, setCouponStatus] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState<string | null>(null); // Add this
+  // Helper to extract sections from the description string
+  const getSection = (desc: string, title: string) => {
+  const parts = desc.split(title);
+  if (parts.length < 2) return null;
+  const content = parts[1].split(/[A-Z]{2,}\s[A-Z]{2,}/)[0]; // Stops at next CAPITAL heading
+  return content.trim();
+};
 
 useEffect(() => {
     const handleCouponRemoved = () => {
@@ -701,7 +709,7 @@ useEffect(() => {
         .action-buttons-container {
           display: flex;
           gap: 12px;
-          margin-bottom: 5px;
+          margin-bottom: 1px;
           max-width: 450px; /* Prevents them from getting huge on desktop */
         }
 
@@ -891,10 +899,62 @@ useEffect(() => {
               )}
             </div>
               </div>
+                {/* ✅ QUANTITY SELECTOR */}
+                {/* <div style={{ display: "flex", alignItems: "center", gap: "1px", marginBottom: "1px" }}>
+                  <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34" }}></label>
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "2px solid #1d2c34",
+                    borderRadius: "50px",
+                    padding: "4px 8px",
+                    gap: "10px",
+                    height: "40px",
+                    backgroundColor: "#fff",
+                  }}>
+                    {/* Minus */}
+                    {/* <button
+                      type="button"
+                      onClick={() => setQuantity(prev => Math.max(1, Number(prev) - 1))}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button> */}
 
-              <div className="product-wrapper" style={{ marginTop: "1px" }}>
+                    {/* Number */}
+                    {/* <input
+                      type="number"
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      onBlur={handleBlur}
+                      style={{
+                        width: "36px",
+                        textAlign: "center",
+                        border: "none",
+                        padding: "0",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        outline: "none",
+                        background: "transparent",
+                        MozAppearance: "textfield",
+                      }}
+                    /> */}
+
+                    {/* Plus */}
+                    {/* <button
+                      type="button"
+                      onClick={() => setQuantity(prev => Number(prev) + 1)}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                  </div>
+                </div> */} 
+
+{/* coupon */}
+              <div className="product-wrapper" style={{ marginTop: "0px" }}>
             <div style={{ marginBottom: "1px" }}>
-            <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34", display: "block", marginBottom: "8px" }}>
+            <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34", display: "block", marginBottom: "1px" }}>
               HAVE A DISCOUNT CODE?
             </label>
             <div style={{ display: "flex", gap: "8px" }}>
@@ -944,58 +1004,7 @@ useEffect(() => {
             )}
           </div>
                {/* ✅ SLEEK ACTION BUTTONS (With Working Logic) */}
-                {/* ✅ QUANTITY SELECTOR */}
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-                  <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34" }}>QTY</label>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    border: "1px solid #e5e5e5",
-                    borderRadius: "50px",
-                    padding: "4px 8px",
-                    gap: "8px",
-                    height: "40px",
-                    backgroundColor: "#fff",
-                  }}>
-                    {/* Minus */}
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(prev => Math.max(1, Number(prev) - 1))}
-                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </button>
-
-                    {/* Number */}
-                    <input
-                      type="number"
-                      value={quantity}
-                      onChange={handleQuantityChange}
-                      onBlur={handleBlur}
-                      style={{
-                        width: "36px",
-                        textAlign: "center",
-                        border: "none",
-                        padding: "0",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        outline: "none",
-                        background: "transparent",
-                        MozAppearance: "textfield",
-                      }}
-                    />
-
-                    {/* Plus */}
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(prev => Number(prev) + 1)}
-                      style={{ background: "none", border: "none", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center" }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </button>
-                  </div>
-                </div>
-
+              
                {/* ✅ SLEEK ACTION BUTTONS (With Working Logic) */}
                 <div className="action-buttons-container">
                   <button onClick={handleAddToCart} className="btn-custom btn-add">
@@ -1028,16 +1037,55 @@ useEffect(() => {
                   </button>
                 </div>
                 
-                {product.descriptionHtml ? (
-                  <div 
-                    className="product-description-content"
-                    dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-                    style={{ marginTop: "1px" }}
-                    
-                  />
-                ) : (
-                  <p className="single-text">{product.description}</p>
-                )}
+              {/* ✅ DYNAMIC MULTI-SECTION ACCORDION */}
+        <div style={{ marginTop: "1px" }}>
+          
+          {/* 1. WHAT IS IT */}
+          <div className="accordion-item">
+            <button className="accordion-trigger" onClick={() => setOpenSection(openSection === 'what' ? null : 'what')}>
+              <span className="accordion-title">WHAT IS IT</span>
+              <ChevronDown size={22} style={{ transform: openSection === 'what' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
+            </button>
+            <div style={{ display: openSection === 'what' ? 'block' : 'none' }} className="accordion-content">
+               <p>{getSection(product.description, "WHAT IS IT") || product.description.split("WHAT IT DOES")[0]}</p>
+            </div>
+          </div>
+
+          {/* 2. WHAT IT DOES */}
+          <div className="accordion-item">
+            <button className="accordion-trigger" onClick={() => setOpenSection(openSection === 'does' ? null : 'does')}>
+              <span className="accordion-title">WHAT IT DOES</span>
+              <ChevronDown size={22} style={{ transform: openSection === 'does' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
+            </button>
+            <div style={{ display: openSection === 'does' ? 'block' : 'none' }} className="accordion-content">
+               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHAT IT DOES") || "Refer to description." }} />
+            </div>
+          </div>
+
+          {/* 3. HOW IT DOES / KEY INGREDIENTS */}
+          <div className="accordion-item">
+            <button className="accordion-trigger" onClick={() => setOpenSection(openSection === 'how' ? null : 'how')}>
+              <span className="accordion-title">HOW IT DOES</span>
+              <ChevronDown size={22} style={{ transform: openSection === 'how' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
+            </button>
+            <div style={{ display: openSection === 'how' ? 'block' : 'none' }} className="accordion-content">
+               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "HOW IT DOES") || "Refer to description." }} />
+            </div>
+          </div>
+
+          {/* 4. WHY YOU'LL LOVE IT */}
+          <div className="accordion-item">
+            <button className="accordion-trigger" onClick={() => setOpenSection(openSection === 'love' ? null : 'love')}>
+              <span className="accordion-title">WHY YOU'LL LOVE IT</span>
+              <ChevronDown size={22} style={{ transform: openSection === 'love' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
+            </button>
+            <div style={{ display: openSection === 'love' ? 'block' : 'none' }} className="accordion-content">
+               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHY YOU'LL LOVE IT") || "Refer to description." }} />
+            </div>
+          </div>
+
+        
+        </div>
 
                 <div className="product-main-data">
                   <div className="product-info top">
