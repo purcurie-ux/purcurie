@@ -25,7 +25,8 @@ async function fetchShopifyData() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!,
+      // Change this line in your fetchShopifyData function:
+      'X-Shopify-Storefront-Access-Token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || '',
     },
     next: { revalidate: 3600 }, // Refreshes every hour
     body: JSON.stringify({ query }),
