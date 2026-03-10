@@ -196,13 +196,12 @@ const closeSearch = (clearQuery = true) => {
             display: block !important;
           }
 
-          /* 2. Remove the line from the item BEFORE login (Contact Us) */
-          .nav-menu .nav-link:nth-of-type(4),
-          .menu-wrap .nav-link:nth-of-type(4) {
-            border-bottom: none !important;
-          }
+           /* 2. FORCE the line on the last item (Login) */
+          .nav-menu .nav-link:last-child,
+          .menu-wrap .nav-link:last-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
 
-          /* 3. Ensure Login has its line on top to bridge the gap correctly */
+          /* 3. Keep the top line on Login to match the double-line bridge look */
           .nav-link.login-link,
           .menu-wrap .nav-link.login-link {
             border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -378,6 +377,9 @@ const closeSearch = (clearQuery = true) => {
               <a href="/product" className="nav-link">
                 Shop
               </a>
+              <a href="/track" className="nav-link">
+                Track Order
+                </a>
               <a href="/contact" className="nav-link">
                 Contact us
               </a>
@@ -525,6 +527,9 @@ style={{
                 </a>
                 <a href="/product" className="nav-link" onClick={closeDesktopMenu}>
                   Shop
+                </a>
+                <a href="/track" className="nav-link">
+                Track Order
                 </a>
                 <a href="/contact" className="nav-link" onClick={closeDesktopMenu}>
                   Contact us
@@ -704,8 +709,18 @@ function CartModal() {
                     padding: "20px", 
                   }}
                 >
-                  {/* Discount Input UI */}
+              {/* Discount Input UI */}
                   <div style={{ marginBottom: "20px" }}>
+                    {/* ✅ New Label Text Added Here */}
+                    <p style={{ 
+                      fontSize: "11px", 
+                      fontWeight: "700", 
+                      color: "#1D2C34", 
+                      marginBottom: "8px", 
+                      letterSpacing: "0.5px" 
+                    }}>
+                      ADD DISCOUNT CODE
+                    </p>
                     <div style={{ display: "flex", gap: "10px" }}>
                       <input
                         type="text"
@@ -722,7 +737,7 @@ function CartModal() {
                         style={{
                           padding: "10px 12px",
                           width: "100%",
-                          border: "1px solid #e5e7eb",
+                          border: "1px solid #1D2C34",
                           borderRadius: "4px",
                           fontSize: "14px",
                           outline: "none",
@@ -919,7 +934,7 @@ function CartItem({ item }: { item: any }) {
         style={{
           display: "flex",
           alignItems: "center",
-          border: "1px solid #e5e7eb",
+          border: "1px solid #1D2C34",
           borderRadius: "50px",
           padding: "4px 8px",
           gap: "8px",

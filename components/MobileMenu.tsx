@@ -23,12 +23,16 @@ export function MobileMenu() {
           <a href="/product" className="nav-link">
             Shop
           </a>
+            <a href="/track" className="nav-link">
+                Track Order
+                </a>
           {/* <a href="/blogs" className="nav-link">
             Blogs
           </a> */}
           <a href="/contact" className="nav-link">
             Contact us
           </a>
+          
           <a 
             href="https://shopify.com/98468430146/account" 
             className="nav-link"
