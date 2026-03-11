@@ -10,7 +10,7 @@ function AboutPage() {
               className="about-info"
             >
               <p className="single-text">
-                We believe skincare is more than just routine — it’s about confidence, self-care, and feeling comfortable in your own skin every day. PurCurie was created with a vision to make high-quality, skin-loving products accessible to everyone, without confusion, false promises, or unnecessary complexity.
+                We believe skincare is more than just routine, it’s about confidence, self-care, and feeling comfortable in your own skin every day. PurCurie was created with a vision to make high-quality, skin-loving products accessible to everyone, without confusion, false promises, or unnecessary complexity.
                 Our goal is simple: to bring you thoughtfully selected skincare and personal care products that nourish, protect, and enhance your natural beauty.
               </p>
               <a
