@@ -32,6 +32,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     const result = await response.json();
+    if (result.errors) {
+    console.error("Shopify API Error:", JSON.stringify(result.errors));
+    }
+    console.log("Shopify Data Received:", !!result.data);
 
     // Safety check: If Shopify returns an error or empty data
     if (!result?.data) {
@@ -48,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/collections/${c.handle}`,
       lastModified: new Date(c.updatedAt),
     }));
+    
 
     return [...staticPages, ...productUrls, ...collectionUrls];
 
