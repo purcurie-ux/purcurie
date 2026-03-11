@@ -23,9 +23,9 @@ export function MobileMenu() {
           <a href="/product" className="nav-link">
             Shop
           </a>
-            <a href="/track" className="nav-link">
-                Track Order
-                </a>
+           <a href="/track/search" className="nav-link">
+            Track Order
+          </a>
           {/* <a href="/blogs" className="nav-link">
             Blogs
           </a> */}

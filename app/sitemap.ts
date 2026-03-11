@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 const SHOPIFY_DOMAIN = 'purcurie.myshopify.com';
-const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
+const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2024-10/graphql.json`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://purcurie.com';
