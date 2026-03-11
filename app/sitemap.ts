@@ -18,9 +18,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Using the exact name you have in Vercel
         'X-Shopify-Storefront-Access-Token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || '',
-      },
+        // Adding this line often fixes "silent" fetch failures
+        'Accept': 'application/json',
+        },
       next: { revalidate: 3600 },
       body: JSON.stringify({
         query: `{
