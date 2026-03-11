@@ -1,16 +1,20 @@
 import { MetadataRoute } from 'next'
 
 const SHOPIFY_DOMAIN = 'purcurie.myshopify.com';
-const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2024-10/graphql.json`;
+// Changed to 2024-01 which is the most stable version for many stores
+const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://purcurie.com';
   
-  // Default pages that always exist
   const staticPages = [
     { url: baseUrl, lastModified: new Date() },
     { url: `${baseUrl}/about`, lastModified: new Date() },
     { url: `${baseUrl}/contact`, lastModified: new Date() },
+    { url: `${baseUrl}/shipping`, lastModified: new Date() },
+    { url: `${baseUrl}/refund`, lastModified: new Date() },
+    { url: `${baseUrl}/terms`, lastModified: new Date() },
+    { url: `${baseUrl}/privacy`, lastModified: new Date() },
   ];
 
   try {
@@ -19,9 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || '',
-        // Adding this line often fixes "silent" fetch failures
         'Accept': 'application/json',
-        },
+      },
       next: { revalidate: 3600 },
       body: JSON.stringify({
         query: `{
@@ -32,33 +35,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     const result = await response.json();
-    if (result.errors) {
-    console.error("Shopify API Error:", JSON.stringify(result.errors));
-    }
-    console.log("Shopify Data Received:", !!result.data);
 
-    // Safety check: If Shopify returns an error or empty data
-    if (!result?.data) {
-      console.warn("Shopify API returned no data, serving static sitemap.");
+    if (result.errors || !result.data) {
+      console.error("Shopify fetch failed. Details:", JSON.stringify(result.errors || "No data"));
       return staticPages;
     }
 
+    // MATCHING YOUR ROUTE: /product/[handle]
     const productUrls = (result.data.products?.nodes || []).map((p: any) => ({
-      url: `${baseUrl}/products/${p.handle}`,
+      url: `${baseUrl}/product/${p.handle}`, 
       lastModified: new Date(p.updatedAt),
     }));
 
+    // MATCHING YOUR ROUTE: /categories/[handle]
     const collectionUrls = (result.data.collections?.nodes || []).map((c: any) => ({
-      url: `${baseUrl}/collections/${c.handle}`,
+      url: `${baseUrl}/categories/${c.handle}`,
       lastModified: new Date(c.updatedAt),
     }));
-    
 
     return [...staticPages, ...productUrls, ...collectionUrls];
 
   } catch (error) {
-    // If the network or fetch fails entirely, the build will still pass!
-    console.error("Sitemap build error:", error);
+    console.error("Sitemap build network error:", error);
     return staticPages;
   }
 }
