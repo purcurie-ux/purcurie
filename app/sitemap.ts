@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next'
 
 const SHOPIFY_DOMAIN = 'purcurie.myshopify.com';
-// Changed to 2024-01 which is the most stable version for many stores
-const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`;
+// Updated to the current 2026 stable version
+const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2026-01/graphql.json`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://purcurie.com';
@@ -36,18 +36,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const result = await response.json();
 
-    if (result.errors || !result.data) {
-      console.error("Shopify fetch failed. Details:", JSON.stringify(result.errors || "No data"));
+    // Debugging logs for Vercel
+    if (result.errors) {
+      console.error("Shopify API Error:", JSON.stringify(result.errors, null, 2));
       return staticPages;
     }
 
-    // MATCHING YOUR ROUTE: /product/[handle]
+    if (!result?.data) {
+      console.warn("No data returned from Shopify.");
+      return staticPages;
+    }
+
+    // MATCHES YOUR LOGS: /product/[handle]
     const productUrls = (result.data.products?.nodes || []).map((p: any) => ({
       url: `${baseUrl}/product/${p.handle}`, 
       lastModified: new Date(p.updatedAt),
     }));
 
-    // MATCHING YOUR ROUTE: /categories/[handle]
+    // MATCHES YOUR LOGS: /categories/[handle]
     const collectionUrls = (result.data.collections?.nodes || []).map((c: any) => ({
       url: `${baseUrl}/categories/${c.handle}`,
       lastModified: new Date(c.updatedAt),
