@@ -377,7 +377,7 @@ const closeSearch = (clearQuery = true) => {
               <a href="/product" className="nav-link">
                 Shop
               </a>
-              <a href="/track/search" className="nav-link">
+              <a href="/track" className="nav-link">
               Track Order
             </a>
               <a href="/contact" className="nav-link">
@@ -528,7 +528,7 @@ style={{
                 <a href="/product" className="nav-link" onClick={closeDesktopMenu}>
                   Shop
                 </a>
-               <a href="/track/search" className="nav-link">
+               <a href="/track" className="nav-link">
                 Track Order
               </a>
                 <a href="/contact" className="nav-link" onClick={closeDesktopMenu}>
