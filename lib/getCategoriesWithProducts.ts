@@ -46,7 +46,7 @@ export async function getCategoriesWithProducts() {
   if (!data?.collections) return [];
 
   // 🚫 EXCLUDE collections you don't want
-  const excludedHandles = ["frontpage", "best-seller", "new arrivals"];
+  const excludedHandles = ["frontpage", "best-seller", "new-arrivals"];
 
   return data.collections.edges
     .map((e: any) => e.node)
