@@ -137,6 +137,22 @@ export default function RootLayout({
           src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/js/webflow.8a267672.347e9cb06ba68506.js"
           strategy="afterInteractive"
         />
+
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-RCPN5XWR33"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-RCPN5XWR33');
+          `}
+        </Script>
+        
       </body>
     </html>
   );
