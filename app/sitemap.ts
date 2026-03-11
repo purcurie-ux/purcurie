@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-const SHOPIFY_DOMAIN = 'purcurie.myshopify.com';
+const SHOPIFY_DOMAIN = 'pur-curie.myshopify.com';
 // Updated to the current 2026 stable version
 const GRAPHQL_URL = `https://${SHOPIFY_DOMAIN}/api/2026-01/graphql.json`;
 
