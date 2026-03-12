@@ -110,7 +110,7 @@ export default function RootLayout({
           <Footer />
         </CartProvider>
 
-        --- JUNIP SCRIPT ---
+      
         <Script 
           src="https://widgets.juniphq.com/v1/junip_shopify.js" 
           strategy="afterInteractive" 
@@ -152,7 +152,7 @@ export default function RootLayout({
             gtag('config', 'G-RCPN5XWR33');
           `}
         </Script>
-        
+
       </body>
     </html>
   );
