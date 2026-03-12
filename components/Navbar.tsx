@@ -289,7 +289,7 @@ const closeSearch = (clearQuery = true) => {
               className="brand w-inline-block w--current"
             >
               <img
-                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1768757461"
+                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1773346756"
                 loading="lazy"
                 alt="Purcurie"
                 style={{ height: "40px", width: "auto", objectFit: "contain" }}
