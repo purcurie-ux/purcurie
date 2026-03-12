@@ -20,7 +20,7 @@ export default function OkendoHomeReviews() {
             <img src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg" alt="Icon" />
             <div>Customer Stories</div>
           </div>
-          <h2 className="section-heading">PurCurie Reviews</h2>
+          <h2 className="section-heading">Purcurie Reviews</h2>
         </div>
 
         {/* This div tells Okendo to inject the Store-wide reviews here */}

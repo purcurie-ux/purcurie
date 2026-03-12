@@ -17,7 +17,7 @@ function Refund() {
             <div className="info-data">
               <h3>Introduction</h3>
               <p className="single-text">
-                This Refund and Return Policy governs the return, replacement and refund of products purchased from PurCurie (“we”, “us”, “our”) through our website, mobile site or related services (collectively referred to as the “Platform”). By placing an order on the Platform, you agree to the terms of this policy.
+                This Refund and Return Policy governs the return, replacement and refund of products purchased from Purcurie (“we”, “us”, “our”) through our website, mobile site or related services (collectively referred to as the “Platform”). By placing an order on the Platform, you agree to the terms of this policy.
               </p>
             </div>
 
@@ -25,7 +25,7 @@ function Refund() {
             <div className="info-data">
               <h3>Eligibility for Returns</h3>
               <p className="single-text">
-                PurCurie sells skincare, beauty, personal care and cosmetics products which are sensitive in nature and meant for personal use. For reasons of hygiene, safety and quality assurance, we do not accept returns for opened, used or tampered products.
+                Purcurie sells skincare, beauty, personal care and cosmetics products which are sensitive in nature and meant for personal use. For reasons of hygiene, safety and quality assurance, we do not accept returns for opened, used or tampered products.
                 <br /><br />
                 A return, replacement or refund may be initiated only if the product delivered is damaged, defective, expired, incorrect, or missing.
                 <br /><br />
@@ -45,7 +45,7 @@ function Refund() {
             <div className="info-data">
               <h3>How to Raise a Request</h3>
               <p className="single-text">
-                To initiate a return or refund, you must contact PurCurie customer support at support@purcurie.com with your order number, product details and clear images or video showing the issue with the product. Our team will review the request and may ask for additional information before approving the claim.
+                To initiate a return or refund, you must contact Purcurie customer support at support@purcurie.com with your order number, product details and clear images or video showing the issue with the product. Our team will review the request and may ask for additional information before approving the claim.
               </p>
             </div>
 
@@ -53,7 +53,7 @@ function Refund() {
             <div className="info-data">
               <h3>Verification and Approval</h3>
               <p className="single-text">
-                All requests are subject to verification by PurCurie. If the claim is found to be valid, we will arrange for a replacement or refund as applicable. PurCurie reserves the right to reject any request that does not meet the conditions of this policy.
+                All requests are subject to verification by Purcurie. If the claim is found to be valid, we will arrange for a replacement or refund as applicable. Purcurie reserves the right to reject any request that does not meet the conditions of this policy.
               </p>
             </div>
 
@@ -91,7 +91,7 @@ function Refund() {
               <p className="single-text">
                 For any queries related to returns or refunds, you may contact:
                 <br /><br />
-                <strong>PurCurie Customer Support</strong><br />
+                <strong>Purcurie Customer Support</strong><br />
                 Email: support@purcurie.com
               </p>
             </div>
@@ -100,7 +100,7 @@ function Refund() {
             <div className="info-data">
               <h3>Policy Changes</h3>
               <p className="single-text">
-                PurCurie reserves the right to modify or update this Refund & Return Policy at any time. Any changes will be effective once published on this page.
+                Purcurie reserves the right to modify or update this Refund & Return Policy at any time. Any changes will be effective once published on this page.
               </p>
             </div>
 

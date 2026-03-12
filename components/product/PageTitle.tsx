@@ -5,7 +5,7 @@ interface PageTitleProps {
 
 function PageTitle({
   title = "New Arrivals",
-  description = "Explore fresh arrivals crafted to elevate your makeup and skincare game.",
+  description = "The latest cosmetics and beauty essentials, curated for modern beauty",
 }: PageTitleProps) {
   return (
     <div className="page-title">

@@ -8,8 +8,8 @@ export function HeroSection() {
             style={{ opacity: 0 }}
             className="hero-heading"
           >
-            Pure Care <br /> 
-            For Skin
+            Modern Beauty<br></br>
+            for Everyday
           </h2>
           <div className="hero-wrap">
             <p
@@ -17,7 +17,7 @@ export function HeroSection() {
               style={{ opacity: 0 }}
               className="hero-info"
             >
-              Thoughtfully selected skincare and beauty products designed to support your daily routine and natural glow.
+              Discover high-quality cosmetics and beauty tools designed for effortless everyday beauty.
             </p>
             <div className="hero-small-img">
               <img
@@ -93,7 +93,7 @@ export function HeroSection() {
                   />
                 </div>
               </div>
-              <div>Growing community of skincare lovers</div>
+              <div>Growing community of modern cosmetics lovers</div>
             </div>
           </div>
           <div

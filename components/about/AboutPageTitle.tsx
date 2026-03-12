@@ -13,7 +13,7 @@ function AboutPageTitle() {
             }}
             className="main-heading"
           >
-            About PurCurie
+            About Purcurie
           </h1>
         </div>
       </div>

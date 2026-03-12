@@ -17,15 +17,15 @@ function Terms() {
             <div className="info-data">
               <h3>Introduction</h3>
               <p className="single-text">
-                These Terms and Conditions (“Terms”) govern your access to and use of the PurCurie website, mobile site and related services (collectively referred to as the “Platform”). By accessing or using the Platform or placing an order, you agree to be bound by these Terms. If you do not agree to these Terms, you must not use the Platform.
+                These Terms and Conditions (“Terms”) govern your access to and use of the Purcurie website, mobile site and related services (collectively referred to as the “Platform”). By accessing or using the Platform or placing an order, you agree to be bound by these Terms. If you do not agree to these Terms, you must not use the Platform.
               </p>
             </div>
 
             {/* ABOUT */}
             <div className="info-data">
-              <h3>About PurCurie</h3>
+              <h3>About Purcurie</h3>
               <p className="single-text">
-                PurCurie is a skincare and personal care brand engaged in the business of selling beauty, wellness and grooming products through its digital Platform. PurCurie reserves the right to modify, suspend or discontinue any part of its services at any time without prior notice.
+                Purcurie is a skincare and personal care brand engaged in the business of selling beauty, wellness and grooming products through its digital Platform. Purcurie reserves the right to modify, suspend or discontinue any part of its services at any time without prior notice.
               </p>
             </div>
 
@@ -49,7 +49,7 @@ function Terms() {
             <div className="info-data">
               <h3>Product Information</h3>
               <p className="single-text">
-                PurCurie makes every effort to display product details, images and descriptions accurately. However, slight variations in packaging, color, fragrance or appearance may occur due to manufacturing batches or digital display differences. Such variations shall not be considered defects.
+                Purcurie makes every effort to display product details, images and descriptions accurately. However, slight variations in packaging, color, fragrance or appearance may occur due to manufacturing batches or digital display differences. Such variations shall not be considered defects.
               </p>
             </div>
 
@@ -57,7 +57,7 @@ function Terms() {
             <div className="info-data">
               <h3>Pricing and Payments</h3>
               <p className="single-text">
-                All prices on the Platform are displayed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise. PurCurie reserves the right to change prices at any time without prior notice. Payments must be made through the payment methods available on the Platform. PurCurie does not store card or banking details.
+                All prices on the Platform are displayed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise. Purcurie reserves the right to change prices at any time without prior notice. Payments must be made through the payment methods available on the Platform. Purcurie does not store card or banking details.
               </p>
             </div>
 
@@ -65,7 +65,7 @@ function Terms() {
             <div className="info-data">
               <h3>Order Acceptance</h3>
               <p className="single-text">
-                An order is considered accepted only after payment is successfully processed and a confirmation is issued. PurCurie reserves the right to cancel or refuse any order due to stock unavailability, pricing errors, suspected fraud or other operational reasons.
+                An order is considered accepted only after payment is successfully processed and a confirmation is issued. Purcurie reserves the right to cancel or refuse any order due to stock unavailability, pricing errors, suspected fraud or other operational reasons.
               </p>
             </div>
 
@@ -73,7 +73,7 @@ function Terms() {
             <div className="info-data">
               <h3>Shipping and Delivery</h3>
               <p className="single-text">
-                PurCurie will make reasonable efforts to deliver products within the estimated time displayed. However, delivery timelines are not guaranteed and delays may occur due to courier, weather, or other factors beyond our control.
+                Purcurie will make reasonable efforts to deliver products within the estimated time displayed. However, delivery timelines are not guaranteed and delays may occur due to courier, weather, or other factors beyond our control.
               </p>
             </div>
 
@@ -81,7 +81,7 @@ function Terms() {
             <div className="info-data">
               <h3>Returns and Refunds</h3>
               <p className="single-text">
-                All returns, replacements and refunds are governed by the PurCurie Refund & Return Policy available on the Platform. By placing an order, you agree to be bound by that policy.
+                All returns, replacements and refunds are governed by the Purcurie Refund & Return Policy available on the Platform. By placing an order, you agree to be bound by that policy.
               </p>
             </div>
 
@@ -97,7 +97,7 @@ function Terms() {
             <div className="info-data">
               <h3>Intellectual Property</h3>
               <p className="single-text">
-                All content on the Platform, including text, images, logos, graphics and design, is the property of PurCurie and is protected by applicable intellectual property laws. You may not copy, reproduce or use any content without prior written permission.
+                All content on the Platform, including text, images, logos, graphics and design, is the property of Purcurie and is protected by applicable intellectual property laws. You may not copy, reproduce or use any content without prior written permission.
               </p>
             </div>
 
@@ -105,7 +105,7 @@ function Terms() {
             <div className="info-data">
               <h3>Limitation of Liability</h3>
               <p className="single-text">
-                PurCurie shall not be liable for any indirect, incidental or consequential damages arising from the use of the Platform or products purchased, except as required under applicable law.
+                Purcurie shall not be liable for any indirect, incidental or consequential damages arising from the use of the Platform or products purchased, except as required under applicable law.
               </p>
             </div>
 
@@ -113,7 +113,7 @@ function Terms() {
             <div className="info-data">
               <h3>Termination</h3>
               <p className="single-text">
-                PurCurie reserves the right to suspend or terminate your account or access to the Platform at any time for violation of these Terms or any unlawful activity.
+                Purcurie reserves the right to suspend or terminate your account or access to the Platform at any time for violation of these Terms or any unlawful activity.
               </p>
             </div>
 
@@ -131,7 +131,7 @@ function Terms() {
               <p className="single-text">
                 For any questions or concerns regarding these Terms, you may contact:
                 <br /><br />
-                <strong>PurCurie Customer Support</strong><br />
+                <strong>Purcurie Customer Support</strong><br />
                 Email: support@purcurie.com
               </p>
             </div>
@@ -140,7 +140,7 @@ function Terms() {
             <div className="info-data">
               <h3>Changes to These Terms</h3>
               <p className="single-text">
-                PurCurie reserves the right to modify these Terms at any time. Any changes will be posted on this page and your continued use of the Platform will be deemed acceptance of the updated Terms.
+                Purcurie reserves the right to modify these Terms at any time. Any changes will be posted on this page and your continued use of the Platform will be deemed acceptance of the updated Terms.
               </p>
             </div>
 

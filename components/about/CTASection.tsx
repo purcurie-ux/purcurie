@@ -17,8 +17,7 @@ function CTASection() {
               style={{ opacity: 0 }}
               className="cta-heading"
             >
-              Empowering healthy skin with clean, gentle, &amp;
-              effective care.
+              Beauty Made Simple
             </h3>
           </div>
           <div
@@ -58,8 +57,8 @@ function CTASection() {
               <div>shop now</div>
             </a>
             <p className="cta-info">
-              Our products are carefully selected to nourish your skin, support 
-              its natural balance, and help you feel confident in your skin every day.
+              Explore our collection of cosmetics 
+              and beauty tools designed for everyday confidence.
             </p>
           </div>
         </div>

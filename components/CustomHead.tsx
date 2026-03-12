@@ -13,7 +13,7 @@ interface GlamzHeadProps {
 }
 
 export default function GlamzHead({
-  title = "PurCurie",
+  title = "Purcurie",
   description = "Pure Care For Skin",
   ogImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
   twitterImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",

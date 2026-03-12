@@ -35,105 +35,11 @@ export default async function HomePage() {
               }}
               className="section-heading"
             >
-              Explore curated beauty collections made enhance every look.
+              Explore curated beauty collections made to enhance every look.
             </h2>
           </div>
           <div className="category-collection w-dyn-list">
-            {/* <div role="list" className="category-list w-dyn-items">
-              <div role="listitem" className="category-item w-dyn-item">
-                <a
-                  data-w-id="4c05280d-cb3d-9ac0-85bf-9e5b0caedec9"
-                  style={{ opacity: 0 }}
-                  href="/category/organic-beauty"
-                  className="category-box w-inline-block"
-                >
-                  <div className="category-img">
-                    <img
-                      loading="lazy"
-                      src="https://cdn.prod.website-files.com/686f838d338fa886aea111c4/687dd71268774c56f9297c32_categories-01.webp"
-                      alt="Category Image"
-                      sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                      srcSet="
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/687dd71268774c56f9297c32_categories-01-p-500.webp 500w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/687dd71268774c56f9297c32_categories-01-p-800.webp 800w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/687dd71268774c56f9297c32_categories-01.webp       852w
-                        "
-                      className="category-image-02"
-                    />
-                  </div>
-                  <div className="category-bottom">
-                    <h3 className="category-heading">Organic Beauty</h3>
-                    <img
-                      src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c937_a5ff82f93c5b6280e1699b577954124a_link-arrow.svg"
-                      loading="lazy"
-                      alt="Arrow"
-                    />
-                  </div>
-                </a>
-              </div>
-              <div role="listitem" className="category-item w-dyn-item">
-                <a
-                  data-w-id="4c05280d-cb3d-9ac0-85bf-9e5b0caedec9"
-                  style={{ opacity: 0 }}
-                  href="/category/fragrances"
-                  className="category-box w-inline-block"
-                >
-                  <div className="category-img">
-                    <img
-                      loading="lazy"
-                      src="https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efbb10298698bc53fc2e_categories-02.webp"
-                      alt="Category Image"
-                      sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                      srcSet="
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efbb10298698bc53fc2e_categories-02-p-500.webp 500w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efbb10298698bc53fc2e_categories-02-p-800.webp 800w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efbb10298698bc53fc2e_categories-02.webp       852w
-                        "
-                      className="category-image-02"
-                    />
-                  </div>
-                  <div className="category-bottom">
-                    <h3 className="category-heading">Fragrances</h3>
-                    <img
-                      src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c937_a5ff82f93c5b6280e1699b577954124a_link-arrow.svg"
-                      loading="lazy"
-                      alt="Arrow"
-                    />
-                  </div>
-                </a>
-              </div>
-              <div role="listitem" className="category-item w-dyn-item">
-                <a
-                  data-w-id="4c05280d-cb3d-9ac0-85bf-9e5b0caedec9"
-                  style={{ opacity: 0 }}
-                  href="/category/makeup"
-                  className="category-box w-inline-block"
-                >
-                  <div className="category-img">
-                    <img
-                      loading="lazy"
-                      src="https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efa53c217f84434bce3e_categories-03.webp"
-                      alt="Category Image"
-                      sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                      srcSet="
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efa53c217f84434bce3e_categories-03-p-500.webp 500w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efa53c217f84434bce3e_categories-03-p-800.webp 800w,
-                          https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870efa53c217f84434bce3e_categories-03.webp       852w
-                        "
-                      className="category-image-02"
-                    />
-                  </div>
-                  <div className="category-bottom">
-                    <h3 className="category-heading">Makeup</h3>
-                    <img
-                      src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c937_a5ff82f93c5b6280e1699b577954124a_link-arrow.svg"
-                      loading="lazy"
-                      alt="Arrow"
-                    />
-                  </div>
-                </a>
-              </div>
-            </div> */}
+            
             <div role="list" className="category-list w-dyn-items">
               {collections.map((collection: any) => (
                 <div
@@ -192,8 +98,7 @@ export default async function HomePage() {
               </div>
               <div className="seller-bottom">
                 <p className="single-text">
-                  Shop our most popular products, trusted by beauty lovers
-                  everywhere.
+                 Discover our most loved cosmetics and beauty essentials.
                 </p>
                 <a href="/product"
                   data-w-id="5ad1bb13-0115-b5a0-2487-66b7423c2b63"
@@ -368,9 +273,9 @@ export default async function HomePage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Curated Skincare</h5>
+                <h5 className="service-heading">Premium Cosmetics</h5>
                 <p className="single-text">
-                  Carefully selected products from trusted beauty and skincare brands
+                  Carefully selected cosmetic products designed for everyday beauty
                 </p>
               </div>
             </div>
@@ -385,9 +290,9 @@ export default async function HomePage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Self-Care Essentials</h5>
+                <h5 className="service-heading">Professional Beauty Tools</h5>
                 <p className="single-text">
-                 Everyday skincare and personal care products for healthy-looking skin
+                 Tools designed to make application effortless.
                 </p>
               </div>
             </div>
@@ -402,7 +307,7 @@ export default async function HomePage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Targeted Solutions</h5>
+                <h5 className="service-heading">Modern Beauty Essentials</h5>
                 <p className="single-text">
                   Products designed to support different skin types and concerns
                 </p>
@@ -421,7 +326,7 @@ export default async function HomePage() {
               <div>
                 <h5 className="service-heading">New Arrivals</h5>
                 <p className="single-text">
-                  Discover the latest skincare and beauty products added to our store
+                  Discover our latest cosmetic launches.
                 </p>
               </div>
             </div>
@@ -441,7 +346,7 @@ export default async function HomePage() {
               <div>New Arrivals</div>
             </div>
             <h2 className="section-heading">
-              Explore our newest skincare <br/> and beauty essentials.
+              Explore our newest cosmetics <br/> and beauty essentials
             </h2>
           </div>
 
@@ -519,7 +424,7 @@ export default async function HomePage() {
                   className="section-img"
                 >
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/anthony-tran-Sd9A6NVHsd4-unsplash.jpg?v=1768094481"
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888"
                     loading="lazy"
                     style={{
                       WebkitTransform:
@@ -535,9 +440,9 @@ export default async function HomePage() {
                     sizes="100vw"
                     alt="Benefits Image"
                     srcSet="
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/687613b1bb70047a940a3d18_benefits-p-500.webp  500w,
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/687613b1bb70047a940a3d18_benefits-p-800.webp  800w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/anthony-tran-Sd9A6NVHsd4-unsplash.jpg?v=1768094481       1052w
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  500w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  800w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  1052w
                       "
                     className="section-image"
                   />
@@ -555,10 +460,13 @@ export default async function HomePage() {
                       "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-5deg, 0)",
                     transform:
                       "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-5deg, 0)",
+                      fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', // Adjusts based on screen size
+                      maxWidth: '800px', 
+                      lineHeight: '1.2'
                   }}
                   className="benefits-heading"
                 >
-                  A curated selection designed to feel elegant and effortless
+                  A curated collection of cosmetics designed for effortless everyday beauty.
                 </h2>
               </div>
               <div className="benefits-wrap">
@@ -575,11 +483,11 @@ export default async function HomePage() {
                         alt="Benefits Icon"
                         className="benefits-icon"
                       />
-                      <h5 className="benefits-title">Refined Quality</h5>
+                      <h5 className="benefits-title">Premium Formulation</h5>
                     </div>
                     <div>
                       <p className="single-text">
-                        Each product is selected for its formulation, finish, and overall skincare experience.
+                        High-quality cosmetics designed for daily wear.
                       </p>
                     </div>
                   </div>
@@ -595,12 +503,11 @@ export default async function HomePage() {
                         alt="Benefits Icon"
                         className="benefits-icon"
                       />
-                      <h5 className="benefits-title">Beauty Solutions</h5>
+                      <h5 className="benefits-title">Professional Tools</h5>
                     </div>
                     <div>
                       <p className="single-text">
-                        We bring the latest beauty trends &amp;innovations to
-                        your fingertips.
+                       Tools designed for smooth and effortless application.
                       </p>
                     </div>
                   </div>
@@ -616,12 +523,11 @@ export default async function HomePage() {
                         alt="Benefits Icon"
                         className="benefits-icon"
                       />
-                      <h5 className="benefits-title">For Every Skin Type</h5>
+                      <h5 className="benefits-title">Made for Everyday Beaut</h5>
                     </div>
                     <div>
                       <p className="single-text">
-                        A diverse range of shades and formulas suitable for all
-                        skin tones and types.
+                        Simple products designed for modern routines.
                       </p>
                     </div>
                   </div>
@@ -701,8 +607,8 @@ export default async function HomePage() {
                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                   alt="Story Image"
                   srcSet="
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874ef0ed180d96e9c50895a_story-01-p-500.webp   500w,
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874ef0ed180d96e9c50895a_story-01-p-800.webp   800w,
+                       https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574  500w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574   800w,
                       https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574  1080w,
                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574        1388w
                     "
@@ -717,23 +623,22 @@ export default async function HomePage() {
                   style={{ opacity: 0 }}
                   className="story-heading"
                 >
-                  Our mission is to bring you high-quality beauty &amp; skincare
-                  solutions enhance your natural radiance.
+                  Purcurie mission is to create high-quality cosmetics and beauty tools that make everyday beauty effortless.
                 </h3>
               </div>
               <div className="story-img">
                 <img
                   className="story-image"
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ron-lach-8140908.jpg?v=1768094254"
+                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102"
                   alt="Story Image"
                   style={{ opacity: 0 }}
                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                   data-w-id="d320c2db-e691-2ddb-25c7-615332e021e3"
                   loading="lazy"
                   srcSet="
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874ef0d51ee2a9d7c6939b9_story-02-p-500.webp  500w,
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874ef0d51ee2a9d7c6939b9_story-02-p-800.webp  800w,
-                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ron-lach-8140908.jpg?v=1768094254       1024w
+                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102  500w,
+                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102 800w,
+                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102     1024w
                     "
                 />
               </div>
@@ -743,7 +648,7 @@ export default async function HomePage() {
                 className="story-bottom"
               >
                 <p className="single-text">
-                 Each product is chosen with intention guided by quality, aesthetic, and performance so your skincare experience feels refined, effortless, and quietly luxurious.
+                 Each product is chosen with intention guided by quality, aesthetic, and performance so your skin experience feels refined, effortless, and quietly luxurious.
                 </p>
                 <a
                   href="/about"

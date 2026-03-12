@@ -12,19 +12,19 @@ import ScrollTrigger from "@/components/ui/ScrollTrigger";
 import ClientInit from "@/components/ClientInit";
 
 export const metadata: Metadata = {
-  title: "PurCurie | Pure Care For Skin",
+  title: "Purcurie | Pure Care For Skin",
   description: "Discover the best skincare products designed to support your daily routine and natural glow.",
   openGraph: {
-    title: "PurCurie | Pure Care For Skin",
+    title: "Purcurie | Pure Care For Skin",
     description: "Discover the best skincare products designed to support your daily routine and natural glow.",
     url: "https://www.purcurie.com/", // ✅ Replace with your actual domain
-    siteName: "PurCurie",
+    siteName: "Purcurie",
     images: [
       {
         url: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_23_2026_10_19_18_AM_-_Edited.png?v=1769143874", // ✅ Using your logo as the preview image
         width: 1200,
         height: 630,
-        alt: "PurCurie - Pure Care For Skin",
+        alt: "Purcurie - Pure Care For Skin",
       },
     ],
     locale: "en_US",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PurCurie | Pure Care For Skin",
+    title: "Purcurie | Pure Care For Skin",
     description: "Discover the best skincare products designed to support your daily routine and natural glow.",
     images: ["https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_23_2026_10_19_18_AM_-_Edited.png?v=1769143874"], // ✅ Twitter preview image
   },

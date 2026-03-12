@@ -45,7 +45,7 @@ export function MobileMenu() {
         </div>
       </div>
       <div className="nav-bottom">
-        <div>© 2026 PurCurie.</div>
+        <div>© 2026 Purcurie.</div>
         <div className="social-icon-wrap">
           <a
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16514"

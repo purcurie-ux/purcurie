@@ -116,12 +116,12 @@ function BlogPost() {
                   ensure long-lasting radiance, easy application, and a flawless
                   finish every time. Because true beauty should never be
                   complicated it should be effortless &amp;empowering With
-                  PurCurie, every product is designed to complement your natural
+                  Purcurie, every product is designed to complement your natural
                   beauty, ensuring you always look and feel your absolute best.
                 </p>
                 <p>‍</p>
                 <h3>
-                  PurCurie enhances your natural beauty with effortless elegance
+                  Purcurie enhances your natural beauty with effortless elegance
                 </h3>
                 <p>
                   Senectus tempor vivamus fringilla auctor massa quam venenatis.
@@ -158,11 +158,11 @@ function BlogPost() {
                   sapien a orci adipiscing.
                 </p>
                 <blockquote>
-                  "At PurCurie, we bring you high-quality, trend-setting beauty
+                  At Purcurie, we bring you high-quality, trend-setting beauty
                   essentials designed to enhance your natural glow. From
                   skincare to makeup, every product is crafted with care to help
                   you shine effortlessly. Embrace beauty that lasts, because you
-                  deserve the best."
+                  deserve the best.
                 </blockquote>
                 <h5>
                   We believe in high-quality products that empower, enhance, and

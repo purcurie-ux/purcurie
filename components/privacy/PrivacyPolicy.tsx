@@ -17,7 +17,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Introduction</h3>
               <p className="single-text">
-                This Privacy Policy describes how PurCurie (“we”, “us”, “our”) collects, uses, stores, processes and protects the personal information of users who access or use our website, mobile site and related services (collectively referred to as the “Platform”). This policy is issued in accordance with the Information Technology Act, 2000 and the rules made thereunder and governs your relationship with PurCurie in relation to data protection and privacy.
+                This Privacy Policy describes how Purcurie (“we”, “us”, “our”) collects, uses, stores, processes and protects the personal information of users who access or use our website, mobile site and related services (collectively referred to as the “Platform”). This policy is issued in accordance with the Information Technology Act, 2000 and the rules made thereunder and governs your relationship with Purcurie in relation to data protection and privacy.
                 <br /><br />
                 By accessing or using the Platform or by providing your information, you agree to be bound by this Privacy Policy and the laws of India. If you do not agree with any part of this policy, you must not use the Platform.
               </p>
@@ -28,7 +28,7 @@ function PrivacyPolicy() {
               <h3>Who We Are</h3>
               <div className="data-wrap">
                 <p>
-                  PurCurie is a skincare and personal care brand engaged in the business of selling, marketing and distributing beauty and wellness products through its digital Platform. For the purposes of applicable data protection laws, PurCurie acts as a Data Controller when it collects and processes your personal information for its own business purposes and as a Data Processor when it processes personal information on behalf of third parties such as payment processors and logistics partners.
+                  Purcurie is a skincare and personal care brand engaged in the business of selling, marketing and distributing beauty and wellness products through its digital Platform. For the purposes of applicable data protection laws, Purcurie acts as a Data Controller when it collects and processes your personal information for its own business purposes and as a Data Processor when it processes personal information on behalf of third parties such as payment processors and logistics partners.
                 </p>
               </div>
             </div>
@@ -37,7 +37,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Our Commitment to Privacy</h3>
               <p className="single-text">
-                PurCurie is committed to protecting your privacy and ensuring that your personal information is handled in a safe, responsible and lawful manner. We continually review our data protection practices to ensure compliance with applicable laws and industry standards.
+                Purcurie is committed to protecting your privacy and ensuring that your personal information is handled in a safe, responsible and lawful manner. We continually review our data protection practices to ensure compliance with applicable laws and industry standards.
               </p>
             </div>
 
@@ -66,7 +66,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Consent</h3>
               <p className="single-text">
-                By using the Platform and providing your personal information, you expressly consent to PurCurie collecting, storing, processing, transferring and using your personal information in accordance with this Privacy Policy.
+                By using the Platform and providing your personal information, you expressly consent to Purcurie collecting, storing, processing, transferring and using your personal information in accordance with this Privacy Policy.
               </p>
             </div>
 
@@ -74,7 +74,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Cookies and Tracking Technologies</h3>
               <p className="single-text">
-                PurCurie uses cookies and similar tracking technologies to enable essential website functions, enhance performance, remember user preferences and understand how users interact with the Platform. You can control or disable cookies through your browser settings, however some features of the Platform may not function correctly if cookies are disabled.
+                Purcurie uses cookies and similar tracking technologies to enable essential website functions, enhance performance, remember user preferences and understand how users interact with the Platform. You can control or disable cookies through your browser settings, however some features of the Platform may not function correctly if cookies are disabled.
               </p>
             </div>
 
@@ -83,10 +83,10 @@ function PrivacyPolicy() {
               <h3>Disclosure of Personal Information</h3>
               <div className="data-wrap">
                 <p>
-                  We may share your personal information with trusted third parties including payment gateways, courier and logistics providers, customer support platforms, analytics services and marketing partners for the purpose of operating our business and providing services to you. These third parties are contractually obligated to keep your information confidential and use it only for the purposes for which it is shared. PurCurie does not sell your personal data.
+                  We may share your personal information with trusted third parties including payment gateways, courier and logistics providers, customer support platforms, analytics services and marketing partners for the purpose of operating our business and providing services to you. These third parties are contractually obligated to keep your information confidential and use it only for the purposes for which it is shared. Purcurie does not sell your personal data.
                 </p>
                 <p>
-                  We may also disclose your information if required by law, court order, government authority or to protect the rights, safety and property of PurCurie, its users or the public.
+                  We may also disclose your information if required by law, court order, government authority or to protect the rights, safety and property of Purcurie, its users or the public.
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Data Security</h3>
               <p className="single-text">
-                PurCurie implements reasonable physical, technical and administrative safeguards to protect your personal information from unauthorized access, alteration, misuse or disclosure. These measures include secure servers, encrypted communications, restricted access to data and secure payment processing systems. While we take strong precautions, no system can be completely secure and we cannot guarantee absolute protection.
+                Purcurie implements reasonable physical, technical and administrative safeguards to protect your personal information from unauthorized access, alteration, misuse or disclosure. These measures include secure servers, encrypted communications, restricted access to data and secure payment processing systems. While we take strong precautions, no system can be completely secure and we cannot guarantee absolute protection.
               </p>
             </div>
 
@@ -111,7 +111,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Third-Party Links</h3>
               <p className="single-text">
-                Our Platform may contain links to third-party websites. PurCurie is not responsible for the privacy practices of such websites and we encourage you to review their privacy policies before sharing any personal information.
+                Our Platform may contain links to third-party websites. Purcurie is not responsible for the privacy practices of such websites and we encourage you to review their privacy policies before sharing any personal information.
               </p>
             </div>
 
@@ -137,7 +137,7 @@ function PrivacyPolicy() {
               <p className="single-text">
                 If you have any questions, concerns or complaints regarding this Privacy Policy or the handling of your personal information, you may contact:
                 <br /><br />
-                <strong>PurCurie – Privacy Team</strong><br />
+                <strong>Purcurie - Privacy Team</strong><br />
                 Email: support@purcurie.com
               </p>
             </div>
@@ -146,7 +146,7 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Changes to This Policy</h3>
               <p className="single-text">
-                PurCurie may update this Privacy Policy from time to time. Any changes will be published on this page and we recommend that you review it regularly.
+                Purcurie may update this Privacy Policy from time to time. Any changes will be published on this page and we recommend that you review it regularly.
               </p>
             </div>
 

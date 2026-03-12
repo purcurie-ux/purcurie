@@ -78,8 +78,8 @@
 //                 <a href="tel:+(91) 97697 77006" className="ft-link">
 //                   +(91) 97697 77006
 //                 </a>
-//                 <a href="mailto:contact@purcurie.com" className="ft-link">
-//                   contact@purcurie.com
+//                 <a href="mailto:contact@Purcurie.com" className="ft-link">
+//                   contact@Purcurie.com
 //                 </a>
 //               </div>
 //             </div>
@@ -100,7 +100,7 @@
 //           <div className="social-icon-wrap">
 //             <a
 //               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8aec"
-//               href="https://x.com/PurCurie"
+//               href="https://x.com/Purcurie"
 //               target="_blank"
 //               className="social-icon w-inline-block"
 //             >
@@ -136,7 +136,7 @@
 //             </a> */}
 //             <a
 //               data-w-id="56b1c28c-7224-591c-c46f-bf3d0dbf8af2"
-//               href="https://www.instagram.com/purcurie/"
+//               href="https://www.instagram.com/Purcurie/"
 //               target="_blank"
 //               className="social-icon w-inline-block"
 //             >
@@ -194,7 +194,7 @@
 //             </div>
 //           </div>
 //         </div>
-//         <div>© 2026 PurCurie</div>
+//         <div>© 2026 Purcurie</div>
 //       </div>
 //     </section>
 //   );
@@ -221,7 +221,7 @@ import { Star, Navigation, Clock, ExternalLink } from "lucide-react";
 const locations = [
   {
     id: 1,
-    name: "PurCurie Warehouse",
+    name: "Purcurie Warehouse",
     label: "WH",
     category: "Skincare & Cosmetics",
     rating: 4.9,
@@ -235,7 +235,7 @@ const locations = [
   },
   {
     id: 2,
-    name: "PurCurie Head Office",
+    name: "Purcurie Head Office",
     label: "HQ",
     category: "",
     rating: 5.0,
@@ -375,7 +375,7 @@ function Footer() {
                 alt="Location Icon"
                 style={{ width: "20px", height: "auto" }}
               />
-              <div style={{ color: "white", fontWeight: "500" }}>PurCurie Store</div>
+              <div style={{ color: "white", fontWeight: "500" }}>Purcurie Store</div>
             </a>
           </div>
 
@@ -417,7 +417,7 @@ function Footer() {
             <a href="https://x.com/PurCurie" target="_blank" className="social-icon w-inline-block">
               <img src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7b344fca3399f4e2c_ic-twitter.svg" loading="lazy" alt="Twitter" />
             </a>
-            <a href="https://www.instagram.com/purcurie/" target="_blank" className="social-icon w-inline-block">
+            <a href="https://www.instagram.com/Purcurie/" target="_blank" className="social-icon w-inline-block">
               <img src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7f89048e8516b771f_ic-insta.svg" loading="lazy" alt="Instagram" />
             </a>
           </div>
@@ -453,7 +453,7 @@ function Footer() {
             </form>
           </div>
         </div>
-        <div>© 2026 PurCurie</div>
+        <div>© 2026 Purcurie</div>
       </div>
     </section>
   );

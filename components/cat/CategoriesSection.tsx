@@ -754,7 +754,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 1"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>Would you like a matching short answer too?</div>
+                <div>Are Purcurie products cruelty-free?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -790,7 +790,7 @@ async function CategoriesSection() {
                 data-w-tab="Tab 4"
                 className="faq-wrap w-inline-block w-tab-link"
               >
-                <div>Do you have a rewards or loyalty program?</div>
+                <div>What is your return or exchange policy?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -802,38 +802,35 @@ async function CategoriesSection() {
             <div className="faq-right w-tab-content">
               <div data-w-tab="Tab 5" className="w-tab-pane w--tab-active">
                 <p className="single-text">
-                  Check our product descriptions for skin type suitability or
-                  use our beauty quiz for personalized recommendations. You can
-                  also consult our experts for guidance.
+                  We carefully select products that meet high quality and safety standards.
+                   Our goal is to provide beauty products that are responsibly formulated
+                    and safe for everyday use.
                 </p>
               </div>
               <div data-w-tab="Tab 1" className="w-tab-pane">
                 <p className="single-text">
-                  You can return or exchange products within 30 days if they are
-                  unused and in original packaging. Visit our
-                  <a href="/return-policy"> Returns &amp;Exchanges</a> page to
-                  start the process.
+                 Yes, our cosmetics are designed for everyday wear, offering comfort,
+                 durability, and effortless application throughout the day.
                 </p>
               </div>
               <div data-w-tab="Tab 2" className="w-tab-pane">
                 <p className="single-text">
-                  Subscribe to our newsletter and follow us on social media for
-                  the latest product launches and exclusive promotions. Stay
-                  connected for beauty tips and special offers!
+                  Subscribe to our newsletter or follow us on social media to stay updated 
+                  on new product launches, beauty tips, and exclusive offers.
                 </p>
               </div>
               <div data-w-tab="Tab 3" className="w-tab-pane">
                 <p className="single-text">
-                  Yes, our makeup products undergo rigorous testing to ensure
-                  long wear and durability. They are designed to stay flawless
-                  and fresh throughout the day.
+                  Yes. Our makeup products are designed to deliver long-lasting performance while
+                   maintaining a comfortable and natural feel throughout the day.
                 </p>
               </div>
               <div data-w-tab="Tab 4" className="w-tab-pane">
                 <p className="single-text">
-                  Yes, we offer a loyalty program where you can earn points on
-                  every purchase. Redeem points for exclusive discounts and
-                  special rewards as a valued customer.
+                   You can return or exchange products within 48 hours after delivered
+                    if they are unused and in original packaging. Visit our
+                  <a href="/return-policy"> Returns &amp;Exchanges</a> page to
+                  start the process.
                 </p>
               </div>
             </div>

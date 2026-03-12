@@ -18,12 +18,11 @@ function PageTitle() {
             //   }}
               className="main-heading"
             >
-              Beauty Collections
+              Cosmetics & <br></br>Beauty Collections
             </h1>
           </div>
           <p className="title-info">
-            Experience beauty redefined with collections that inspire confidence
-            and charm.
+            Discover curated cosmetics and beauty tools designed for effortless everyday beauty.
           </p>
         </div>
       </div>

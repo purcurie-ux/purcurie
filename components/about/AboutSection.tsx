@@ -10,8 +10,7 @@ function AboutPage() {
               className="about-info"
             >
               <p className="single-text">
-                We believe skincare is more than just routine, it’s about confidence, self-care, and feeling comfortable in your own skin every day. PurCurie was created with a vision to make high-quality, skin-loving products accessible to everyone, without confusion, false promises, or unnecessary complexity.
-                Our goal is simple: to bring you thoughtfully selected skincare and personal care products that nourish, protect, and enhance your natural beauty.
+                At Purcurie, we believe beauty should feel simple, refined, and effortless. Our mission is to offer thoughtfully curated cosmetics and beauty tools designed for everyday confidence. Each product is selected with care, focusing on quality, simplicity, and modern beauty routines.
               </p>
               <a
                 href="/categories"
@@ -77,7 +76,7 @@ function AboutPage() {
                   className="section-img"
                 >
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_41_18_AM.png?v=1768163227"
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_drv5ugdrv5ugdrv5.jpg?v=1773337450"
                     loading="lazy"
                     style={{
                       WebkitTransform:
@@ -93,8 +92,8 @@ function AboutPage() {
                     sizes="(max-width: 540px) 100vw, 540px"
                     alt="About Image"
                     srcSet="
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874d274bdde1d9ca5624036_about-01-p-500.webp 500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_41_18_AM.png?v=1768163227       540w
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_drv5ugdrv5ugdrv5.jpg?v=1773337450 500w,
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_drv5ugdrv5ugdrv5.jpg?v=1773337450 540w
                       "
                     className="section-image"
                   />
@@ -152,8 +151,8 @@ function AboutPage() {
                     alt="WE Icon"
                   />
                   <div>
-                    <h4 className="wc-heading">Unmatched Quality</h4>
-                    <div>Carefully selected products made for long-lasting skin benefits</div>
+                    <h4 className="wc-heading">Premium Quality</h4>
+                    <div>Carefully selected cosmetics and beauty tools designed for everyday use.</div>
                   </div>
                 </div>
               </div>
@@ -181,8 +180,8 @@ function AboutPage() {
                     alt="WE Icon"
                   />
                   <div>
-                    <h4 className="wc-heading">Skin-Loving Formulas</h4>
-                    <div>Designed to nourish, protect, and strengthen your skin barrier</div>
+                    <h4 className="wc-heading">Designed for Everyone</h4>
+                    <div>Beauty essentials created to suit different styles and preferences.</div>
                   </div>
                 </div>
               </div>
@@ -210,8 +209,8 @@ function AboutPage() {
                     alt="WE Icon"
                   />
                   <div>
-                    <h4 className="wc-heading">For Every Skin Type</h4>
-                    <div>Solutions suitable for oily, dry, sensitive, and combination skin</div>
+                    <h4 className="wc-heading">Modern Beauty Essentials</h4>
+                    <div>Products designed to simplify your beauty routine.</div>
                   </div>
                 </div>
               </div>
@@ -230,7 +229,7 @@ function AboutPage() {
               >
                 <div className="fact-text">Trusted Products</div>
                 <p className="fact-info">
-                  Carefully selected skincare and beauty essentials for everyday use.
+                 Carefully selected cosmetics and beauty tools designed for everyday use.
                 </p>
               </div>
               <div
@@ -240,7 +239,7 @@ function AboutPage() {
               >
                 <div className="fact-text">Customer-1<sup>st</sup>Brand</div>
                 <p className="fact-info">
-                  Built around trust, transparency, and real skin needs.
+                  Built around trust, quality, and simplicity in beauty.
                 </p>
               </div>
               <div
@@ -248,9 +247,9 @@ function AboutPage() {
                 style={{ opacity: 0 }}
                 className="fact-block last"
               >
-                <div className="fact-text">Skin-First Formulas</div>
+                <div className="fact-text">Modern Formulations</div>
                 <p className="fact-info">
-                  Designed to support all skin types with gentle, effective ingredients.
+                 Designed to deliver reliable performance and effortless application.
                 </p>
               </div>
             </div>
@@ -272,7 +271,7 @@ function AboutPage() {
                 className="section-img"
               >
                 <img
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/jocelyn-morales-JiqTLjzEH18-unsplash.jpg?v=1768163225"
+                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_46.jpg?v=1773338519"
                   loading="lazy"
                   style={{
                     WebkitTransform:
@@ -288,9 +287,9 @@ function AboutPage() {
                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                   alt="Fact Image"
                   srcSet="
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874abfe4322e1f5db992c96_fact-p-500.webp  500w,
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874abfe4322e1f5db992c96_fact-p-800.webp  800w,
-                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/jocelyn-morales-JiqTLjzEH18-unsplash.jpg?v=1768163225       1092w
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_47.jpg?v=1773338897  500w,
+                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_47.jpg?v=1773338897  800w,
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_47.jpg?v=1773338897       1092w
                     "
                   className="section-image"
                 />
@@ -299,7 +298,7 @@ function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="our-team">
+      {/* <section className="our-team">
         <div className="w-layout-blockcontainer container w-container">
           <div className="section-title">
             <div className="sub-title">
@@ -331,8 +330,8 @@ function AboutPage() {
               data-w-id="a8c72e85-7fb9-8a4c-873a-f949fd52d72d"
               style={{ opacity: 0 }}
               className="team-block"
-            >
-              <div className="team-img">
+            > */}
+              {/* <div className="team-img">
                 <img
                   src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design__17_-transformed.png?v=1768165712"
                   loading="lazy"
@@ -344,8 +343,8 @@ function AboutPage() {
                   alt="Team Image"
                   className="team-image"
                 />
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <div className="team-text">Jay Mishra</div>
                 <div className="body-small">Founder &amp; CEO</div>
               </div>
@@ -372,7 +371,7 @@ function AboutPage() {
                 <div className="team-text">Akash Mandal</div>
                 <div className="body-small">Co-founder</div>
               </div>
-            </div>
+            </div> */}
             {/* team 3 manoj */}
             {/* <div
               data-w-id="a8c72e85-7fb9-8a4c-873a-f949fd52d73d"
@@ -421,9 +420,9 @@ function AboutPage() {
                 <div className="body-small">CTO</div>
               </div>
             </div> */} 
-          </div>
-        </div>
-      </section>
+          {/* </div> */}
+        {/* </div>
+      </section> */}
       <section className="community">
         <div className="w-layout-blockcontainer container w-container">
           <div className="community-inner">
@@ -461,7 +460,7 @@ function AboutPage() {
                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 772px"
                   alt="Community Image"
                   srcSet="
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c34b467920b191bc778b_community-01-p-500.webp 500w,
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-shiny-diamond-3762768.jpg?v=1768163225  500w,
                       https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-shiny-diamond-3762768.jpg?v=1768163225       772w
                     "
                   className="section-image"
@@ -476,9 +475,7 @@ function AboutPage() {
               <div>
                 <h3 className="community-heading">Why Purcurie is Loved</h3>
                 <p className="single-text">
-                  Join the PurCurie community and stay connected to a world where skincare meets 
-                  simplicity and science. Discover products that work with your skin, not against it, 
-                  and be the first to explore what’s new at PurCurie.
+                  Join the Purcurie community and discover cosmetics and beauty tools designed for effortless everyday beauty. We focus on simplicity, quality, and modern beauty essentials.
                 </p>
               </div>
               <a
@@ -531,7 +528,7 @@ function AboutPage() {
                 className="section-img"
               >
                 <img
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c34b3504a43191f12d46_community-02.webp"
+                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-shvetsa-3851905.jpg?v=1773339202"
                   loading="lazy"
                   style={{
                     WebkitTransform:
@@ -547,8 +544,8 @@ function AboutPage() {
                   sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 774px"
                   alt="Community Image"
                   srcSet="
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c34b3504a43191f12d46_community-02-p-500.webp 500w,
-                      https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c34b3504a43191f12d46_community-02.webp       774w
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-shvetsa-3851905.jpg?v=1773339202 500w,
+                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-shvetsa-3851905.jpg?v=1773339202  774w
                     "
                   className="section-image"
                 />
@@ -571,9 +568,9 @@ function AboutPage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Curated Skincare</h5>
+                <h5 className="service-heading">Premium Cosmetics</h5>
                 <p className="single-text">
-                  Carefully selected products from trusted beauty and skincare brands
+                  Carefully curated makeup essentials for everyday beauty
                 </p>
               </div>
             </div>
@@ -588,9 +585,9 @@ function AboutPage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Self-Care Essentials</h5>
+                <h5 className="service-heading">Beauty Tools</h5>
                 <p className="single-text">
-                  Everyday skincare and personal care products for healthy-looking skin
+                  Professional tools designed for smooth application
                 </p>
               </div>
             </div>
@@ -605,9 +602,9 @@ function AboutPage() {
                 className="service-icon"
               />
               <div>
-                <h5 className="service-heading">Targeted Solutions</h5>
+                <h5 className="service-heading">Modern Essentials</h5>
                 <p className="single-text">
-                  Products designed to support different skin types and concerns
+                  Minimal beauty products designed for modern routines
                 </p>
               </div>
             </div>
@@ -624,14 +621,14 @@ function AboutPage() {
               <div>
                 <h5 className="service-heading">New Arrivals</h5>
                 <p className="single-text">
-                 Discover the latest skincare and beauty products added to our store
+                 Discover the latest additions to our cosmetic collection
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section className="reviews">
+      {/* <section className="reviews">
         <div className="w-layout-blockcontainer container w-container">
           <div className="sub-title">
             <img
@@ -899,7 +896,7 @@ function AboutPage() {
             <div className="d-none w-slider-nav w-round w-num"></div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="faq">
         <div className="w-layout-blockcontainer container w-container">
           <div className="overflow-hidden">
@@ -924,7 +921,7 @@ function AboutPage() {
                 data-w-tab="Tab 5"
                 className="faq-wrap top w-inline-block w-tab-link w--current"
               >
-                <div>Are PurCurie products suitable for sensitive skin?</div>
+                <div>How do I choose the right cosmetic product for me?</div>
                 <img
                   loading="lazy"
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
@@ -984,8 +981,7 @@ function AboutPage() {
             <div className="faq-right w-tab-content">
               <div data-w-tab="Tab 5" className="w-tab-pane w--tab-active">
                 <p className="single-text">
-                  Many of our products are formulated to be gentle and skin-friendly. 
-                  We recommend checking the ingredient list on each product page and doing a patch test before full use.
+                  Check our product descriptions for details on shades, finishes, and recommended use. Our collections are designed to suit different beauty preferences and everyday routines.
                 </p>
               </div>
               <div data-w-tab="Tab 1" className="w-tab-pane">

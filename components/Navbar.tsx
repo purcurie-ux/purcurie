@@ -291,7 +291,7 @@ const closeSearch = (clearQuery = true) => {
               <img
                 src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1768757461"
                 loading="lazy"
-                alt="PurCurie"
+                alt="Purcurie"
                 style={{ height: "40px", width: "auto", objectFit: "contain" }}
               />
             </a>
@@ -545,7 +545,7 @@ style={{
               </div>
             </div>
             <div className="nav-bottom">
-              <div>© 2026 PurCurie.</div>
+              <div>© 2026 Purcurie.</div>
               <div className="social-icon-wrap">
                 <a
                   href="https://x.com/PurCurie"
