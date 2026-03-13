@@ -10,9 +10,9 @@ export default function JunipHomeReviews() {
     const maxRetries = 10;
 
     const initJunip = () => {
-      // @ts-ignore
+      
       if (window.Junip && typeof window.Junip.init === 'function') {
-        // @ts-ignore
+      
         window.Junip.init();
         console.log("Junip Initialized successfully");
       } else if (retryCount < maxRetries) {

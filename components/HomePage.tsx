@@ -10,6 +10,13 @@ export default async function HomePage() {
 
   return (
     <div className="page-wrap">
+       {/* Junip Store Key — required for all rating widgets */}
+      <span
+        className="junip-store-key"
+        data-store-key={process.env.NEXT_PUBLIC_JUNIP_STORE_KEY}
+        style={{ display: "none" }}
+      ></span>
+
       {/* Categories Section */}
       <section className="categories">
         <div className="w-layout-blockcontainer container w-container">
@@ -198,17 +205,20 @@ export default async function HomePage() {
                           </div>
 
                           <div className="product-bottom">
-                            <h5 className="product-heading">
-                              {bestSeller.title}
-                            </h5>
-                            <div>
-                              ₹ {bestSeller.priceRange.minVariantPrice.amount}{" "}
-                              {
-                                bestSeller.priceRange.minVariantPrice
-                                  .currencyCode
-                              }
-                            </div>
-                          </div>
+                        <h5 className="product-heading">
+                          {bestSeller.title}
+                        </h5>
+                        {/* Junip Star Rating */}
+                        <span
+                          className="junip-product-summary"
+                          data-product-id={bestSeller.id.split('/').pop()}
+                          style={{ display: "block", marginBottom: "4px" }}
+                        ></span>
+                        <div>
+                          ₹ {bestSeller.priceRange.minVariantPrice.amount}{" "}
+                          {bestSeller.priceRange.minVariantPrice.currencyCode}
+                        </div>
+                      </div>
 
                           <div className="cursor">
                             <div>Detail</div>
@@ -377,12 +387,18 @@ export default async function HomePage() {
                       </div>
 
                       <div className="product-bottom">
-                        <h5 className="product-heading">{product.title}</h5>
-                        <div>
-                          ₹ {product.priceRange.minVariantPrice.amount}{" "}
-                          {product.priceRange.minVariantPrice.currencyCode}
-                        </div>
+                      <h5 className="product-heading">{product.title}</h5>
+                      {/* Junip Star Rating */}
+                      <span
+                        className="junip-product-summary"
+                        data-product-id={product.id.split('/').pop()}
+                        style={{ display: "block", marginBottom: "4px" }}
+                      ></span>
+                      <div>
+                        ₹ {product.priceRange.minVariantPrice.amount}{" "}
+                        {product.priceRange.minVariantPrice.currencyCode}
                       </div>
+                    </div>
 
                       <div className="cursor">
                         <div>Detail</div>
