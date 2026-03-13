@@ -790,18 +790,24 @@ useEffect(() => {
                 <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                   <div className="carousel-main">
                     {/* Images */}
-                    {allImages.map((img, index) => (
-                      <img
-                        key={index}
-                        loading="lazy"
-                        src={img}
-                        srcSet={index === 0 ? product.mainImageSrcset : undefined}
-                        className={`product-main-image carousel-image ${
-                          index === currentImageIndex ? 'active' : ''
-                        }`}
-                        alt={product.title}
-                      />
-                    ))}
+                   {allImages.map((img, index) => (
+                  <img
+                    key={index}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    src={img}
+                    srcSet={index === 0 ? product.mainImageSrcset : undefined}
+                    className={`product-main-image carousel-image ${
+                      index === currentImageIndex ? 'active' : ''
+                    }`}
+                    alt={product.title}
+                    style={{
+                      // ✅ Hide all non-active images immediately, even before CSS loads
+                      opacity: !mounted ? (index === 0 ? 1 : 0) : undefined,
+                      // ✅ Prevent non-active images from taking up layout space before mount
+                      visibility: !mounted && index !== 0 ? 'hidden' : undefined,
+                    }}
+                  />
+                ))}
                     
                     {/* Navigation Arrows */}
                     {allImages.length > 1 && (

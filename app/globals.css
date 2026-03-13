@@ -8471,34 +8471,60 @@ blockquote {
   transition: all 0.25s ease;
 }
 .accordion-item {
-          border-top: 1px solid #000;
-        }
-        .accordion-item:last-of-type {
-          border-bottom: 1px solid #000;
-        }
-        .accordion-trigger {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 18px 10px;
-          background: none;
-          border: none;
-          cursor: pointer;
-        }
-       .accordion-title {
-          font-size: 18px;        /* Increased size */
-          font-weight: 800;       /* Extra bold for premium feel */
-          color: #1D2C34;         /* Using your brand's dark blue */
-          letter-spacing: 0.5px;
-          font-family: inherit;
-        }
-       .accordion-content {
-          padding: 10px 10px 25px;
-          font-size: 16px;        /* Increased for better readability */
-          font-weight: 450;       /* Slightly thicker than normal */
-          line-height: 1.7;       /* More space between lines */
-          color: #2D3E46;         /* Softer dark gray for eyes */
-        }
-        .accordion-content ul { list-style: none; padding: 0; }
-        .accordion-content li { margin-bottom: 8px; }
+  border-top: 1px solid #000;
+}
+.accordion-item:last-of-type {
+  border-bottom: 1px solid #000;
+}
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.accordion-title {
+  font-size: 18px;        /* Increased size */
+  font-weight: 800;       /* Extra bold for premium feel */
+  color: #1D2C34;         /* Using your brand's dark blue */
+  letter-spacing: 0.5px;
+  font-family: inherit;
+}
+.accordion-content {
+  padding: 10px 10px 25px;
+  font-size: 16px;        /* Increased for better readability */
+  font-weight: 450;       /* Slightly thicker than normal */
+  line-height: 1.7;       /* More space between lines */
+  color: #2D3E46;         /* Softer dark gray for eyes */
+}
+.accordion-content ul { list-style: none; padding: 0; }
+.accordion-content li { margin-bottom: 8px; }
+
+/* Best Seller Hero Image - Click Feel */
+.seller-main-img {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+}
+
+.seller-main-img:active {
+  transform: scale(0.97);
+}
+
+.seller-main-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.seller-main-img:active::after {
+  opacity: 1;
+}

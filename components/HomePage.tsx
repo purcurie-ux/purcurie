@@ -144,43 +144,49 @@ export default async function HomePage() {
               {bestSeller && (
                 <>
                   {/* BIG HERO IMAGE (Image 0) */}
+              {/* BIG HERO IMAGE (Image 0) - Now Clickable */}
+              <a 
+                href={`/product/${bestSeller.handle}`} 
+                className="seller-main-img w-inline-block" 
+                style={{ cursor: 'pointer', display: 'block' }}
+              >
+                <div
+                  data-w-id="d63da87d-6772-8348-f91e-c899fc37aee7"
+                >
                   <div
-                    data-w-id="d63da87d-6772-8348-f91e-c899fc37aee7"
-                    className="seller-main-img"
+                    style={{
+                      WebkitTransform:
+                        "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                      MozTransform:
+                        "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                      msTransform:
+                        "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                      transform:
+                        "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                    }}
+                    className="section-img"
                   >
-                    <div
-                      style={{
-                        WebkitTransform:
-                          "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                        MozTransform:
-                          "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                        msTransform:
-                          "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                        transform:
-                          "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      }}
-                      className="section-img"
-                    >
-                      {bestSeller.images.edges[0]?.node?.url && (
-                        <img
-                          src={bestSeller.images.edges[0].node.url}
-                          loading="lazy"
-                          alt={
-                            bestSeller.images.edges[0].node.altText ||
-                            bestSeller.title
-                          }
-                          className="section-image"
-                          style={{
-                            WebkitTransform:
-                              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
-                            transform:
-                              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
-                            filter: "blur(10px)",
-                          }}
-                        />
-                      )}
-                    </div>
+                    {bestSeller.images.edges[0]?.node?.url && (
+                      <img
+                        src={bestSeller.images.edges[0].node.url}
+                        loading="lazy"
+                        alt={
+                          bestSeller.images.edges[0].node.altText ||
+                          bestSeller.title
+                        }
+                        className="section-image"
+                        style={{
+                          WebkitTransform:
+                            "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
+                          transform:
+                            "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
+                          filter: "blur(10px)",
+                        }}
+                      />
+                    )}
                   </div>
+                </div>
+              </a>
 
                   {/* SIDE PRODUCT CARD (Image 1) */}
                   <div className="seller-product w-dyn-list">
