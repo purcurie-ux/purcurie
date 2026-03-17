@@ -10,6 +10,8 @@ import WebflowPageId from "@/components/WebflowPageId";
 import { CartProvider } from "@/context/CartContext";
 import ScrollTrigger from "@/components/ui/ScrollTrigger";
 import ClientInit from "@/components/ClientInit";
+import PurcurieChat from "@/components/ChatBot";
+
 
 export const metadata: Metadata = {
   title: "Purcurie | Pure Care For Skin",
@@ -43,6 +45,8 @@ export const metadata: Metadata = {
     apple: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846", // ✅ Apple Touch Icon (iPhone/iPad home screen)
   },
 };
+
+
 
 export default function RootLayout({
   children,
@@ -107,6 +111,7 @@ export default function RootLayout({
         <CartProvider>
           <Navbar />
           {children}
+          <PurcurieChat />
           <Footer />
         </CartProvider>
 
