@@ -23,4 +23,6 @@ export type ChatMessage = {
   role: "customer" | "admin";
   content: string;
   created_at: string;
+  media_url?: string | null;
+  media_type?: string | null;
 };
