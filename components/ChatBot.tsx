@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 
+
 type Message = { role: "user" | "assistant"; content: string };
 
 export default function PurcurieChat() {
@@ -10,7 +11,7 @@ export default function PurcurieChat() {
     {
       role: "assistant",
       content:
-        "Hi there! 💄 I'm Purcurie's beauty assistant. How can I help?",
+        "Hi there! 👋\nI'm Purcurie's support.\nHow can I help you today?",
     },
   ]);
   const [history, setHistory] = useState<Message[][]>([]);
@@ -332,22 +333,48 @@ useEffect(() => {
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <div style={{
                 width: "34px", height: "34px", borderRadius: "50%",
-                background: "#CEDFE7", display: "flex",
+                background: "#fff", display: "flex",
                 alignItems: "center", justifyContent: "center",
-                fontSize: "16px", flexShrink: 0,
-              }}>💄</div>
-              <div>
-                <div style={{ color: "#EAF0F4", fontWeight: 700, fontSize: "14px", letterSpacing: "0.02em" }}>
-                  Purcurie Beauty
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "1px" }}>
-                  <div style={{
-                    width: "6px", height: "6px", borderRadius: "50%",
-                    background: "#4ade80", boxShadow: "0 0 6px #4ade80",
-                  }} />
-                  <span style={{ color: "#CEDFE7", fontSize: "11px", fontWeight: 500 }}>Online now</span>
-                </div>
-              </div>
+                overflow: "hidden", // Ensures the image stays round
+                flexShrink: 0,
+            }}>
+            {/* Replace '/logo.png' with your actual logo path */}
+            <img 
+                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1_9f44e2e8-b95a-4b61-a256-70fabf2012f6.jpg?v=1773774612" // Ensure this path is correct
+                alt="Purcurie Logo" 
+                style={{ 
+                width: "100%", 
+                height: "100%", 
+                objectFit: "cover" // Changed from 'contain' to 'cover' to fill the area
+                }}
+            />
+            </div>
+           {/* Header text container */}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ 
+                color: "#EAF0F4", 
+                fontWeight: 700, 
+                fontSize: "14px", 
+                letterSpacing: "0.02em",
+                lineHeight: "1.2" // Tightens the space around the text
+            }}>
+                Purcurie Support
+            </div>
+            <div style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "5px", 
+                marginTop: "-2px" // Negative margin pulls it upward
+            }}>
+                <div style={{
+                width: "6px", height: "6px", borderRadius: "50%",
+                background: "#4ade80", boxShadow: "0 0 6px #4ade80",
+                }} />
+                <span style={{ color: "#CEDFE7", fontSize: "11px", fontWeight: 500 }}>
+                Online now
+                </span>
+            </div>
+            </div>
             </div>
     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
     {history.length > 0 && (
