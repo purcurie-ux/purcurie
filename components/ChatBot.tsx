@@ -23,7 +23,7 @@ export default function PurcurieChat() {
   const [notifDismissed, setNotifDismissed] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
-  const { cart } = useCart();
+  const { cartItems } = useCart();
 
   // Auto scroll to bottom
   useEffect(() => {
@@ -133,7 +133,7 @@ useEffect(() => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: updated,
-          cartItems: cart || [],
+          cartItems: cartItems || [],
         }),
       });
 
