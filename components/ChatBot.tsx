@@ -23,7 +23,7 @@ export default function PurcurieChat() {
   const [notifDismissed, setNotifDismissed] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
-  const { cartItems } = useCart();
+  const { items: cartItems } = useCart();
 
   // Auto scroll to bottom
   useEffect(() => {
