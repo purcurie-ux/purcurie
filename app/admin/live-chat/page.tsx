@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase, ChatSession, ChatMessage } from "@/lib/supabase";
 
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "purcurie2024";
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "";
 
 export default function AdminLiveChat() {
   const [authed, setAuthed] = useState(false);
