@@ -614,7 +614,7 @@ import { useCart } from "@/context/CartContext";
 import { supabase, ChatMessage } from "@/lib/supabase";
 
 type Message = { role: "user" | "assistant"; content: string };
-type ChatMode = "bot" | "waiting" | "live" | "closed";
+type ChatMode = "bot" | "waiting" | "active" | "closed";
 
 const WAIT_SECONDS = 120; // 2 minutes
 
