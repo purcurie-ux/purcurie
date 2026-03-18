@@ -1351,7 +1351,7 @@ export default function PurcurieChat() {
                   <span style={{ fontSize: "12px", color: "#CEDFE7", lineHeight: 1 }}>New</span>
                 </button>
               )}
-             {isLiveMode && chatMode !== "closed" && (
+              {isLiveMode && (
                 <button className="hdr-btn" onClick={() => setChatMode("bot")} title="Back to assistant"
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", height: "auto", padding: "4px 6px" }}>
                   <span style={{ fontSize: "15px" }}>🤖</span>
