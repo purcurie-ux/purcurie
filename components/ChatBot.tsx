@@ -940,6 +940,14 @@ export default function PurcurieChat() {
 
   const sendMessage = async (overrideInput?: string) => {
     const text = overrideInput ?? input;
+
+    if (text.includes("Track My Package")) {
+      setMessages(prev => [...prev,
+        { role: "user", content: text },
+        { role: "assistant", content: "You can track your order here 👇\n\nhttps://www.purcurie.com/track\n\nIf you need detailed order status, just share your order number (e.g. #1053) and I'll look it up for you! 📦" }
+      ]);
+      return;
+    }
     
     if (text.includes("Get Discount") || text.toLowerCase().includes("discount") || text.toLowerCase().includes("coupon") || text.toLowerCase().includes("promo")) {
       setInstaStep("prompt");
@@ -1029,7 +1037,7 @@ export default function PurcurieChat() {
     setInstaStep("idle");
   };
 
-  const suggestions = ["Track Order 📦", "Get Discount 🎁", "Talk to Human 👤", "WhatsApp Us 💬"];
+  const suggestions = ["Track Order 📦","Track My Package 🚚", "Get Discount 🎁", "Talk to Human 👤", "WhatsApp Us 💬"];
 
   // ── Render: Name/Query form ──
   const renderNameForm = () => (
@@ -1250,8 +1258,15 @@ export default function PurcurieChat() {
         .chat-window.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
         @media (max-width: 480px) {
-          .chat-window { width: calc(100vw - 24px); height: calc(100dvh - 110px); right: 0; left: auto; bottom: 68px; }
-          .purcurie-chat-root { right: 12px !important; bottom: 16px !important; }
+          .chat-window { 
+            width: calc(100vw - 24px); 
+            height: calc(100dvh - 140px);
+            max-height: 520px;
+            right: 0; 
+            left: auto; 
+            bottom: 68px; 
+          }
+          .purcurie-chat-root { right: 12px !important; bottom: 12px !important; }
         }
 
         .purcurie-scrollbar::-webkit-scrollbar { width: 4px; }
@@ -1272,6 +1287,10 @@ export default function PurcurieChat() {
 
         .toggle-btn { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .toggle-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(29,44,52,0.25); }
+        @media (max-width: 480px) {
+          .toggle-btn { width: 48px !important; height: 48px !important; font-size: 20px !important; }
+          .purcurie-chat-root { bottom: 12px !important; right: 12px !important; }
+        }
 
         .suggestion-chip { transition: background 0.15s, color 0.15s; }
         .suggestion-chip:hover { background: #1D2C34 !important; color: white !important; }

@@ -317,16 +317,21 @@ STEP 4 — You HAVE direct access to the order database. NEVER say "I don't have
 
 📦 Response Template for Verified Orders:
 ✅ IF TRACKING LINK IS PROVIDED:
-  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. You can track it here: [Tracking Link]"
+  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. You can track it here: [Tracking Link]. For full tracking details visit: https://www.purcurie.com/track"
 
 ❌ IF NO TRACKING LINK IS PROVIDED (Status is Processing/Pending):
-  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. Tracking details will be updated here as soon as your package is handed to the courier."
+  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. Tracking details will be updated soon. Track your order here: https://www.purcurie.com/track"
 
 🔴 CRITICAL INSTRUCTION FOR LINKS:
 - Use the actual URL from "Order Lookup Result" ONLY if it starts with "https".
 - If the tracking link in the data is "NONE_AVAILABLE_YET" or empty, use the second template above.
 - NEVER invent or use example links.
 - NEVER use "waybill.purcurie.com", "17track.net", or any "example.com" links.
+- When a user provides an email or phone number, check it against the order EVERY TIME independently.
+- Do NOT assume it's wrong just because previous attempts failed.
+- Each verification attempt must be treated as completely fresh and independent.
+- If the current input matches the order's email or phone, confirm it immediately regardless of prior failed attempts.
+- Never say "that doesn't match" unless you have actually compared the current input to the order data right now.
 
 📦 Order Lookup Result:
 ${orderInfo || "No order data found yet for the current inquiry."}
@@ -345,15 +350,18 @@ Guidelines:
 - 🎫 TICKETS: If raising a ticket, ask for the issue and Order #, then confirm it's logged for a 24-hour review.
 - 👤 HUMAN: If requested, provide the WhatsApp link: https://wa.me/9769777006.
 - 💬 WHATSAPP: Mention WhatsApp for faster updates.
+- 📦 TRACKING PAGE: Always include this link at the end of any order status response: "You can also track your order here: https://www.purcurie.com/track"
 - Keep responses warm, professional, and under 3 sentences.
 - NEVER show raw technical tags (like [VERIFICATION STATUS...]) to the user.
 `;
+
+const trimmedMessages = messages.slice(-6);
 
     const response = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",
       messages: [
         { role: "system", content: systemPrompt },
-        ...messages,
+        ...trimmedMessages,
       ],
       max_tokens: 1024,
     });
