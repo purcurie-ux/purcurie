@@ -10,6 +10,7 @@ export type ChatSession = {
   id: string;
   customer_name: string | null;
   customer_email: string | null;
+  customer_phone: string | null;
   initial_query: string;
   status: "waiting" | "active" | "closed";
   created_at: string;

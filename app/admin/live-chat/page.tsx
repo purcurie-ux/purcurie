@@ -27,6 +27,7 @@ export default function AdminLiveChat() {
 
   // Media
   const [uploading, setUploading] = useState(false);
+  const [previews, setPreviews] = useState<Array<{ url: string; type: string; file: File }>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -125,36 +126,62 @@ export default function AdminLiveChat() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ session_id: sessionId, status: "closed" }),
     });
-    if (activeSession?.id === sessionId) setActiveSession(null);
+    if (activeSession?.id === sessionId) {
+      setActiveSession(prev => prev ? { ...prev, status: "closed" } : null);
+    }
     fetchSessions();
   };
 
-  const sendReply = async (mediaUrl?: string, mediaType?: string) => {
+const sendReply = async () => {
     if (!activeSession) return;
-    if (!replyInput.trim() && !mediaUrl) return;
+    if (!replyInput.trim() && previews.length === 0) return;
+    setUploading(true);
+
+    // Upload all previews
+    if (previews.length > 0) {
+      for (const preview of previews) {
+        const ext = preview.file.name.split(".").pop();
+        const path = `${activeSession.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { data, error } = await supabase.storage.from("chat-media").upload(path, preview.file);
+        if (!error && data) {
+          const { data: { publicUrl } } = supabase.storage.from("chat-media").getPublicUrl(data.path);
+          await supabase.from("chat_messages").insert({
+            session_id: activeSession.id,
+            role: "admin",
+            content: replyInput.trim() || "",
+            media_url: publicUrl,
+            media_type: preview.type,
+          });
+        }
+      }
+      setPreviews([]);
+      setReplyInput("");
+      setUploading(false);
+      return;
+    }
+
+    // Text only
     const content = replyInput.trim();
     setReplyInput("");
+    setUploading(false);
     await supabase.from("chat_messages").insert({
       session_id: activeSession.id,
       role: "admin",
-      content: content || "",
-      media_url: mediaUrl || null,
-      media_type: mediaType || null,
+      content,
+      media_url: null,
+      media_type: null,
     });
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !activeSession) return;
-    setUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `${activeSession.id}/${Date.now()}.${ext}`;
-    const { data, error } = await supabase.storage.from("chat-media").upload(path, file);
-    if (error) { console.error(error); setUploading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from("chat-media").getPublicUrl(data.path);
-    const mediaType = file.type.startsWith("video") ? "video" : "image";
-    await sendReply(publicUrl, mediaType);
-    setUploading(false);
+ const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length || !activeSession) return;
+    const newPreviews = files.map(file => ({
+      url: URL.createObjectURL(file),
+      type: file.type.startsWith("video") ? "video" : "image",
+      file,
+    }));
+    setPreviews(prev => [...prev, ...newPreviews]);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -388,7 +415,7 @@ export default function AdminLiveChat() {
 
         {/* Main panel */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
-          {!activeSession ? (
+          {!activeSession || activeSession === null ? (
             <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "12px", padding: "24px", textAlign: "center" }}>
               <div style={{ fontSize: "40px" }}>💬</div>
               <div style={{ color: "#EAF0F4", fontWeight: 600, fontSize: "15px" }}>No chat selected</div>
@@ -409,8 +436,16 @@ export default function AdminLiveChat() {
                   <div style={{ color: "#EAF0F4", fontWeight: 700, fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {activeSession.customer_name || "Customer"}
                   </div>
-                  <div style={{ color: "#7a9bab", fontSize: "11px", marginTop: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                 <div style={{ color: "#7a9bab", fontSize: "11px", marginTop: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {activeSession.initial_query}
+                  </div>
+                  <div style={{ display: "flex", gap: "10px", marginTop: "2px" }}>
+                    {activeSession.customer_email && (
+                      <span style={{ color: "#4ade80", fontSize: "10px" }}>✉ {activeSession.customer_email}</span>
+                    )}
+                    {activeSession.customer_phone && (
+                      <span style={{ color: "#4ade80", fontSize: "10px" }}>📞 {activeSession.customer_phone}</span>
+                    )}
                   </div>
                 </div>
                 <div style={{ flexShrink: 0, display: "flex", gap: "8px", alignItems: "center" }}>
@@ -469,12 +504,28 @@ export default function AdminLiveChat() {
                   ))}
                 <div ref={bottomRef} />
               </div>
-
+            
+                {previews.length > 0 && (
+                  <div style={{ padding: "8px 16px", background: "#141f25", borderTop: "1px solid #2a3f4a", display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+                    {previews.map((p, i) => (
+                      <div key={i} style={{ position: "relative", display: "inline-block" }}>
+                        {p.type === "image"
+                          ? <img src={p.url} alt="preview" style={{ height: "60px", width: "60px", objectFit: "cover", borderRadius: "8px", border: "1.5px solid #2a3f4a" }} />
+                          : <video src={p.url} style={{ height: "60px", width: "80px", objectFit: "cover", borderRadius: "8px", border: "1.5px solid #2a3f4a" }} />
+                        }
+                        <button onClick={() => setPreviews(prev => prev.filter((_, idx) => idx !== i))}
+                          style={{ position: "absolute", top: "-6px", right: "-6px", background: "#ef4444", border: "none", borderRadius: "50%", width: "18px", height: "18px", cursor: "pointer", color: "#fff", fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>✕</button>
+                      </div>
+                    ))}
+                    {uploading && <span style={{ fontSize: "11px", color: "#7a9bab" }}>Uploading...</span>}
+                  </div>
+                )}
+                
               {/* Reply input */}
               {activeSession.status === "active" ? (
                 <div style={{ padding: "12px 16px", borderTop: "1px solid #2a3f4a", background: "#141f25", display: "flex", gap: "8px", alignItems: "center" }}>
                   {/* Hidden file input */}
-                  <input ref={fileInputRef} type="file" accept="image/*,video/*" onChange={handleFileUpload}
+                  <input ref={fileInputRef} type="file" accept="image/*,video/*" onChange={handleFileUpload} multiple
                     style={{ display: "none" }} />
                   {/* Attach button */}
                   <button onClick={() => fileInputRef.current?.click()} disabled={uploading}
@@ -489,7 +540,7 @@ export default function AdminLiveChat() {
                     onChange={e => setReplyInput(e.target.value)}
                     onKeyDown={e => e.key === "Enter" && !e.shiftKey && sendReply()}
                   />
-                  <button className="send-btn" onClick={() => sendReply()}
+                  <button className="send-btn" onClick={sendReply}
                     style={{ background: "#EAF0F4", border: "none", color: "#1D2C34", borderRadius: "10px", padding: "11px 16px", fontSize: "16px", fontWeight: 700, cursor: "pointer", transition: "background 0.15s", flexShrink: 0 }}>
                     ➤
                   </button>

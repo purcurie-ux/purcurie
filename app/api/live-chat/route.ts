@@ -9,11 +9,10 @@ const supabase = createClient(
 
 // POST /api/live-chat — create a new session
 export async function POST(req: NextRequest) {
-  const { initial_query, customer_name, customer_email } = await req.json();
-
+   const { initial_query, customer_name, customer_email, customer_phone } = await req.json();
   const { data, error } = await supabase
     .from("chat_sessions")
-    .insert({ initial_query, customer_name, customer_email, status: "waiting" })
+    .insert({ initial_query, customer_name, customer_email, customer_phone, status: "waiting" })
     .select()
     .single();
 

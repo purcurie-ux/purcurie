@@ -633,6 +633,9 @@ export default function PurcurieChat() {
   const [visible, setVisible] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [notifDismissed, setNotifDismissed] = useState(false);
+  const [showDiscountNotif, setShowDiscountNotif] = useState(false);
+  const [discountNotifDismissed, setDiscountNotifDismissed] = useState(false);
+  const [showDiscount, setShowDiscount] = useState(false);
 
   // Live chat state
   const [chatMode, setChatMode] = useState<ChatMode>("bot");
@@ -642,18 +645,24 @@ export default function PurcurieChat() {
   const [waitSeconds, setWaitSeconds] = useState(WAIT_SECONDS);
   const [customerName, setCustomerName] = useState("");
   const [customerQuery, setCustomerQuery] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [showNameForm, setShowNameForm] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const waitTimerRef = useRef<NodeJS.Timeout | null>(null);
   const liveFileInputRef = useRef<HTMLInputElement>(null);
   const [liveUploading, setLiveUploading] = useState(false);
+  const [livePreviews, setLivePreviews] = useState<Array<{ url: string; type: string; file: File }>>([]);
+  const [liveUnread, setLiveUnread] = useState(0);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
   const { items: cartItems } = useCart();
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, liveMessages]);
 
   useEffect(() => {
-    if (open) { setTimeout(() => setVisible(true), 10); setShowNotif(false); }
+    if (open) { setTimeout(() => setVisible(true), 10); setShowNotif(false); setShowDiscountNotif(false); }
     else { setVisible(false); }
   }, [open]);
 
@@ -662,6 +671,12 @@ export default function PurcurieChat() {
     const timer = setTimeout(() => { if (!open) setShowNotif(true); }, 15000);
     return () => clearTimeout(timer);
   }, [notifDismissed, open]);
+
+  useEffect(() => {
+    if (discountNotifDismissed) return;
+    const timer = setTimeout(() => { if (!open) setShowDiscountNotif(true); }, 10000);
+    return () => clearTimeout(timer);
+  }, [discountNotifDismissed, open]);
 
   useEffect(() => {
     const savedMessages = localStorage.getItem("purcurie_history");
@@ -695,6 +710,7 @@ export default function PurcurieChat() {
       .then(({ data }) => { if (data) setLiveMessages(data as ChatMessage[]); });
 
     // Subscribe to new messages
+    // Subscribe to new messages
     const channel = supabase
       .channel(`session-${sessionId}`)
       .on("postgres_changes", {
@@ -703,7 +719,32 @@ export default function PurcurieChat() {
         table: "chat_messages",
         filter: `session_id=eq.${sessionId}`,
       }, (payload) => {
-        setLiveMessages((prev) => [...prev, payload.new as ChatMessage]);
+        const newMsg = payload.new as ChatMessage;
+        setLiveMessages((prev) => [...prev, newMsg]);
+        // If customer is on bot view and message is from admin, notify
+       if (newMsg.role === "admin") {
+          setLiveUnread(u => u + 1);
+          // Play ping sound
+          try {
+            if (!audioCtxRef.current) {
+              audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+            }
+            const ctx = audioCtxRef.current;
+            if (ctx.state === "suspended") ctx.resume();
+            const o = ctx.createOscillator();
+            const g = ctx.createGain();
+            o.connect(g);
+            g.connect(ctx.destination);
+            o.frequency.value = 880;
+            o.type = "sine";
+            g.gain.setValueAtTime(0.3, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+            o.start(ctx.currentTime);
+            o.stop(ctx.currentTime + 0.4);
+          } catch (err) {
+            console.log("Sound error:", err);
+          }
+        }
       })
       .on("postgres_changes", {
         event: "UPDATE",
@@ -713,18 +754,61 @@ export default function PurcurieChat() {
       }, (payload) => {
         const newStatus = payload.new.status;
         if (newStatus === "active") {
-          setChatMode("active" as ChatMode);
+          setChatMode("active");
           localStorage.setItem("purcurie_chat_mode", "active");
           if (waitTimerRef.current) clearInterval(waitTimerRef.current);
         }
         if (newStatus === "closed") {
           setChatMode("closed");
           localStorage.setItem("purcurie_chat_mode", "closed");
+          setTimeout(() => {
+            localStorage.removeItem("purcurie_live_session");
+            localStorage.removeItem("purcurie_chat_mode");
+            setSessionId(null);
+            setLiveMessages([]);
+            setChatMode("bot");
+          }, 5000);
         }
       })
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
+  }, [sessionId]);
+
+// Clear unread when customer views live chat
+  useEffect(() => {
+    if (chatMode === "active") setLiveUnread(0);
+  }, [chatMode]);
+
+
+  // ✅ Polling fallback — check session status every 10 seconds
+  useEffect(() => {
+     if (!sessionId) return;
+    const interval = setInterval(async () => {
+      const { data } = await supabase
+        .from("chat_sessions")
+        .select("status")
+        .eq("id", sessionId)
+        .single();
+      if (data?.status === "closed") {
+        setChatMode("closed");
+        localStorage.setItem("purcurie_chat_mode", "closed");
+        setTimeout(() => {
+          localStorage.removeItem("purcurie_live_session");
+          localStorage.removeItem("purcurie_chat_mode");
+          setSessionId(null);
+          setLiveMessages([]);
+          setChatMode("bot");
+        }, 5000);
+        clearInterval(interval);
+      }
+      if (data?.status === "active" && chatMode === "waiting") {
+        setChatMode("active");
+        localStorage.setItem("purcurie_chat_mode", "active");
+        if (waitTimerRef.current) clearInterval(waitTimerRef.current);
+      }
+    }, 2000);
+    return () => clearInterval(interval);
   }, [sessionId, chatMode]);
 
   // ✅ Wait timer countdown
@@ -752,6 +836,7 @@ export default function PurcurieChat() {
   const startLiveChat = async () => {
     if (!customerQuery.trim()) return;
     setShowNameForm(false);
+    setChatMode("waiting");
 
     const res = await fetch("/api/live-chat", {
       method: "POST",
@@ -759,6 +844,8 @@ export default function PurcurieChat() {
       body: JSON.stringify({
         initial_query: customerQuery,
         customer_name: customerName || "Customer",
+        customer_email: customerEmail,
+        customer_phone: customerPhone,
       }),
     });
     const data = await res.json();
@@ -766,33 +853,49 @@ export default function PurcurieChat() {
       setSessionId(data.session.id);
       localStorage.setItem("purcurie_live_session", data.session.id);
       localStorage.setItem("purcurie_chat_mode", "waiting");
-      setChatMode("waiting");
     }
   };
 
-  const handleLiveFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !sessionId) return;
-    setLiveUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `${sessionId}/${Date.now()}.${ext}`;
-    const { data, error } = await supabase.storage.from("chat-media").upload(path, file);
-    if (error) { console.error(error); setLiveUploading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from("chat-media").getPublicUrl(data.path);
-    const mediaType = file.type.startsWith("video") ? "video" : "image";
-    await supabase.from("chat_messages").insert({
-      session_id: sessionId,
-      role: "customer",
-      content: "",
-      media_url: publicUrl,
-      media_type: mediaType,
-    });
-    setLiveUploading(false);
+  const handleLiveFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    const newPreviews = files.map(file => ({
+      url: URL.createObjectURL(file),
+      type: file.type.startsWith("video") ? "video" : "image",
+      file,
+    }));
+    setLivePreviews(prev => [...prev, ...newPreviews]);
     if (liveFileInputRef.current) liveFileInputRef.current.value = "";
   };
 
   const sendLiveMessage = async () => {
-    if (!liveInput.trim() || !sessionId) return;
+    if (!liveInput.trim() && livePreviews.length === 0) return;
+    if (!sessionId) return;
+
+    if (livePreviews.length > 0) {
+      setLiveUploading(true);
+      for (const preview of livePreviews) {
+        const ext = preview.file.name.split(".").pop();
+        const path = `${sessionId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { data, error } = await supabase.storage.from("chat-media").upload(path, preview.file);
+        if (!error && data) {
+          const { data: { publicUrl } } = supabase.storage.from("chat-media").getPublicUrl(data.path);
+          await supabase.from("chat_messages").insert({
+            session_id: sessionId,
+            role: "customer",
+            content: liveInput.trim() || "",
+            media_url: publicUrl,
+            media_type: preview.type,
+          });
+        }
+      }
+      setLiveUploading(false);
+      setLivePreviews([]);
+      setLiveInput("");
+      if (liveFileInputRef.current) liveFileInputRef.current.value = "";
+      return;
+    }
+
     const content = liveInput.trim();
     setLiveInput("");
     await supabase.from("chat_messages").insert({
@@ -837,6 +940,14 @@ export default function PurcurieChat() {
   const sendMessage = async (overrideInput?: string) => {
     const text = overrideInput ?? input;
 
+        if (text.includes("Get Discount")) {
+      setShowDiscount(true);
+      setMessages(prev => [...prev,
+        { role: "user", content: text },
+        { role: "assistant", content: "🎉 Here's your exclusive welcome discount code!\n\nUse code below at checkout:" }
+      ]);
+      return;
+    }
     if (text.includes("Talk to Human") || text === "talk_to_human") {
       setShowNameForm(true);
       setCustomerQuery(text === "talk_to_human" ? "" : "");
@@ -895,7 +1006,9 @@ export default function PurcurieChat() {
     localStorage.setItem("purcurie_history_all", JSON.stringify(remainingHistory));
   };
 
-  const resetAll = () => {
+ const resetAll = () => {
+    // Don't wipe live session if still active or waiting
+    if (chatMode === "active" || chatMode === "waiting") return;
     localStorage.removeItem("purcurie_history");
     localStorage.removeItem("purcurie_history_all");
     localStorage.removeItem("purcurie_chat_open");
@@ -910,7 +1023,7 @@ export default function PurcurieChat() {
     setLiveMessages([]);
   };
 
-  const suggestions = ["Track Order 📦", "Return/Refund ↩️", "Talk to Human 👤", "WhatsApp Us 💬"];
+  const suggestions = ["Track Order 📦", "Get Discount 🎁", "Talk to Human 👤", "WhatsApp Us 💬"];
 
   // ── Render: Name/Query form ──
   const renderNameForm = () => (
@@ -926,6 +1039,20 @@ export default function PurcurieChat() {
         onChange={e => setCustomerName(e.target.value)}
         style={{ border: "1.5px solid #CEDFE7", borderRadius: "10px", padding: "10px 14px", fontSize: "13px", outline: "none", background: "#fff", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}
       />
+      <input
+        placeholder="Email address *"
+        value={customerEmail}
+        onChange={e => setCustomerEmail(e.target.value)}
+        type="email"
+        style={{ border: `1.5px solid ${customerEmail && !/\S+@\S+\.\S+/.test(customerEmail) ? "#ef4444" : "#CEDFE7"}`, borderRadius: "10px", padding: "10px 14px", fontSize: "13px", outline: "none", background: "#fff", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}
+      />
+      <input
+        placeholder="Phone number *"
+        value={customerPhone}
+        onChange={e => setCustomerPhone(e.target.value)}
+        type="tel"
+        style={{ border: `1.5px solid ${customerPhone && !/^\d{10}$/.test(customerPhone) ? "#ef4444" : "#CEDFE7"}`, borderRadius: "10px", padding: "10px 14px", fontSize: "13px", outline: "none", background: "#fff", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}
+      />
       <textarea
         placeholder="Describe your issue... *"
         value={customerQuery}
@@ -938,8 +1065,9 @@ export default function PurcurieChat() {
           style={{ flex: 1, background: "#EAF0F4", border: "1.5px solid #CEDFE7", borderRadius: "10px", padding: "10px", fontSize: "13px", fontWeight: 600, cursor: "pointer", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}>
           Cancel
         </button>
-        <button onClick={startLiveChat} disabled={!customerQuery.trim()}
-          style={{ flex: 2, background: customerQuery.trim() ? "#1D2C34" : "#CEDFE7", border: "none", borderRadius: "10px", padding: "10px", fontSize: "13px", fontWeight: 600, cursor: customerQuery.trim() ? "pointer" : "not-allowed", color: customerQuery.trim() ? "#EAF0F4" : "#7a9bab", fontFamily: "Satoshi, sans-serif", transition: "background 0.2s" }}>
+        <button onClick={startLiveChat}
+          disabled={!customerQuery.trim() || !customerEmail.trim() || !customerPhone.trim()}
+          style={{ flex: 2, background: customerQuery.trim() && customerEmail.trim() && customerPhone.trim() ? "#1D2C34" : "#CEDFE7", border: "none", borderRadius: "10px", padding: "10px", fontSize: "13px", fontWeight: 600, cursor: customerQuery.trim() && customerEmail.trim() && customerPhone.trim() ? "pointer" : "not-allowed", color: customerQuery.trim() && customerEmail.trim() && customerPhone.trim() ? "#EAF0F4" : "#7a9bab", fontFamily: "Satoshi, sans-serif", transition: "background 0.2s" }}>
           Connect Me →
         </button>
       </div>
@@ -980,7 +1108,7 @@ export default function PurcurieChat() {
         <span style={{ fontWeight: 600 }}>Your query: </span>{customerQuery}
       </div>
       <button onClick={() => { endLiveChat(); }}
-        style={{ background: "none", border: "1.5px solid #CEDFE7", borderRadius: "99px", padding: "7px 20px", fontSize: "12px", cursor: "pointer", color: "#7a9bab", fontFamily: "Satoshi, sans-serif" }}>
+        style={{ background: "none", border: "1.5px solid #1D2C34", borderRadius: "99px", padding: "7px 20px", fontSize: "12px", cursor: "pointer", color: "#7a9bab", fontFamily: "Satoshi, sans-serif", }}>
         Cancel & go back
       </button>
     </div>
@@ -1027,8 +1155,27 @@ export default function PurcurieChat() {
         )}
         <div ref={bottomRef} />
       </div>
+
+         {livePreviews.length > 0 && (
+        <div style={{ padding: "8px 14px", background: "#ffffff", borderTop: "1px solid #CEDFE7", display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", flexShrink: 0 }}>
+          {livePreviews.map((p, i) => (
+            <div key={i} style={{ position: "relative", display: "inline-block" }}>
+              {p.type === "image"
+                ? <img src={p.url} alt="preview" style={{ height: "60px", width: "60px", objectFit: "cover", borderRadius: "8px", border: "1.5px solid #CEDFE7" }} />
+                : <video src={p.url} style={{ height: "60px", width: "80px", objectFit: "cover", borderRadius: "8px", border: "1.5px solid #CEDFE7" }} />
+              }
+              <button onClick={() => setLivePreviews(prev => prev.filter((_, idx) => idx !== i))}
+                style={{ position: "absolute", top: "-6px", right: "-6px", background: "#ef4444", border: "none", borderRadius: "50%", width: "18px", height: "18px", cursor: "pointer", color: "#fff", fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>✕</button>
+            </div>
+          ))}
+          {liveUploading
+            ? <span style={{ fontSize: "11px", color: "#7a9bab" }}>Uploading...</span>
+            : <span style={{ fontSize: "11px", color: "#1D2C34", fontWeight: 600 }}>{livePreviews.length} file{livePreviews.length > 1 ? "s" : ""} ready to send</span>
+          }
+        </div>
+      )}
      <div style={{ padding: "12px 14px", borderTop: "1px solid #CEDFE7", background: "#ffffff", display: "flex", gap: "8px", alignItems: "center", flexShrink: 0, borderRadius: "0 0 20px 20px" }}>
-        <input ref={liveFileInputRef} type="file" accept="image/*,video/*" onChange={handleLiveFileUpload} style={{ display: "none" }} />
+       <input ref={liveFileInputRef} type="file" accept="image/*,video/*" onChange={handleLiveFileUpload} multiple style={{ display: "none" }} />
         <button onClick={() => liveFileInputRef.current?.click()} disabled={liveUploading}
           style={{ background: "none", border: "1.5px solid #CEDFE7", color: liveUploading ? "#CEDFE7" : "#1D2C34", borderRadius: "50%", width: "36px", height: "36px", cursor: liveUploading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", flexShrink: 0 }}>
           {liveUploading ? "⏳" : "📎"}
@@ -1054,14 +1201,21 @@ export default function PurcurieChat() {
       <div style={{ fontSize: "32px" }}>✅</div>
       <div style={{ fontSize: "15px", fontWeight: 700, color: "#1D2C34" }}>Chat ended</div>
       <div style={{ fontSize: "12px", color: "#7a9bab" }}>Thanks for reaching out. Hope we helped!</div>
-      <button onClick={resetAll}
+      <div style={{ fontSize: "11px", color: "#CEDFE7", marginTop: "4px" }}>Returning to assistant in a moment...</div>
+      <button onClick={() => {
+          localStorage.removeItem("purcurie_live_session");
+          localStorage.removeItem("purcurie_chat_mode");
+          setSessionId(null);
+          setLiveMessages([]);
+          setChatMode("bot");
+        }}
         style={{ background: "#1D2C34", border: "none", color: "#EAF0F4", borderRadius: "99px", padding: "10px 24px", fontSize: "13px", fontWeight: 600, cursor: "pointer", fontFamily: "Satoshi, sans-serif", marginTop: "8px" }}>
         Back to Assistant
       </button>
     </div>
   );
 
-  const isLiveMode = chatMode !== "bot";
+  const isLiveMode = chatMode !== "bot" && chatMode !== "closed";
   const liveHeaderLabel = chatMode === "waiting" ? "Waiting..." : chatMode === "active" ? "Live Support" : "Chat Ended";
   const liveHeaderColor = chatMode === "active" ? "#4ade80" : chatMode === "waiting" ? "#facc15" : "#CEDFE7";
 
@@ -1174,7 +1328,7 @@ export default function PurcurieChat() {
                     {isLiveMode ? liveHeaderLabel : "Purcurie Support"}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "-2px" }}>
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: liveHeaderColor, boxShadow: `0 0 6px ${liveHeaderColor}` }} />
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: isLiveMode ? liveHeaderColor : "#4ade80", boxShadow: `0 0 6px ${isLiveMode ? liveHeaderColor : "#4ade80"}` }} />
                   <span style={{ color: "#CEDFE7", fontSize: "11px", fontWeight: 500 }}>
                     {isLiveMode ? (chatMode === "waiting" ? "In queue" : chatMode === "active" ? "Connected" : "Ended") : "Online now"}
                   </span>
@@ -1197,11 +1351,11 @@ export default function PurcurieChat() {
                   <span style={{ fontSize: "12px", color: "#CEDFE7", lineHeight: 1 }}>New</span>
                 </button>
               )}
-              {isLiveMode && chatMode !== "closed" && (
-                <button className="hdr-btn" onClick={endLiveChat} title="End live chat"
+             {isLiveMode && chatMode !== "closed" && (
+                <button className="hdr-btn" onClick={() => setChatMode("bot")} title="Back to assistant"
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", height: "auto", padding: "4px 6px" }}>
-                  <span style={{ fontSize: "15px" }}>🚫</span>
-                  <span style={{ fontSize: "12px", color: "#CEDFE7", lineHeight: 1 }}>End</span>
+                  <span style={{ fontSize: "15px" }}>🤖</span>
+                  <span style={{ fontSize: "12px", color: "#CEDFE7", lineHeight: 1 }}>Bot</span>
                 </button>
               )}
               <button className="hdr-btn reset-btn" onClick={resetAll} title="Clear all & reset"
@@ -1223,6 +1377,26 @@ export default function PurcurieChat() {
             chatMode === "active" ? renderLiveChat() :
             chatMode === "closed" ? renderClosed() : (
             <>
+
+            {/* Live session resume banner */}
+              {sessionId && (
+                <div onClick={() => { setChatMode(localStorage.getItem("purcurie_chat_mode") as ChatMode || "active"); setLiveUnread(0); }}
+                  style={{ margin: "10px 16px 0", background: "#1D2C34", borderRadius: "12px", padding: "10px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", flexShrink: 0 }}>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    <div style={{ color: "#4ade80", fontSize: "11px", fontWeight: 700 }}>● Live session active</div>
+                    {liveUnread > 0 && (
+                      <span style={{ background: "#ef4444", color: "#fff", borderRadius: "99px", padding: "1px 6px", fontSize: "10px", fontWeight: 700 }}>{liveUnread}</span>
+                    )}
+                  </div>
+                  <div style={{ color: "#CEDFE7", fontSize: "12px", marginTop: "2px" }}>
+                    {liveUnread > 0 ? `${liveUnread} new message${liveUnread > 1 ? "s" : ""}` : "Tap to return to agent"}
+                  </div>
+                  </div>
+                  <span style={{ color: "#EAF0F4", fontSize: "18px" }}>→</span>
+                </div>
+              )}
+
               {/* Bot messages */}
               <div className="purcurie-scrollbar"
                 style={{ flex: 1, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: "10px", background: "#EAF0F4" }}>
@@ -1249,6 +1423,20 @@ export default function PurcurieChat() {
                     </div>
                   </div>
                 ))}
+
+                {showDiscount && (
+                  <div style={{ background: "#1D2C34", borderRadius: "16px", padding: "16px", textAlign: "center", margin: "4px 0" }}>
+                    <div style={{ color: "#7a9bab", fontSize: "11px", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "8px" }}>YOUR DISCOUNT CODE</div>
+                    <div style={{ color: "#4ade80", fontSize: "22px", fontWeight: 800, letterSpacing: "0.12em", marginBottom: "8px" }}>WELCOME10</div>
+                    <div style={{ color: "#CEDFE7", fontSize: "11px", marginBottom: "12px" }}>10% off your first order</div>
+                    <button
+                      onClick={() => { navigator.clipboard.writeText("WELCOME10"); }}
+                      style={{ background: "#4ade80", border: "none", color: "#1D2C34", borderRadius: "8px", padding: "8px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", fontFamily: "Satoshi, sans-serif" }}>
+                      Copy Code 📋
+                    </button>
+                  </div>
+                )}
+
                 {loading && (
                   <div style={{ display: "flex", justifyContent: "flex-start" }}>
                     <div style={{ background: "#ffffff", border: "1px solid #CEDFE7", borderRadius: "18px 18px 18px 4px", padding: "12px 16px", display: "flex", gap: "4px", alignItems: "center", boxShadow: "0 1px 4px rgba(29,44,52,0.08)" }}>
@@ -1299,14 +1487,34 @@ export default function PurcurieChat() {
             <button onClick={dismissNotif} style={{ background: "none", border: "none", color: "#CEDFE7", cursor: "pointer", fontSize: "12px", padding: "0", lineHeight: 1, flexShrink: 0, marginTop: "1px" }}>✕</button>
           </div>
         )}
+                {/* 🎟 Discount Notification Bubble */}
+        {showDiscountNotif && !open && !showNotif && (
+          <div className="notif-bubble"
+            style={{ position: "absolute", bottom: "72px", right: "0", background: "#1D2C34", color: "#EAF0F4", borderRadius: "16px 16px 4px 16px", padding: "10px 14px", fontSize: "13px", fontWeight: 500, maxWidth: "240px", minWidth: "200px", lineHeight: "1.4", boxShadow: "0 8px 24px rgba(29,44,52,0.2)", cursor: "pointer", display: "flex", alignItems: "flex-start", gap: "8px" }}
+            onClick={() => { setOpen(true); setShowDiscountNotif(false); setDiscountNotifDismissed(true); }}>
+            <span style={{ flex: 1 }}>🎁 Want a discount code? Click here!</span>
+            <button onClick={e => { e.stopPropagation(); setShowDiscountNotif(false); setDiscountNotifDismissed(true); }}
+              style={{ background: "none", border: "none", color: "#CEDFE7", cursor: "pointer", fontSize: "12px", padding: "0", lineHeight: 1, flexShrink: 0, marginTop: "1px" }}>✕</button>
+          </div>
+        )}
 
         {/* Toggle Button */}
         <div style={{ position: "relative" }}>
-          {showNotif && !open && (
-            <div className="notif-badge" style={{ position: "absolute", top: "-4px", right: "-4px", width: "16px", height: "16px", background: "#ef4444", borderRadius: "50%", border: "2px solid white", zIndex: 1 }} />
+          {(showNotif || liveUnread > 0) && !open && (
+            <div className="notif-badge" style={{ position: "absolute", top: "-4px", right: "-4px", minWidth: "16px", height: "16px", background: "#ef4444", borderRadius: "99px", border: "2px solid white", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 3px" }}>
+              {liveUnread > 0 && <span style={{ color: "#fff", fontSize: "9px", fontWeight: 700 }}>{liveUnread}</span>}
+            </div>
           )}
           <button className="toggle-btn"
-            onClick={() => { const n = !open; setOpen(n); localStorage.setItem("purcurie_chat_open", n.toString()); }}
+            onClick={() => {
+              const n = !open;
+              setOpen(n);
+              localStorage.setItem("purcurie_chat_open", n.toString());
+              // Pre-init audio context on user gesture so it's ready
+              if (!audioCtxRef.current) {
+                audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+              }
+            }}
             style={{ background: "#1D2C34", border: "none", color: "#EAF0F4", width: "56px", height: "56px", borderRadius: "50%", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(29,44,52,0.2)" }}>
             {open
               ? <span style={{ fontSize: "20px", fontWeight: 600, lineHeight: 1 }}>✕</span>
