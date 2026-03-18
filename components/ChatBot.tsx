@@ -1437,18 +1437,6 @@ export default function PurcurieChat() {
                     <div style={{ color: "#7a9bab", fontSize: "11px", marginBottom: "14px" }}>Follow @purcurie.in and then tap the button below to reveal your code</div>
                     <a
                       href="https://www.instagram.com/purcurie"
-                        onClick={(e) => {
-                        e.preventDefault();
-                        const appLink = "instagram://user?username=purcurie";
-                        const webLink = "https://www.instagram.com/purcurie";
-                        const start = Date.now();
-                        window.location.href = appLink;
-                        setTimeout(() => {
-                            if (Date.now() - start < 2000) {
-                            window.open(webLink, "_blank");
-                            }
-                        }, 1000);
-                        }}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ display: "inline-block", background: "linear-gradient(135deg, #f97316, #ec4899, #8b5cf6)", border: "none", color: "#fff", borderRadius: "8px", padding: "9px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", textDecoration: "none", marginBottom: "10px" }}>
