@@ -636,6 +636,7 @@ export default function PurcurieChat() {
   const [showDiscountNotif, setShowDiscountNotif] = useState(false);
   const [discountNotifDismissed, setDiscountNotifDismissed] = useState(false);
   const [showDiscount, setShowDiscount] = useState(false);
+  const [instaStep, setInstaStep] = useState<"idle" | "prompt" | "revealed">("idle");
 
   // Live chat state
   const [chatMode, setChatMode] = useState<ChatMode>("bot");
@@ -939,12 +940,13 @@ export default function PurcurieChat() {
 
   const sendMessage = async (overrideInput?: string) => {
     const text = overrideInput ?? input;
-
-        if (text.includes("Get Discount")) {
+    
+    if (text.includes("Get Discount") || text.toLowerCase().includes("discount") || text.toLowerCase().includes("coupon") || text.toLowerCase().includes("promo")) {
+      setInstaStep("prompt");
       setShowDiscount(true);
       setMessages(prev => [...prev,
         { role: "user", content: text },
-        { role: "assistant", content: "🎉 Here's your exclusive welcome discount code!\n\nUse code below at checkout:" }
+        { role: "assistant", content: "🎉 You're one step away from your discount!\n\nFollow us on Instagram to unlock your exclusive code 👇" }
       ]);
       return;
     }
@@ -994,6 +996,8 @@ export default function PurcurieChat() {
     const initialMsg = [{ role: "assistant" as const, content: "Hi there! 👋\nI'm Purcurie's support.\nHow can I help you today?" }];
     setMessages(initialMsg);
     localStorage.setItem("purcurie_history", JSON.stringify(initialMsg));
+    setShowDiscount(false);
+    setInstaStep("idle");
   };
 
   const goBackToPrevious = () => {
@@ -1021,6 +1025,8 @@ export default function PurcurieChat() {
     setChatMode("bot");
     setSessionId(null);
     setLiveMessages([]);
+    setShowDiscount(false);
+    setInstaStep("idle");
   };
 
   const suggestions = ["Track Order 📦", "Get Discount 🎁", "Talk to Human 👤", "WhatsApp Us 💬"];
@@ -1424,16 +1430,50 @@ export default function PurcurieChat() {
                   </div>
                 ))}
 
-                {showDiscount && (
+                {showDiscount && instaStep === "prompt" && (
+                  <div style={{ background: "#1D2C34", borderRadius: "16px", padding: "16px", textAlign: "center", margin: "4px 0" }}>
+                    <div style={{ fontSize: "28px", marginBottom: "8px" }}>📸</div>
+                    <div style={{ color: "#EAF0F4", fontSize: "13px", fontWeight: 700, marginBottom: "4px" }}>Follow us on Instagram</div>
+                    <div style={{ color: "#7a9bab", fontSize: "11px", marginBottom: "14px" }}>Follow @purcurie.in and then tap the button below to reveal your code</div>
+                    <a
+                      href="https://www.instagram.com/purcurie"
+                        onClick={(e) => {
+                        e.preventDefault();
+                        const appLink = "instagram://user?username=purcurie";
+                        const webLink = "https://www.instagram.com/purcurie";
+                        const start = Date.now();
+                        window.location.href = appLink;
+                        setTimeout(() => {
+                            if (Date.now() - start < 2000) {
+                            window.open(webLink, "_blank");
+                            }
+                        }, 1000);
+                        }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: "inline-block", background: "linear-gradient(135deg, #f97316, #ec4899, #8b5cf6)", border: "none", color: "#fff", borderRadius: "8px", padding: "9px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", textDecoration: "none", marginBottom: "10px" }}>
+                      👉 Follow @purcurie.in
+                    </a>
+                    <div style={{ color: "#CEDFE7", fontSize: "11px", marginBottom: "10px" }}>Once followed, tap below 👇</div>
+                    <button
+                      onClick={() => setInstaStep("revealed")}
+                      style={{ background: "#4ade80", border: "none", color: "#1D2C34", borderRadius: "8px", padding: "9px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", fontFamily: "Satoshi, sans-serif", width: "100%" }}>
+                      ✅ I've Followed — Show My Code
+                    </button>
+                  </div>
+                )}
+
+                {showDiscount && instaStep === "revealed" && (
                   <div style={{ background: "#1D2C34", borderRadius: "16px", padding: "16px", textAlign: "center", margin: "4px 0" }}>
                     <div style={{ color: "#7a9bab", fontSize: "11px", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "8px" }}>YOUR DISCOUNT CODE</div>
-                    <div style={{ color: "#4ade80", fontSize: "22px", fontWeight: 800, letterSpacing: "0.12em", marginBottom: "8px" }}>WELCOME10</div>
-                    <div style={{ color: "#CEDFE7", fontSize: "11px", marginBottom: "12px" }}>10% off your first order</div>
+                    <div style={{ color: "#4ade80", fontSize: "22px", fontWeight: 800, letterSpacing: "0.12em", marginBottom: "4px" }}>WELCOME10</div>
+                    <div style={{ color: "#CEDFE7", fontSize: "11px", marginBottom: "14px" }}>10% off your first order 🎉</div>
                     <button
                       onClick={() => { navigator.clipboard.writeText("WELCOME10"); }}
-                      style={{ background: "#4ade80", border: "none", color: "#1D2C34", borderRadius: "8px", padding: "8px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", fontFamily: "Satoshi, sans-serif" }}>
+                      style={{ background: "#4ade80", border: "none", color: "#1D2C34", borderRadius: "8px", padding: "9px 20px", fontSize: "12px", fontWeight: 700, cursor: "pointer", fontFamily: "Satoshi, sans-serif", width: "100%" }}>
                       Copy Code 📋
                     </button>
+                    <div style={{ color: "#7a9bab", fontSize: "10px", marginTop: "10px" }}>Thanks for following us! 💚</div>
                   </div>
                 )}
 
