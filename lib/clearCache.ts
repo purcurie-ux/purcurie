@@ -1,4 +1,4 @@
-export const SITE_VERSION = "1.0.4"; // 👈 bump this on every deployment
+export const SITE_VERSION = "1.0.5"; // 👈 bump this on every deployment
 
 export function checkAndClearCache() {
   try {

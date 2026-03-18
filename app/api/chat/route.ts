@@ -156,13 +156,15 @@ async function getOrderByNumber(orderNumber: string) {
 // The old version was checking message.length instead of match.length,
 // which caused it to reject valid numbers inside longer sentences.
 function extractOrderNumber(message: string): string | null {
-  // Priority 1: explicit "#1053" or "order 1053" or "order #1053"
-  const explicit = message.match(/(?:order\s*#?|#)(\d{3,6})\b/i);
+  // Strip emails first so numbers inside emails are never matched
+  const withoutEmail = message.replace(/\S+@\S+\.\S+/g, "");
+
+  // Priority 1: explicit "#1053" or "order 1053"
+  const explicit = withoutEmail.match(/(?:order\s*#?|#)(\d{3,6})\b/i);
   if (explicit) return explicit[1];
 
-  // Priority 2: a bare standalone number (e.g. user just types "1053")
-  // Only match if the entire message is a short number, or a number padded by whitespace/punctuation
-  const bare = message.trim().match(/^[^\d]*(\d{3,6})[^\d]*$/);
+  // Priority 2: bare standalone number only
+  const bare = withoutEmail.trim().match(/^[^\d]*(\d{3,6})[^\d]*$/);
   if (bare) return bare[1];
 
   return null;
@@ -210,11 +212,11 @@ export async function POST(req: Request) {
           const raw: string = m.content;
 
           // Email match — trim whitespace and ignore case
-          const userEmail = raw.trim().toLowerCase();
-          const orderEmail = (order.email ?? "").trim().toLowerCase();
-          if (orderEmail && userEmail.includes(orderEmail)) {
-            return true;
-          }
+         const userEmail = raw.trim().toLowerCase().replace(/\s+/g, "");
+         const orderEmail = (order.email ?? "").trim().toLowerCase().replace(/\s+/g, "");
+         if (orderEmail && (userEmail.includes(orderEmail) || orderEmail.includes(userEmail))) {
+         return true;
+         }
 
           // Phone match — last 10 digits only
           const userPhone = normalisePhone(raw);
@@ -329,8 +331,10 @@ STEP 4 — You HAVE direct access to the order database. NEVER say "I don't have
 
   After the tracking number, add this note: "Tap the Copy📋  button to copy AWB number."
 
-❌ IF NO TRACKING LINK IS PROVIDED (Tracking Number is NONE_AVAILABLE_YET):
-  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. Placed on [Date] for [Total]. Tracking details will be shared once your order ships. You can check order status at https://shopify.com/98468430146/account"
+❌ IF NO TRACKING (Tracking Number is "NONE_AVAILABLE_YET"):
+  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. Placed on [Date] for [Total]. Your order is being prepared and tracking details will be shared once shipped. Track status at https://shopify.com/98468430146/account"
+
+🔴 NEVER show "NONE", "NONE_AVAILABLE_YET" or "undefined" to the user under any circumstance.
 
 🔴 CRITICAL INSTRUCTION FOR LINKS:
 - Use the actual URL from "Order Lookup Result" ONLY if it starts with "https".
@@ -353,19 +357,34 @@ ${products.length ? JSON.stringify(products, null, 2) : "Catalog currently unava
 ${cartItems?.length ? JSON.stringify(cartItems, null, 2) : "Cart is empty."}
 
 Guidelines:
-- 📦 TRACKING: If the user asks to track an order but hasn't provided a number yet, respond EXACTLY with: "I'd be happy to help! Please enter your order number (e.g., #1053)."
-- 📦 REFUNDS: For returns/refunds, tell users to email support@purcurie.com.
-- ↩️ REFUNDS: If the "Order Lookup Result" shows the status as "Refunded", tell the user: "Your order has been refunded. The amount should reflect in your original payment method within 5-7 business days."
-- ❌ CANCELLED: If the "Order Lookup Result" shows the status as "Cancelled", tell the user: "Your order [Order Number] has been cancelled. If you were charged, the refund should reflect within 5-7 business days. For any questions, please email support@purcurie.com."
-- 🎫 TICKETS: If raising a ticket, ask for the issue and Order #, then confirm it's logged for a 24-hour review.
-- 👤 HUMAN: If requested, provide the WhatsApp link: https://wa.me/9769777006.
-- 💬 WHATSAPP: Mention WhatsApp for faster updates.
-- 📦 TRACKING PAGE: Always include this link at the end of any order status response: "You can also track your order here: https://www.purcurie.com/track"
-- Keep responses warm, professional, and under 3 sentences.
+- 🔄 REFUND/RETURN/EXCHANGE/CANCEL: If the user mentions refund, return, exchange, cancel, or anything related to these topics, respond EXACTLY with this message and nothing else:
+  "For returns/refunds, please email support@purcurie.com and they'll be happy to assist you! 😊
+  
+  Need faster help? You can also reach us on WhatsApp:
+  https://wa.me/9769777006
+  
+  Or write 'connect me' to start a live chat with our team."
+
+- 📦 TRACKING/ORDER STATUS:-If the user asks to track an order but hasn't provided a number yet, respond EXACTLY with: "I'd be happy to help! Please enter your order number (e.g., #1053)."
+- 👤 HUMAN/AGENT/SUPPORT: If the user says talk to human, talk to agent, customer care, support, support team, connect me, need help, or any similar phrase — respond EXACTLY with this message and nothing else:
+  "I'll connect you with our support team right away! 😊
+  
+  Reach us instantly on WhatsApp 👇
+  https://wa.me/9769777006
+  
+  Or write 'connect me' below to start a live chat session with our team."
+
+- 🎫 TICKETS: If the user wants to raise a ticket, report an issue, or contact support, respond EXACTLY: "You can raise a support ticket directly here 👇\n\nhttps://www.purcurie.com/contact\n\nOur team will get back to you within 24 hours! 😊"
+- 💬 WHATSAPP: Always mention WhatsApp for faster updates: https://wa.me/9769777006
+- 📦 TRACKING PAGE: Always include this link at the end of any order status response: "You can also track your order here: https://www.purcurie.com/track" 
+- Keep responses warm, professional, and under 3 sentences unless using the exact templates above.
 - NEVER show raw technical tags (like [VERIFICATION STATUS...]) to the user.
+- NEVER show "NONE", "NONE_AVAILABLE_YET" or "undefined" to the user under any circumstance.
+- NEVER show the Shopify account link (shopify.com/...) to customers.
+
 `;
 
-const trimmedMessages = messages.slice(-6);
+const trimmedMessages = messages.slice(-20);
 
     const response = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",

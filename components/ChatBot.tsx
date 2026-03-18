@@ -620,6 +620,10 @@ const WAIT_SECONDS = 120; // 2 minutes
 
 function TrackingLine({ trackingNum }: { trackingNum: string }) {
   const [copied, setCopied] = useState(false);
+  // Don't render copy button if no real tracking number
+  if (!trackingNum || trackingNum === "NONE_AVAILABLE_YET" || trackingNum === "NONE") {
+    return <span>📦 Tracking: Not yet assigned</span>;
+  }
 
   const handleCopy = () => {
     // Fallback for mobile browsers where clipboard API may fail
@@ -693,6 +697,7 @@ export default function PurcurieChat() {
   const [discountNotifDismissed, setDiscountNotifDismissed] = useState(false);
   const [showDiscount, setShowDiscount] = useState(false);
   const [instaStep, setInstaStep] = useState<"idle" | "prompt" | "revealed">("idle");
+  const [showTrackNew, setShowTrackNew] = useState(false);
 
   // Live chat state
   const [chatMode, setChatMode] = useState<ChatMode>("bot");
@@ -998,28 +1003,34 @@ const renderMessageContent = (content: string) => {
     }
 
     const parts = line.split(urlRegex);
-    const rendered = parts.map((part, i) => {
-      if (part.match(urlRegex)) {
-        let label = part;
-        try {
-          const url = new URL(part);
-          label = url.hostname.replace("www.", "") + url.pathname;
-        } catch {}
-        return (
-          <a key={i} href={part} target="_blank" rel="noopener noreferrer"
-            style={{
-              color: "inherit",
-              textDecoration: "underline",
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-              display: "inline",
-            }}>
-            {label}
-          </a>
-        );
-      }
-      return part;
-    });
+const rendered = parts.map((part, i) => {
+  if (part.match(urlRegex)) {
+    // Strip trailing punctuation like . , ) ] that got caught in the URL
+    const cleanUrl = part.replace(/[.,\)\]!?]+$/, "");
+    const trailing = part.slice(cleanUrl.length); // e.g. the "."
+    let label = cleanUrl;
+    try {
+      const url = new URL(cleanUrl);
+      label = url.hostname.replace("www.", "") + url.pathname;
+    } catch {}
+    return (
+      <span key={i}>
+        <a href={cleanUrl} target="_blank" rel="noopener noreferrer"
+          style={{
+            color: "inherit",
+            textDecoration: "underline",
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+            display: "inline",
+          }}>
+          {label}
+        </a>
+        {trailing}
+      </span>
+    );
+  }
+  return part;
+});
 
     return <span key={lineIdx}>{rendered}{"\n"}</span>;
   });
@@ -1027,13 +1038,13 @@ const renderMessageContent = (content: string) => {
   const sendMessage = async (overrideInput?: string) => {
     const text = overrideInput ?? input;
 
-    if (text.includes("Track My Package")) {
-      setMessages(prev => [...prev,
-        { role: "user", content: text },
-        { role: "assistant", content: "You can track your order here 👇\n\nhttps://www.purcurie.com/track\n\nIf you need detailed order status, just share your order number (e.g. #1053) and I'll look it up for you! 📦" }
-      ]);
-      return;
-    }
+   if (text.includes("Track My Package")) {
+  setMessages(prev => [...prev,
+    { role: "user", content: text },
+    { role: "assistant", content: "You can track your order here 👇\n\nhttps://www.purcurie.com/track\n\nNeed your tracking / AWB number ? Just share your order number (e.g. #1053) and I'll look it up for you with full tracking details! 📦" }
+  ]);
+  return;
+}
     
     if (text.includes("Get Discount") || text.toLowerCase().includes("discount") || text.toLowerCase().includes("coupon") || text.toLowerCase().includes("promo")) {
       setInstaStep("prompt");
@@ -1044,7 +1055,8 @@ const renderMessageContent = (content: string) => {
       ]);
       return;
     }
-    if (text.includes("Talk to Human") || text === "talk_to_human") {
+    // if (text.includes("Speak to Our Team") || text === "speak_to_our_team") {
+    if (text.toLowerCase().includes("speak to our team") || text.toLowerCase().includes("connect me") || text === "speak_to_our_team") {
       setShowNameForm(true);
       setCustomerQuery(text === "talk_to_human" ? "" : "");
       return;
@@ -1124,7 +1136,7 @@ const renderMessageContent = (content: string) => {
     setInstaStep("idle");
   };
 
-  const suggestions = ["Track Order 📦","Track My Package 🚚", "Get Discount 🎁", "Talk to Human 👤", "WhatsApp Us 💬"];
+  const suggestions = ["Track Order 📦","Track My Package 🚚", "Get Discount 🎁", "👩 Speak to Our Team", "WhatsApp Us 💬", "Return/Refund ↩️",];
 
   // ── Render: Name/Query form ──
   const renderNameForm = () => (
@@ -1401,6 +1413,12 @@ const renderMessageContent = (content: string) => {
         .hdr-btn:active { transform: scale(0.88); }
         .hdr-btn.reset-btn:hover .spin-icon { display: inline-block; animation: spinOnce 0.4s ease forwards; }
         @keyframes spinOnce { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        @keyframes trackPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(29,44,52,0.3); }
+        50% { box-shadow: 0 0 0 6px rgba(29,44,52,0); }
+        }
+
       `}</style>
 
       <div className="purcurie-chat purcurie-chat-root"
@@ -1459,7 +1477,7 @@ const renderMessageContent = (content: string) => {
               {!isLiveMode && (
                 <button className="hdr-btn" onClick={startNewChat} title="Start new chat"
                   style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", height: "auto", padding: "4px 6px" }}>
-                  <span style={{ fontSize: "15px" }}>➕</span>
+                  <span style={{ fontSize: "15px", filter: "brightness(0) invert(1)" }}>➕</span>
                   <span style={{ fontSize: "12px", color: "#CEDFE7", lineHeight: 1 }}>New</span>
                 </button>
               )}
@@ -1524,14 +1542,53 @@ const renderMessageContent = (content: string) => {
                       border: m.role === "user" ? "none" : "1px solid #CEDFE7",
                       whiteSpace: "pre-wrap", wordBreak: "break-word", overflowWrap: "anywhere",
                     }}>
-                      <>
-                        {m.content.includes("Verified Customer Account") && (
-                          <div style={{ fontSize: '10px', background: '#4ade80', color: '#1D2C34', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold', marginBottom: '6px', display: 'inline-block', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>
-                            SECURE VERIFIED
-                          </div>
+                    <>
+                    {m.content.includes("Verified Customer Account") && (
+                        <div style={{ fontSize: '10px', background: '#4ade80', color: '#1D2C34', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold', marginBottom: '6px', display: 'inline-block', letterSpacing: '0.05em', whiteSpace: 'nowrap' }}>
+                        SECURE VERIFIED
+                        </div>
+                    )}
+                    {renderMessageContent(m.content)}
+
+                    {/* ✅ Reset button after successful order fetch */}
+            
+                    {m.role === "assistant" && m.content.includes("Verified Customer Account") && (
+                    <div style={{ marginTop: "12px", paddingTop: "12px", borderTop: "1px solid #CEDFE7" }}>
+                        {!showTrackNew ? (
+                        <>
+                            <div style={{ fontSize: "11px", color: "#7a9bab", marginBottom: "8px", textAlign: "center" }}>
+                             Want to track a different order?
+                            </div>
+                            <button
+                            onClick={() => setShowTrackNew(true)}
+                            style={{
+                                width: "100%", background: "#1D2C34", border: "none",
+                                borderRadius: "10px", padding: "10px 14px", fontSize: "13px",
+                                fontWeight: 700, cursor: "pointer", color: "#EAF0F4",
+                                fontFamily: "Satoshi, sans-serif", display: "flex",
+                                alignItems: "center", justifyContent: "center", gap: "8px",
+                                animation: "trackPulse 2s ease-in-out infinite",
+                            }}>
+                            🔄 Track Another Order
+                            </button>
+                        </>
+                        ) : (
+                        <div style={{ display: "flex", gap: "8px" }}>
+                            <button
+                            onClick={() => setShowTrackNew(false)}
+                            style={{ flex: 1, background: "none", border: "1.5px solid #CEDFE7", borderRadius: "10px", padding: "8px", fontSize: "12px", fontWeight: 600, cursor: "pointer", color: "#7a9bab", fontFamily: "Satoshi, sans-serif" }}>
+                            Cancel
+                            </button>
+                            <button
+                            onClick={() => { setShowTrackNew(false); startNewChat(); }}
+                            style={{ flex: 2, background: "#1D2C34", border: "none", borderRadius: "10px", padding: "8px", fontSize: "12px", fontWeight: 700, cursor: "pointer", color: "#EAF0F4", fontFamily: "Satoshi, sans-serif" }}>
+                            ✅ Yes, start fresh
+                            </button>
+                        </div>
                         )}
-                        {renderMessageContent(m.content)}
-                      </>
+                    </div>
+                    )}
+                    </>
                     </div>
                   </div>
                 ))}
