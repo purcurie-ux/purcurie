@@ -254,6 +254,8 @@ Order: ${order.name}
 Status: ${displayStatus}
 Date: ${order.createdAt}
 Total: ${order.total}
+Tracking Number: ${order.trackingNumber ?? "NONE_AVAILABLE_YET"}
+Carrier: ${order.carrier ?? "NONE_AVAILABLE_YET"}
 Tracking Link: ${order.trackingUrl ?? "NONE_AVAILABLE_YET"}
 `;
         } else {
@@ -315,12 +317,20 @@ STEP 2 — Never invent statuses, dates, totals, or tracking links. The Order Lo
 STEP 3 — Never show raw tags like [VERIFICATION STATUS: PENDING] to the user.
 STEP 4 — You HAVE direct access to the order database. NEVER say "I don't have access to real-time tracking."
 
-📦 Response Template for Verified Orders:
 ✅ IF TRACKING LINK IS PROVIDED:
-  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. You can track it here: [Tracking Link]. For full tracking details visit: https://www.purcurie.com/track"
+  Reply with EXACTLY this structure:
+  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. Placed on [Date] for [Total].
+  
+  📦 Tracking AWB Number: [Tracking Number]
+  🚚 Carrier: [Carrier]
+  🔗 Track here: [Tracking Link]
+  
+  You can also visit https://www.purcurie.com/track for full details."
 
-❌ IF NO TRACKING LINK IS PROVIDED (Status is Processing/Pending):
-  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. It was placed on [Date] for a total of [Total]. Tracking details will be updated soon. Track your order here: https://www.purcurie.com/track"
+  After the tracking number, add this note: "Tap the Copy📋  button to copy AWB number."
+
+❌ IF NO TRACKING LINK IS PROVIDED (Tracking Number is NONE_AVAILABLE_YET):
+  "🛡️ Verified Customer Account. Your order [Order Number] is [Status]. Placed on [Date] for [Total]. Tracking details will be shared once your order ships. You can check order status at https://shopify.com/98468430146/account"
 
 🔴 CRITICAL INSTRUCTION FOR LINKS:
 - Use the actual URL from "Order Lookup Result" ONLY if it starts with "https".

@@ -657,6 +657,7 @@ export default function PurcurieChat() {
   const [livePreviews, setLivePreviews] = useState<Array<{ url: string; type: string; file: File }>>([]);
   const [liveUnread, setLiveUnread] = useState(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const [copiedTracking, setCopiedTracking] = useState(false);
 
   const { items: cartItems } = useCart();
 
@@ -927,17 +928,63 @@ export default function PurcurieChat() {
     setNotifDismissed(true);
   };
 
-  const renderMessageContent = (content: string) => {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return content.split(urlRegex).map((part, i) => {
+
+const renderMessageContent = (content: string) => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const trackingLineRegex = /📦 Tracking Number: (.+)/;
+
+  return content.split("\n").map((line, lineIdx) => {
+    const trackingMatch = line.match(trackingLineRegex);
+
+    if (trackingMatch) {
+      const trackingNum = trackingMatch[1].trim();
+      return (
+        <div key={lineIdx} style={{ display: "flex", alignItems: "center", gap: "8px", margin: "4px 0" }}>
+          <span>📦 Tracking Number: <strong>{trackingNum}</strong></span>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(trackingNum);
+              setCopiedTracking(true);
+              setTimeout(() => setCopiedTracking(false), 2000);
+            }}
+            style={{
+              background: copiedTracking ? "#4ade80" : "#1D2C34",
+              color: copiedTracking ? "#1D2C34" : "#EAF0F4",
+              border: "none",
+              borderRadius: "6px",
+              padding: "3px 10px",
+              fontSize: "11px",
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "Satoshi, sans-serif",
+              transition: "background 0.2s, color 0.2s",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            {copiedTracking ? "✓ Copied!" : "Copy 📋"}
+          </button>
+        </div>
+      );
+    }
+
+    // Original URL logic, per line
+    const parts = line.split(urlRegex);
+    const rendered = parts.map((part, i) => {
       if (part.match(urlRegex)) {
-        return <a key={i} href={part} target="_blank" rel="noopener noreferrer"
-          style={{ color: "inherit", textDecoration: "underline", wordBreak: "break-all" }}>{part}</a>;
+        return (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer"
+            style={{ color: "inherit", textDecoration: "underline", wordBreak: "break-all" }}>
+            {part}
+          </a>
+        );
       }
       return part;
     });
-  };
 
+    return <span key={lineIdx}>{rendered}{"\n"}</span>;
+  });
+};
   const sendMessage = async (overrideInput?: string) => {
     const text = overrideInput ?? input;
 
