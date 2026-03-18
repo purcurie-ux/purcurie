@@ -618,6 +618,62 @@ type ChatMode = "bot" | "waiting" | "active" | "closed";
 
 const WAIT_SECONDS = 120; // 2 minutes
 
+function TrackingLine({ trackingNum }: { trackingNum: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    // Fallback for mobile browsers where clipboard API may fail
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(trackingNum).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        });
+      } else {
+        // Fallback: create a temp input, select & copy
+        const el = document.createElement("input");
+        el.value = trackingNum;
+        el.style.position = "fixed";
+        el.style.opacity = "0";
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "8px", margin: "4px 0", flexWrap: "wrap" }}>
+      <span>📦 Tracking Number: <strong>{trackingNum}</strong></span>
+      <button
+        onClick={handleCopy}
+        style={{
+          background: copied ? "#4ade80" : "#1D2C34",
+          color: copied ? "#1D2C34" : "#EAF0F4",
+          border: "none",
+          borderRadius: "6px",
+          padding: "3px 10px",
+          fontSize: "11px",
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: "Satoshi, sans-serif",
+          transition: "background 0.2s, color 0.2s",
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+        }}
+      >
+        {copied ? "✓ Copied!" : "Copy 📋"}
+      </button>
+    </div>
+  );
+}
+
 export default function PurcurieChat() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -657,7 +713,7 @@ export default function PurcurieChat() {
   const [livePreviews, setLivePreviews] = useState<Array<{ url: string; type: string; file: File }>>([]);
   const [liveUnread, setLiveUnread] = useState(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const [copiedTracking, setCopiedTracking] = useState(false);
+  
 
   const { items: cartItems } = useCart();
 
@@ -931,51 +987,34 @@ export default function PurcurieChat() {
 
 const renderMessageContent = (content: string) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const trackingLineRegex = /📦 Tracking Number: (.+)/;
+  const trackingMatch_line = /(?:tracking\s+(?:awb\s+)?number|awb\s+number)[:\s]+([A-Z0-9\-]+)/i;
 
   return content.split("\n").map((line, lineIdx) => {
-    const trackingMatch = line.match(trackingLineRegex);
+    const trackingMatch = line.match(trackingMatch_line);
 
     if (trackingMatch) {
       const trackingNum = trackingMatch[1].trim();
-      return (
-        <div key={lineIdx} style={{ display: "flex", alignItems: "center", gap: "8px", margin: "4px 0" }}>
-          <span>📦 Tracking Number: <strong>{trackingNum}</strong></span>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(trackingNum);
-              setCopiedTracking(true);
-              setTimeout(() => setCopiedTracking(false), 2000);
-            }}
-            style={{
-              background: copiedTracking ? "#4ade80" : "#1D2C34",
-              color: copiedTracking ? "#1D2C34" : "#EAF0F4",
-              border: "none",
-              borderRadius: "6px",
-              padding: "3px 10px",
-              fontSize: "11px",
-              fontWeight: 700,
-              cursor: "pointer",
-              fontFamily: "Satoshi, sans-serif",
-              transition: "background 0.2s, color 0.2s",
-              whiteSpace: "nowrap",
-              flexShrink: 0,
-            }}
-          >
-            {copiedTracking ? "✓ Copied!" : "Copy 📋"}
-          </button>
-        </div>
-      );
+      return <TrackingLine key={lineIdx} trackingNum={trackingNum} />;
     }
 
-    // Original URL logic, per line
     const parts = line.split(urlRegex);
     const rendered = parts.map((part, i) => {
       if (part.match(urlRegex)) {
+        let label = part;
+        try {
+          const url = new URL(part);
+          label = url.hostname.replace("www.", "") + url.pathname;
+        } catch {}
         return (
           <a key={i} href={part} target="_blank" rel="noopener noreferrer"
-            style={{ color: "inherit", textDecoration: "underline", wordBreak: "break-all" }}>
-            {part}
+            style={{
+              color: "inherit",
+              textDecoration: "underline",
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              display: "inline",
+            }}>
+            {label}
           </a>
         );
       }
@@ -1034,6 +1073,7 @@ const renderMessageContent = (content: string) => {
         body: JSON.stringify({ messages: updated, cartItems: cartItems || [] }),
       });
       const data = await res.json();
+      console.log("AI REPLY:", data.reply);
       setMessages([...updated, { role: "assistant", content: data.reply }]);
     } catch {
       setMessages([...updated, { role: "assistant", content: "Sorry, something went wrong. Please try again!" }]);
@@ -1402,7 +1442,7 @@ const renderMessageContent = (content: string) => {
                 <div style={{ display: "flex", alignItems: "center", gap: "5px", marginTop: "-2px" }}>
                   <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: isLiveMode ? liveHeaderColor : "#4ade80", boxShadow: `0 0 6px ${isLiveMode ? liveHeaderColor : "#4ade80"}` }} />
                   <span style={{ color: "#CEDFE7", fontSize: "11px", fontWeight: 500 }}>
-                    {isLiveMode ? (chatMode === "waiting" ? "In queue" : chatMode === "active" ? "Connected" : "Ended") : "Online now"}
+                    {isLiveMode ? (chatMode === "waiting" ? "In queue" : chatMode === "active" ? "Connected" : "Ended") : "Online"}
                   </span>
                 </div>
               </div>
