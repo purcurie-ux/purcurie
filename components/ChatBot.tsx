@@ -698,6 +698,8 @@ export default function PurcurieChat() {
   const [showDiscount, setShowDiscount] = useState(false);
   const [instaStep, setInstaStep] = useState<"idle" | "prompt" | "revealed">("idle");
   const [showTrackNew, setShowTrackNew] = useState(false);
+  const [showHelpful, setShowHelpful] = useState(false);
+  const helpfulTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Live chat state
   const [chatMode, setChatMode] = useState<ChatMode>("bot");
@@ -710,6 +712,7 @@ export default function PurcurieChat() {
   const [customerEmail, setCustomerEmail] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [showNameForm, setShowNameForm] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const waitTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -889,6 +892,12 @@ export default function PurcurieChat() {
     }, 1000);
     return () => { if (waitTimerRef.current) clearInterval(waitTimerRef.current); };
   }, [chatMode]);
+
+  useEffect(() => {
+  return () => {
+    if (helpfulTimerRef.current) clearTimeout(helpfulTimerRef.current);
+  };
+}, []);
 
   const formatWait = (s: number) => {
     const m = Math.floor(s / 60);
@@ -1086,7 +1095,13 @@ const rendered = parts.map((part, i) => {
       });
       const data = await res.json();
       console.log("AI REPLY:", data.reply);
-      setMessages([...updated, { role: "assistant", content: data.reply }]);
+    setMessages([...updated, { role: "assistant", content: data.reply }]);
+    setShowHelpful(false);
+    if (helpfulTimerRef.current) clearTimeout(helpfulTimerRef.current);
+    helpfulTimerRef.current = setTimeout(() => {
+    setShowHelpful(true);
+    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+    }, 15000);
     } catch {
       setMessages([...updated, { role: "assistant", content: "Sorry, something went wrong. Please try again!" }]);
     } finally {
@@ -1105,6 +1120,7 @@ const rendered = parts.map((part, i) => {
     localStorage.setItem("purcurie_history", JSON.stringify(initialMsg));
     setShowDiscount(false);
     setInstaStep("idle");
+    setShowThankYou(false); // add this line
   };
 
   const goBackToPrevious = () => {
@@ -1134,7 +1150,10 @@ const rendered = parts.map((part, i) => {
     setLiveMessages([]);
     setShowDiscount(false);
     setInstaStep("idle");
-  };
+    setShowHelpful(false);
+    setShowThankYou(false);
+    if (helpfulTimerRef.current) clearTimeout(helpfulTimerRef.current);
+};
 
   const suggestions = ["Track Order 📦","Track My Package 🚚", "Get Discount 🎁", "👩 Speak to Our Team", "WhatsApp Us 💬", "Return/Refund ↩️",];
 
@@ -1266,6 +1285,8 @@ const rendered = parts.map((part, i) => {
             Agent joined! Say hello 👋
           </div>
         )}
+
+        
         <div ref={bottomRef} />
       </div>
 
@@ -1635,6 +1656,71 @@ const rendered = parts.map((part, i) => {
                     </div>
                   </div>
                 )}
+                {showHelpful && !loading && (
+                <div className="msg-bubble" style={{
+                    background: "#1D2C34", borderRadius: "16px",
+                    padding: "14px 16px", margin: "4px 0", textAlign: "center",
+                }}>
+                    <div style={{ color: "#EAF0F4", fontSize: "13px", fontWeight: 700, marginBottom: "4px" }}>
+                    Did we help you today? 😊
+                    </div>
+                    <div style={{ color: "#7a9bab", fontSize: "11px", marginBottom: "12px" }}>
+                    Let us know how we did
+                    </div>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                    <button
+                        onClick={() => {
+                        setShowHelpful(false);
+                        setShowThankYou(true);
+                        setMessages([
+                        { role: "user", content: "✅ Yes, thanks!" },
+                        { role: "assistant", content: "So glad we could help! 💚 Have a great day!\n\nFeel free to come back anytime 👋" }
+                        ]);
+                        setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+                        }}
+                        style={{ flex: 1, background: "#4ade80", border: "none", borderRadius: "10px", padding: "9px", fontSize: "12px", fontWeight: 700, cursor: "pointer", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}>
+                        ✅ Yes, thanks!
+                    </button>
+                    <button
+                        onClick={() => {
+                        setShowHelpful(false);
+                        if (helpfulTimerRef.current) clearTimeout(helpfulTimerRef.current);
+                        startNewChat();
+                        }}
+                        style={{ flex: 1, background: "#EAF0F4", border: "1.5px solid #CEDFE7", borderRadius: "10px", padding: "9px", fontSize: "12px", fontWeight: 700, cursor: "pointer", color: "#1D2C34", fontFamily: "Satoshi, sans-serif" }}>
+                        🔄 Need more help
+                    </button>
+                    </div>
+                </div>
+                )}
+                {showThankYou && (
+                <div className="msg-bubble" style={{ display: "flex", justifyContent: "flex-start" }}>
+                    <div style={{
+                    background: "#ffffff", border: "1px solid #CEDFE7",
+                    borderRadius: "18px 18px 18px 4px", padding: "10px 14px",
+                    boxShadow: "0 1px 4px rgba(29,44,52,0.08)",
+                    }}>
+                    <div style={{ fontSize: "11px", color: "#7a9bab", marginBottom: "8px" }}>
+                        Want to start fresh?
+                    </div>
+                    <button
+                        onClick={() => {
+                        setShowThankYou(false);
+                        startNewChat();
+                        setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+                        }}
+                        style={{
+                        background: "#1D2C34", border: "none", borderRadius: "10px",
+                        padding: "10px 20px", fontSize: "13px", fontWeight: 700,
+                        cursor: "pointer", color: "#EAF0F4", fontFamily: "Satoshi, sans-serif",
+                        display: "flex", alignItems: "center", gap: "8px", width: "100%",
+                        justifyContent: "center",
+                        }}>
+                        🏠 Go to Home
+                    </button>
+                    </div>
+                </div>
+                )}
                 <div ref={bottomRef} />
               </div>
 
@@ -1654,7 +1740,11 @@ const rendered = parts.map((part, i) => {
                   style={{ flex: 1, border: "1.5px solid #CEDFE7", borderRadius: "99px", padding: "9px 16px", fontSize: "13.5px", outline: "none", color: "#1D2C34", background: "#EAF0F4", fontFamily: "Satoshi, sans-serif", transition: "border-color 0.2s" }}
                   placeholder="Ask or enter order # e.g. 1053..."
                   value={input}
-                  onChange={e => setInput(e.target.value)}
+                  onChange={e => {
+                  setInput(e.target.value);
+                  setShowHelpful(false);
+                  if (helpfulTimerRef.current) clearTimeout(helpfulTimerRef.current);
+                  }}
                   onKeyDown={e => e.key === "Enter" && sendMessage()}
                   onFocus={e => (e.currentTarget.style.borderColor = "#1D2C34")}
                   onBlur={e => (e.currentTarget.style.borderColor = "#CEDFE7")}
