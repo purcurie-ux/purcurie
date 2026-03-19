@@ -4,27 +4,15 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { ChevronLeft, ChevronRight, ChevronDown, Award, Gem, Truck, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import ClinicalStats from "./ClinicalStats";
+import ProductEditorial from "@/components/detail/ProductEditorial";
+import ProductEditorialReverse from "@/components/detail/ProductEditorialReverse";
+import KeyIngredients from "@/components/detail/Keyingredients";
+import ProductFeaturesSplit from "@/components/detail/Productfeaturessplit";
 
-
-interface MoreImage {
-  url: string;
-}
-
-interface ProductDetailData {
-  mainImage: string;
-  mainImageSrcset: string;
-  moreImages: MoreImage[];
-  title: string;
-  price: string;
-  description: string;
-  descriptionHtml?: string;
-  category: string;
-  sku: string;
-  tag: string;
-  skuId: string;
-  productId: string;
-}
-
+// interface MoreImage {
+//   url: string;
+// }
 interface SimilarProduct {
   id: string;
   slug: string;
@@ -38,6 +26,57 @@ interface ProductDetailProps {
   product?: ProductDetailData;
   similarProducts?: SimilarProduct[];
 }
+
+interface ProductDetailData {
+  mainImage: string;
+  mainImageSrcset: string;
+  moreImages: { url: string }[];
+  title: string;
+  price: string;
+  description: string;
+  descriptionHtml?: string;
+  category: string;
+  sku: string;
+  tag: string;
+  skuId: string;
+  productId: string;
+  clinicalStats?: {
+    headingNormal: string;
+    headingItalic: string;
+    bodyText: string;
+    stats: { value: string; description: string }[];
+  } | null;
+  editorial?: {
+    heading: string;
+    paragraphs: string[];
+    mainImage: { url: string; alt?: string };
+    secondaryImages: { url: string; alt?: string }[];
+  } | null;
+  editorialReverse?: {
+    heading: string;
+    paragraph: string;
+    mainImage: { url: string; alt?: string };
+    stackImages: { url: string; alt?: string }[];
+  } | null;
+  keyIngredients?: {
+    label?: string;
+    keywords?: string[];
+    buttonText?: string;
+    buttonLink?: string;
+    ingredients: {
+      name: string;
+      description: string;
+      image: { url: string; alt?: string };
+    }[];
+  } | null;
+  featuresSplit?: {
+    heading: string;
+    body?: string;
+    features?: string[];
+    image: { url: string; alt?: string };
+  } | null;
+}
+
 
 const defaultProduct: ProductDetailData = {
   mainImage:
@@ -169,6 +208,25 @@ useEffect(() => {
   }, [product.price]);
 
 
+
+useEffect(() => {
+  const handleOpenAccordion = (e: CustomEvent) => {
+    setOpenSection(e.detail);
+    setTimeout(() => {
+      const el = document.getElementById("accordion-how");
+      if (el) {
+        const offset = 100; // adjust if heading still hidden — try 120 or 140
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }, 100);
+  };
+
+  window.addEventListener("open-accordion" as any, handleOpenAccordion);
+  return () => window.removeEventListener("open-accordion" as any, handleOpenAccordion);
+}, []);
+
+
   // Restore coupon on page refresh
   useEffect(() => {
     const savedCoupon = localStorage.getItem('active_coupon');
@@ -284,6 +342,8 @@ useEffect(() => {
       return;
     }
 
+
+    
     // ✅ If Junip not loaded (client-side nav), remove old script and re-inject
     const existingScript = document.querySelector(
       'script[src*="juniphq.com"]'
@@ -1069,7 +1129,7 @@ useEffect(() => {
           </div>
 
           {/* 3. HOW IT DOES / KEY INGREDIENTS */}
-          <div className="accordion-item">
+          <div className="accordion-item" id="accordion-how">
             <button className="accordion-trigger" onClick={() => setOpenSection(openSection === 'how' ? null : 'how')}>
               <span className="accordion-title">HOW IT DOES</span>
               <ChevronDown size={22} style={{ transform: openSection === 'how' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
@@ -1137,6 +1197,46 @@ useEffect(() => {
         </div>
       </section>
 
+      {/* come here */}
+<div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
+      <ClinicalStats
+  headingNormal={product.clinicalStats?.headingNormal}
+  headingItalic={product.clinicalStats?.headingItalic}
+  bodyText={product.clinicalStats?.bodyText}
+  stats={product.clinicalStats?.stats}
+/>
+
+<ProductEditorial
+  heading={product.editorial?.heading}
+  paragraphs={product.editorial?.paragraphs}
+  mainImage={product.editorial?.mainImage}
+  secondaryImages={product.editorial?.secondaryImages}
+/>
+
+<ProductEditorialReverse
+  heading={product.editorialReverse?.heading}
+  paragraph={product.editorialReverse?.paragraph}
+  mainImage={product.editorialReverse?.mainImage}
+  stackImages={product.editorialReverse?.stackImages}
+/>
+
+<KeyIngredients
+  label={product.keyIngredients?.label}
+  keywords={product.keyIngredients?.keywords}
+  buttonText={product.keyIngredients?.buttonText}
+  buttonLink={product.keyIngredients?.buttonLink}
+  ingredients={product.keyIngredients?.ingredients ?? []}
+  
+/>
+
+<ProductFeaturesSplit
+  heading={product.featuresSplit?.heading}
+  body={product.featuresSplit?.body}
+  features={product.featuresSplit?.features}
+  image={product.featuresSplit?.image}
+/>
+
+</div>
  {/* similar product enable it later */}
       {/* <section className="products">
         <div className="w-layout-blockcontainer container w-container">
