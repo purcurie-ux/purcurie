@@ -61,7 +61,7 @@ function Refund() {
             <div className="info-data">
               <h3>Refund Method</h3>
               <p className="single-text">
-                Once a return or refund request is approved, the refund will be processed to the original payment method used at the time of purchase. Refunds may take 5 to 10 business days to reflect, depending on the payment gateway or bank.
+                Once a return or refund request is approved, the refund will be processed to the original payment method used at the time of purchase. Refunds may take 5 to 10 business days to reflect, depending on the payment gateway or bank.Purcurie does not charge restocking fees for approved returns. Return shipping costs for defective or incorrect items will be covered by us.
               </p>
             </div>
 
@@ -92,7 +92,8 @@ function Refund() {
                 For any queries related to returns or refunds, you may contact:
                 <br /><br />
                 <strong>Purcurie Customer Support</strong><br />
-                Email: support@purcurie.com
+                <li>Email: support@purcurie.com</li>
+                <li>Registered Address: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203</li>
               </p>
             </div>
 

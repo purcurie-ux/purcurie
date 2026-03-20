@@ -28,7 +28,7 @@ function PrivacyPolicy() {
               <h3>Who We Are</h3>
               <div className="data-wrap">
                 <p>
-                  Purcurie is a skincare and personal care brand engaged in the business of selling, marketing and distributing beauty and wellness products through its digital Platform. For the purposes of applicable data protection laws, Purcurie acts as a Data Controller when it collects and processes your personal information for its own business purposes and as a Data Processor when it processes personal information on behalf of third parties such as payment processors and logistics partners.
+                  Purcurie is a skincare and personal care brand engaged in the business of selling, marketing and distributing beauty and wellness products through its digital Platform.Purcurie is a brand owned and operated by PUR CURIE PRIVATE LIMITED, a private limited company incorporated under the laws of India.For the purposes of applicable data protection laws, Purcurie acts as a Data Controller when it collects and processes your personal information for its own business purposes and as a Data Processor when it processes personal information on behalf of third parties such as payment processors and logistics partners.
                 </p>
               </div>
             </div>
@@ -38,6 +38,14 @@ function PrivacyPolicy() {
               <h3>Our Commitment to Privacy</h3>
               <p className="single-text">
                 Purcurie is committed to protecting your privacy and ensuring that your personal information is handled in a safe, responsible and lawful manner. We continually review our data protection practices to ensure compliance with applicable laws and industry standards.
+              </p>
+            </div>
+
+              {/* Our Identity*/}
+            <div className="info-data">
+              <h3>Our Identity</h3>
+              <p className="single-text">
+                We are a legally registered Private Limited Company incorporated under the laws of India. Our business is built on a foundation of professional integrity and a commitment to customer satisfaction. We leverage modern e-commerce technology to ensure a secure and seamless shopping experience for every user.
               </p>
             </div>
 
@@ -135,10 +143,36 @@ function PrivacyPolicy() {
             <div className="info-data">
               <h3>Contact Us</h3>
               <p className="single-text">
-                If you have any questions, concerns or complaints regarding this Privacy Policy or the handling of your personal information, you may contact:
+                For any questions regarding this policy, please contact our Grievance Officer:
                 <br /><br />
                 <strong>Purcurie - Privacy Team</strong><br />
-                Email: support@purcurie.com
+              Entity Name: PUR CURIE PRIVATE LIMITED Address: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Near Sopara Sub Post Office, Nallasopara West, Palghar, Maharashtra, 401203.
+              Email: support@purcurie.com
+              </p>
+            </div>
+            
+            {/* Business Transparency */}
+           <div className="info-data">
+              <h3>Business Transparency</h3>
+              <p className="single-text">
+               In compliance with Indian trade regulations and Google’s transparency policies, we maintain full disclosure of our business operations:
+                <br /><br />
+                <strong>Purcurie - Privacy Team</strong><br />
+              Registered Trade Name: PUR CURIE PRIVATE LIMITED
+              GSTIN: 27AAQCP4131L1Z0
+              Principal Place of Business: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203
+              </p>
+            </div>
+
+             {/* Our Leadership*/}
+           <div className="info-data">
+              <h3>Our Leadership</h3>
+              <p className="single-text">
+               The strategic vision of Purcurie is led by our Board of Directors:
+                <br /><br />
+                <strong>Purcurie - Privacy Team</strong><br />
+              Mrityunjay Mishra, Director
+              Akash Lokesh Mandal, Director
               </p>
             </div>
 

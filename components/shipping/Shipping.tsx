@@ -67,7 +67,7 @@ function Shipping() {
             <div className="info-data">
               <h3>Shipping Charges</h3>
               <p className="single-text">
-                Shipping charges, if applicable, will be clearly displayed at checkout before the order is placed. Charges may vary based on order value, delivery location, weight and courier partner rates. Purcurie reserves the right to revise shipping charges at any time.
+                Shipping charges, if applicable, will be clearly displayed at checkout before the order is placed. Charges may vary based on order value, delivery location, weight and courier partner rates. Purcurie reserves the right to revise shipping charges at any time.There are no hidden handling fees or taxes added at the final step of checkout; all applicable GST is included in the listed product price or clearly stated shipping fee.
               </p>
             </div>
 
@@ -95,6 +95,13 @@ function Shipping() {
               </p>
             </div>
 
+            <div className="info-data">
+              <h3>Explicit Service Area & Origin</h3>
+              <p className="single-text">
+                Purcurie operates out of Nallasopara, Maharashtra, and currently ships products exclusively within India.
+              </p>
+            </div>
+
             {/* PARTIAL */}
             <div className="info-data">
               <h3>Partial Shipments</h3>
@@ -118,7 +125,9 @@ function Shipping() {
                 For any shipping-related queries, customers may contact:
                 <br /><br />
                 <strong>Purcurie Customer Support</strong><br />
-                Email: support@purcurie.com
+                <li>Entity: PUR CURIE PRIVATE LIMITED</li>
+                <li>Registered Office: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203</li>
+                <li>Email: support@purcurie.com</li>
               </p>
             </div>
 

@@ -387,7 +387,9 @@ function Footer() {
                 <a href="/about" className="ft-link">About us</a>
                 <a href="/categories" className="ft-link">Categories</a>
                 <a href="/product" className="ft-link">Shop</a>
-                <a href="/contact" className="ft-link">Contact us</a>
+                <a href="/contact" className="ft-link" style={{ whiteSpace: "nowrap" }}>
+                Contact us
+              </a>
               </div>
             </div>
             <div>
@@ -406,9 +408,45 @@ function Footer() {
                 <a href="tel:+(91) 97697 77006" className="ft-link">+(91) 97697 77006</a>
                 <a href="mailto:contact@purcurie.com" className="ft-link">contact@purcurie.com</a>
               </div>
+              <div className="ft-legal-info" style={{ marginTop: '10px', fontSize: '0.9rem', opacity: 1, color: 'white' }}>
+              <p style={{ fontWeight: 'bold', marginBottom: '4px' }}>PUR CURIE PRIVATE LIMITED</p>
+              <p style={{ marginBottom: '4px' }}>
+                Room No. 001, Janki Apartment, Bhau Complex, <br />
+                Achole Road, Nallasopara West, Palghar, <br />
+                Maharashtra, 401203
+              </p>
+              <p>GSTIN: 27AAQCP4131L1Z0</p>
+            </div>
             </div>
           </div>
         </div>
+
+        <div>
+  {/* Existing Contact & Legal sections above... */}
+
+  <div className="ft-bottom-bar" style={{ marginTop: '1px', paddingTop: '1px', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+    
+    {/* Copyright Notice */}
+    <div className="ft-copyright" style={{ opacity: 0.6, fontSize: '0.85rem' }}>
+      © 2026 Purcurie. All rights reserved. 
+      <br />
+      Operated by PUR CURIE PRIVATE LIMITED
+    </div>
+
+    {/* Payment Icons - Grayscale for Professional Look */}
+    <div className="ft-payment-icons" style={{ display: 'flex', gap: '20px', alignItems: 'center', opacity: 0.8 }}>
+  {/* UPI - High Contrast White */}
+  <img src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_58.png?v=1773996577" alt="UPI" style={{ height: '35px'  }} />
+  
+  {/* Visa - White Version */}
+  <img src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_61.png?v=1773996375" alt="Visa" style={{ height: '65px' }} />
+  
+  {/* Mastercard - White Version */}
+  <img src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/mastercard-old-3-svgrepo-com.svg?v=1773995784" alt="Mastercard" style={{ height: '50px' }} />
+  
+</div>
+  </div>
+</div>
         
         {/* SOCIAL ICONS (Unchanged) */}
         <div className="footer-bottom">

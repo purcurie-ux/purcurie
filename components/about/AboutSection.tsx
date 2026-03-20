@@ -994,7 +994,8 @@ function AboutPage() {
               <div data-w-tab="Tab 2" className="w-tab-pane">
                 <p className="single-text">
                   Yes. If you receive a damaged, defective, or incorrect product, 
-                  you can request a return or refund within 48 hours of delivery. 
+                  you can request a return or refund within 48 hours of delivery.
+                   <br></br>Clarify that once the request is approved, the money is sent back to the original payment method within 5–10 business days
                   Please refer to our Refund & Return Policy for full details.
                 </p>
               </div>

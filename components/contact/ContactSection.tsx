@@ -258,14 +258,28 @@ function ContactSection() {
                 </div>
               </div>
               <div className="contact-bottom">
-                <h6 className="contact-heading">Reach Out Anytime</h6>
+                <h6 className="contact-heading">Reach Out to PUR CURIE PRIVATE LIMITED</h6>
                 <div className="conatct-wrap">
-                  <div className="contact-info">
-                    <div className="contact-text">Email:</div>
-                    <a href="mailto:support@purcurie.com" className="plain-link">
-                      support@purcurie.com
-                    </a>
-                  </div>
+              <div className="contact-info" style={{ marginTop: '15px' }}>
+            <div className="contact-text" style={{ fontWeight: 'bold', marginBottom: '5px' }}>Registered Office:</div>
+            <a 
+              href="https://maps.app.goo.gl/ox8dtuFEPg8Acd4f6" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="plain-link" 
+              style={{ 
+                fontSize: '14px', 
+                lineHeight: '1.6', 
+                display: 'block', 
+                textDecoration: 'none', 
+                color: 'inherit' 
+              }}
+            >
+              Room No. 001, Janki Apartment, Bhau Complex,<br />
+              Achole Road, Nallasopara West, Palghar,<br />
+              Maharashtra, 401203
+            </a>
+          </div>
                   <div className="contact-info">
                     <div className="contact-text">Phone:</div>
                     <a href="tel:+919769777006" className="plain-link">
@@ -373,6 +387,8 @@ function ContactSection() {
                    Whats app: +91 9769777006
                    <br />
                   Our support team will respond as soon as possible during business hours.
+                  <br />
+                  We are a registered entity: PUR CURIE PRIVATE LIMITED
                 </p>
               </div>
               <div data-w-tab="Tab 1" className="w-tab-pane">
@@ -388,7 +404,7 @@ function ContactSection() {
               </div>
               <div data-w-tab="Tab 2" className="w-tab-pane">
                 <p className="single-text">
-                  You can request a return or refund by emailing us within 48 hours of delivery. Please refer to our Refund & Return Policy for full details.
+                  You can request a return or refund by emailing us within 48 hours of delivery. Please refer to our Refund & Return Policy for full details.<br></br>Clarify that once the request is approved, the money is sent back to the original payment method within 5–10 business days
                 </p>
               </div>
               <div data-w-tab="Tab 3" className="w-tab-pane">

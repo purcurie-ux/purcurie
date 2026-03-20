@@ -25,7 +25,7 @@ function Terms() {
             <div className="info-data">
               <h3>About Purcurie</h3>
               <p className="single-text">
-                Purcurie is a skincare and personal care brand engaged in the business of selling beauty, wellness and grooming products through its digital Platform. Purcurie reserves the right to modify, suspend or discontinue any part of its services at any time without prior notice.
+                Purcurie is a skincare and personal care brand engaged in the business of selling beauty, wellness and grooming products through its digital Platform. Purcurie reserves the right to modify, suspend or discontinue any part of its services at any time without prior notice.Purcurie is a brand owned and operated by PUR CURIE PRIVATE LIMITED, a company incorporated under the laws of India.
               </p>
             </div>
 
@@ -57,7 +57,8 @@ function Terms() {
             <div className="info-data">
               <h3>Pricing and Payments</h3>
               <p className="single-text">
-                All prices on the Platform are displayed in Indian Rupees (INR) and are inclusive of applicable taxes unless stated otherwise. Purcurie reserves the right to change prices at any time without prior notice. Payments must be made through the payment methods available on the Platform. Purcurie does not store card or banking details.
+                AAll prices on the Platform are displayed in Indian Rupees (INR) and are inclusive of Goods and Services Tax (GST) at the applicable rates. Purcurie reserves the right to change prices at any time without prior notice. Payments must be made through the payment methods available on the Platform. Purcurie does not store card or banking details.
+                The price you see on the product page is the final price you will pay at checkout, excluding any clearly stated shipping fees
               </p>
             </div>
 
@@ -121,7 +122,7 @@ function Terms() {
             <div className="info-data">
               <h3>Governing Law and Jurisdiction</h3>
               <p className="single-text">
-                These Terms shall be governed by and interpreted in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts of India.
+                These Terms shall be governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Palghar/Maharashtra, India.
               </p>
             </div>
 
@@ -132,7 +133,9 @@ function Terms() {
                 For any questions or concerns regarding these Terms, you may contact:
                 <br /><br />
                 <strong>Purcurie Customer Support</strong><br />
-                Email: support@purcurie.com
+                <li>Entity: PUR CURIE PRIVATE LIMITED</li>
+                <li>Registered Office: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203</li>
+                <li>Email: support@purcurie.com</li>
               </p>
             </div>
 
