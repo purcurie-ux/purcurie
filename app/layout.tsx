@@ -11,6 +11,7 @@ import { CartProvider } from "@/context/CartContext";
 import ScrollTrigger from "@/components/ui/ScrollTrigger";
 import ClientInit from "@/components/ClientInit";
 import PurcurieChat from "@/components/ChatBot";
+import PageLoader from "@/components/PageLoader";
 
 
 export const metadata: Metadata = {
@@ -104,6 +105,7 @@ export default function RootLayout({
       {/*         BODY AREA         */}
       {/* ------------------------- */}
       <body>
+        <PageLoader />
         <ClientInit />
         <ScrollTrigger />
         <WebflowPageId />

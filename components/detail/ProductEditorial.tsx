@@ -65,6 +65,7 @@ export default function ProductEditorial({
           object-fit: cover;
           object-position: center top;
           display: block;
+          
         }
 
         /* RIGHT — text + stacked images */

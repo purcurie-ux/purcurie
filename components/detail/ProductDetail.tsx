@@ -186,7 +186,7 @@ useEffect(() => {
     const handleCouponApplied = () => {
       const savedCode = localStorage.getItem("active_coupon");
       if (savedCode) {
-        const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10", "WELCOME10"];
+        const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10", "WELCOME10", "GLOW10"];
         if (validCodes.includes(savedCode)) {
           setCoupon(savedCode);
           setCouponStatus("✅ Applied! Your discount is ready.");
@@ -231,7 +231,7 @@ useEffect(() => {
   useEffect(() => {
     const savedCoupon = localStorage.getItem('active_coupon');
     if (savedCoupon) {
-      const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10", "WELCOME10"];
+      const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10", "WELCOME10", "GLOW10"];
       if (validCodes.includes(savedCoupon)) {
         setCoupon(savedCoupon);
         setCouponStatus("✅ Applied! Your discount is ready.");
@@ -250,7 +250,7 @@ useEffect(() => {
     const inputCode = coupon.trim().toUpperCase();
     if (!inputCode) return;
 
-    const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10","WELCOME10"];
+    const validCodes = ["SENPAI100", "JAY100", "PANKAJ50", "PAL10","WELCOME10", "GLOW10"];
     setCouponStatus("Verifying...");
 
     setTimeout(() => {
