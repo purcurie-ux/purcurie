@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         
         permanent: false,
       },
+      {
+        source: '/products/:handle',
+        destination: '/product/:handle',
+        permanent: true,
+      },
     ]
   },
 };
