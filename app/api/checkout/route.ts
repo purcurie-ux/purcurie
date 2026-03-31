@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     );
 
     return NextResponse.json({
-      checkoutUrl: cart.checkoutUrl,
+      checkoutUrl: finalCheckoutUrl,
       checkoutId: cart.id, 
     });
   } catch (error) {
