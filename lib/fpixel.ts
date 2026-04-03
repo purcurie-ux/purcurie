@@ -1,5 +1,9 @@
-export const trackEvent = (event: string, data = {}) => {
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq('track', event, data);
+export const trackEvent = (
+  event: string,
+  data?: any,
+  options?: { eventID?: string }
+) => {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq('track', event, data, options);
   }
 };

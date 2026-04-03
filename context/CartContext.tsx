@@ -122,19 +122,49 @@ useEffect(() => {
           const res = await fetch("/api/check-latest-order");
           const data = await res.json();
 
+          const eventId = Date.now().toString();
           if (data.confirmed) {
           console.log("✅ Order confirmed — clearing cart");
 
           // ✅ TRACK PURCHASE
          try {
             if (typeof window !== "undefined") {
-              trackEvent('Purchase', {
-                value: itemsRef.current.reduce((acc, item) => {
-                  const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
-                  return acc + price * item.quantity;
-                }, 0),
-                currency: 'INR'
+                      trackEvent(
+            'Purchase',
+            {
+              value: itemsRef.current.reduce((acc, item) => {
+                const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
+                return acc + price * item.quantity;
+              }, 0),
+              currency: 'INR'
+            },
+            {
+              eventID: eventId
+            }
+          );
+              // ✅ CAPI TRACKING (SERVER)
+            try {
+              await fetch("/api/meta-capi", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                event_name: "Purchase",
+                event_id: eventId, // 🔥 REQUIRED
+                url: window.location.href,
+                  custom_data: {
+                    value: itemsRef.current.reduce((acc, item) => {
+                      const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
+                      return acc + price * item.quantity;
+                    }, 0),
+                    currency: "INR",
+                  },
+                }),
               });
+            } catch (err) {
+              console.log("CAPI error:", err);
+            }
             }
           } catch (e) {
             console.log("Purchase pixel error:", e);
