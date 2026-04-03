@@ -13,7 +13,34 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [results, setResults] = useState<any[]>([]);
+  const [loadingSearch, setLoadingSearch] = useState(false);  
 
+
+  useEffect(() => {
+  if (!searchQuery.trim()) {
+    setResults([]);
+    return;
+  }
+
+  const delay = setTimeout(async () => {
+    try {
+      setLoadingSearch(true);
+
+const res = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
+const data = await res.json();
+
+setResults(data.products || []);
+    } catch (err) {
+      console.error("Search error:", err);
+      setResults([]);
+    } finally {
+      setLoadingSearch(false);
+    }
+  }, 300); // debounce
+
+  return () => clearTimeout(delay);
+}, [searchQuery]);
 
   useEffect(() => {
     setMounted(true);
@@ -266,10 +293,18 @@ const closeSearch = (clearQuery = true) => {
           }
 
           /* Ensures the 'Menu' button doesn't trigger Webflow's default animation */
-          .w-nav-overlay {
-            display: none !important;
-          }
+              .w-nav-overlay {
+          display: none !important;
         }
+
+        /* Suppress Webflow native search */
+        .w-nav-search-form,
+        [data-node-type="search"],
+        .w-search,
+        .w-search-form {
+          display: none !important;
+        }
+      }
 
         @media screen and (min-width: 992px) {
           /* 1. The Overlay: Faster fade in, slower fade out */
@@ -313,6 +348,17 @@ const closeSearch = (clearQuery = true) => {
             opacity: 0.4 !important;
             transform: translateX(8px) !important;
             transition: all 0.7s cubic-bezier(0.16, 1, 0.8, 1) !important;
+          }
+             /* Kill Webflow native search on desktop */
+          .w-nav-search,
+          .w-search,
+          .w-search-form,
+          .w-search-input,
+          [data-node-type="search"],
+          .w-nav-overlay .w-search {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
           }
         }
       `}</style>
@@ -500,10 +546,11 @@ const closeSearch = (clearQuery = true) => {
         </div>
 
         {/* Search Bar - mirrors Webflow's exact structure */}
-<div
-  className="search-open"
-  style={{
-    display: isSearchOpen ? "block" : "none",
+{/* Search Bar */}
+   <div
+        className="search-open"
+        style={{
+        display: isSearchOpen ? "block" : "none",
     position: "fixed",
     top: isDesktop ? "0px" : "60px",
     left: 0,
@@ -521,6 +568,7 @@ const closeSearch = (clearQuery = true) => {
   <form
     action="/search"
     className="searchbar w-form"
+    style={{ position: "relative" }}
     onSubmit={(e) => {
       e.preventDefault();
       if (searchQuery.trim()) {
@@ -529,6 +577,7 @@ const closeSearch = (clearQuery = true) => {
       }
     }}
   >
+    
     <input
       ref={searchInputRef}
       className="search-input w-input"
@@ -541,6 +590,77 @@ const closeSearch = (clearQuery = true) => {
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
     />
+    {searchQuery && (
+ <div
+  style={{
+    position: "absolute",
+    top: "100%",
+    left: 0,
+    right: 0,
+    background: "#fff",
+    border: "1px solid #eee",
+    borderTop: "none",
+    maxHeight: "320px",
+    overflowY: "auto",
+
+    zIndex: 9999999,   // 🔥 increase
+    
+    boxShadow: "0 10px 30px rgba(0,0,0,0.1)", // optional but premium
+
+  }}
+>
+    {loadingSearch && (
+      <div style={{ padding: "12px", fontSize: "14px" }}>
+        Searching...
+      </div>
+    )}
+
+    {!loadingSearch && results.length === 0 && (
+      <div style={{ padding: "12px", fontSize: "14px", color: "#888" }}>
+        No products found
+      </div>
+    )}
+
+    {results.map((product: any) => (
+      <div
+        key={product.id}
+        onClick={() => {
+          window.location.href = `/product/${product.handle}`;
+          closeSearch();
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          padding: "10px 12px",
+          cursor: "pointer",
+          borderBottom: "1px solid #f5f5f5",
+        }}
+      >
+        <img
+         src={product.featuredImage?.url}
+          alt={product.title}
+          style={{
+            width: "42px",
+            height: "42px",
+            objectFit: "cover",
+            borderRadius: "6px",
+          }}
+        />
+
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: "14px", fontWeight: "500" }}>
+            {product.title}
+          </div>
+
+          <div style={{ fontSize: "12px", color: "#888" }}>
+            ₹ {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(0)}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
     <input className="d-none w-button" type="submit" value="Search" />
     <div
       data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164f9"
@@ -555,6 +675,7 @@ const closeSearch = (clearQuery = true) => {
     </div>
   </form>
 </div>
+
         
         {/* CART MODAL */}
         <CartModal />
