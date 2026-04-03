@@ -9,6 +9,7 @@ import ProductEditorial from "@/components/detail/ProductEditorial";
 import ProductEditorialReverse from "@/components/detail/ProductEditorialReverse";
 import KeyIngredients from "@/components/detail/Keyingredients";
 import ProductFeaturesSplit from "@/components/detail/Productfeaturessplit";
+import { trackEvent } from "@/lib/fpixel";
 
 // interface MoreImage {
 //   url: string;
@@ -283,6 +284,23 @@ useEffect(() => {
       }
     }, 600);
   };
+
+
+useEffect(() => {
+  try {
+    if (typeof window !== "undefined" && product) {
+      trackEvent('ViewContent', {
+        content_name: product.title || '',
+        content_ids: [product.productId || ''],
+        content_type: 'product',
+        value: parseFloat(product.price.replace(/[^\d.]/g, '')) || 0,
+        currency: 'INR'
+      });
+    }
+  } catch (e) {
+    console.log("Pixel ViewContent error:", e);
+  }
+}, [product]);
 
   const handleRemoveCoupon = () => {
     setCoupon("");

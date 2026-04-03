@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
+import { trackEvent } from "@/lib/fpixel";
 
 interface CartItem {
   variantId: string;
@@ -122,9 +123,24 @@ useEffect(() => {
           const data = await res.json();
 
           if (data.confirmed) {
-            console.log("✅ Order confirmed — clearing cart");
-            clearCart();
+          console.log("✅ Order confirmed — clearing cart");
+
+          // ✅ TRACK PURCHASE
+         try {
+            if (typeof window !== "undefined") {
+              trackEvent('Purchase', {
+                value: itemsRef.current.reduce((acc, item) => {
+                  const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
+                  return acc + price * item.quantity;
+                }, 0),
+                currency: 'INR'
+              });
+            }
+          } catch (e) {
+            console.log("Purchase pixel error:", e);
           }
+                    clearCart();
+        }
         } catch (err) {
           console.error("Order check failed:", err);
         } finally {
@@ -338,6 +354,16 @@ const createCheckout = async () => {
           const separator = finalUrl.includes("?") ? "&" : "?";
           finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
         }
+        
+        // ✅ TRACK BEFORE REDIRECT
+        trackEvent('InitiateCheckout', {
+          value: itemsRef.current.reduce((acc, item) => {
+          const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
+          return acc + price * item.quantity;
+        }, 0),
+          currency: 'INR'
+        });
+
 
         window.location.href = finalUrl;
       }
@@ -369,6 +395,12 @@ const createCheckout = async () => {
           const separator = finalUrl.includes("?") ? "&" : "?";
           finalUrl = `${finalUrl}${separator}discount=${savedCode}`;
         }
+
+        // ✅ TRACK HERE ALSO
+        trackEvent('InitiateCheckout', {
+          value: parseFloat(item.price.replace(/[^\d.]/g, '')) || 0,
+          currency: 'INR'
+        });
         window.location.href = finalUrl;
       }
     } catch (error) {

@@ -109,7 +109,7 @@
 //   });
 // }
   
-
+import { trackEvent } from "./fpixel";
 
 
 async function shopifyFetch(query: string, variables?: any) {
@@ -149,19 +149,24 @@ export async function createCart() {
 export async function addToCart(
   cartId: string,
   variantId: string,
-  quantity: number
+  quantity: number,
+  product: {
+    id: string;
+    title: string;
+    price: number;
+  }
 ) {
   const query = `
-      mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
-        cartLinesAdd(cartId: $cartId, lines: $lines) {
-          cart {
-            id
-          }
+    mutation ($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          id
         }
       }
-    `;
+    }
+  `;
 
-  return shopifyFetch(query, {
+  const res = await shopifyFetch(query, {
     cartId,
     lines: [
       {
@@ -170,7 +175,24 @@ export async function addToCart(
       },
     ],
   });
+
+  // ✅ TRACK EVENT HERE (CORRECT PLACE)
+  try {
+  if (product && typeof window !== "undefined") {
+    trackEvent('AddToCart', {
+      content_name: product.title || '',
+      content_ids: [product.id || ''],
+      value: product.price || 0,
+      currency: 'INR'
+    });
+  }
+} catch (e) {
+  console.log("Pixel error:", e);
 }
+
+  return res;
+}
+
 
 /* ---------------- GET CART ---------------- */
 
