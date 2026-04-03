@@ -111,7 +111,131 @@ export default function PurcurieChat() {
   const [livePreviews, setLivePreviews] = useState<Array<{ url: string; type: string; file: File }>>([]);
   const [liveUnread, setLiveUnread] = useState(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const [position, setPosition] = useState<{ x: number | null; y: number | null }>({
+  x: null,
+  y: null
+});
+  const [dragging, setDragging] = useState(false);
+  const dragRef = useRef<HTMLDivElement | null>(null);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const dragMovedRef = useRef(false);
   
+  const handleMouseDown = (e: React.MouseEvent) => {
+  setDragging(true);
+ offsetRef.current = {
+  x: e.clientX - (position.x ?? (window.innerWidth - 80)),
+  y: e.clientY - (position.y ?? (window.innerHeight - 80)),
+};
+};
+
+const handleMouseMove = (e: MouseEvent) => {
+  if (!dragging) return;
+
+  const newX = e.clientX - offsetRef.current.x;
+  const newY = e.clientY - offsetRef.current.y;
+
+  const CHAT_WIDTH = 80; // button width approx
+  const CHAT_HEIGHT = 80;
+
+  const maxX = window.innerWidth - CHAT_WIDTH;
+  const maxY = window.innerHeight - CHAT_HEIGHT;
+
+  setPosition({
+    x: Math.max(0, Math.min(newX, maxX)),
+    y: Math.max(0, Math.min(newY, maxY)),
+  });
+
+  dragMovedRef.current = true;
+};
+
+const handleMouseUp = () => {
+  setDragging(false);
+};
+
+const handleTouchStart = (e: React.TouchEvent) => {
+  const touch = e.touches[0];
+  setDragging(true);
+ offsetRef.current = {
+  x: touch.clientX - (position.x ?? (window.innerWidth - 80)),
+  y: touch.clientY - (position.y ?? (window.innerHeight - 80)),
+};
+};
+
+const handleTouchMove = (e: TouchEvent) => {
+  if (!dragging) return;
+
+  const touch = e.touches[0];
+
+  const newX = touch.clientX - offsetRef.current.x;
+  const newY = touch.clientY - offsetRef.current.y;
+
+  const CHAT_WIDTH = 80;
+  const CHAT_HEIGHT = 80;
+
+  const maxX = window.innerWidth - CHAT_WIDTH;
+  const maxY = window.innerHeight - CHAT_HEIGHT;
+
+  setPosition({
+    x: Math.max(0, Math.min(newX, maxX)),
+    y: Math.max(0, Math.min(newY, maxY)),
+  });
+
+  dragMovedRef.current = true;
+};
+
+useEffect(() => {
+  window.addEventListener("touchmove", handleTouchMove);
+  window.addEventListener("touchend", handleMouseUp);
+
+  return () => {
+    window.removeEventListener("touchmove", handleTouchMove);
+    window.removeEventListener("touchend", handleMouseUp);
+  };
+}, [dragging]);
+
+
+useEffect(() => {
+  window.addEventListener("mousemove", handleMouseMove);
+  window.addEventListener("mouseup", handleMouseUp);
+
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleMouseUp);
+  };
+}, [dragging]);
+
+useEffect(() => {
+  const handleResize = () => {
+    setPosition(prev => {
+      if (prev.x === null || prev.y === null) return prev;
+
+      const CHAT_WIDTH = 80;
+      const CHAT_HEIGHT = 80;
+
+      const maxX = window.innerWidth - CHAT_WIDTH;
+      const maxY = window.innerHeight - CHAT_HEIGHT;
+
+      return {
+        x: Math.max(0, Math.min(prev.x, maxX)),
+        y: Math.max(0, Math.min(prev.y, maxY)),
+      };
+    });
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth < 480) {
+      setPosition({ x: null, y: null }); // reset to default
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   const { items: cartItems } = useCart();
 
@@ -124,13 +248,13 @@ export default function PurcurieChat() {
 
   useEffect(() => {
     if (notifDismissed) return;
-    const timer = setTimeout(() => { if (!open) setShowNotif(true); }, 15000);
+    const timer = setTimeout(() => { if (!open) setShowNotif(true); }, 50000);
     return () => clearTimeout(timer);
   }, [notifDismissed, open]);
 
   useEffect(() => {
     if (discountNotifDismissed) return;
-    const timer = setTimeout(() => { if (!open) setShowDiscountNotif(true); }, 10000);
+    const timer = setTimeout(() => { if (!open) setShowDiscountNotif(true); }, 30000);
     return () => clearTimeout(timer);
   }, [discountNotifDismissed, open]);
 
@@ -764,6 +888,7 @@ const rendered = parts.map((part, i) => {
           opacity: 0; transform: translateY(12px) scale(0.97);
           pointer-events: none; position: absolute;
           bottom: 68px; right: 0; width: 360px; height: 520px;
+          z-index: 999999;
         }
         .chat-window.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
@@ -775,9 +900,14 @@ const rendered = parts.map((part, i) => {
             right: 0; 
             left: auto; 
             bottom: 68px; 
+            z-index: 999999;
           }
-          .purcurie-chat-root { right: 12px !important; bottom: 12px !important; }
-        }
+       @media (max-width: 480px) {
+  .purcurie-chat-root {
+    right: auto !important;
+    bottom: auto !important;
+  }
+}
 
         .purcurie-scrollbar::-webkit-scrollbar { width: 4px; }
         .purcurie-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -833,7 +963,14 @@ const rendered = parts.map((part, i) => {
       `}</style>
 
       <div className="purcurie-chat purcurie-chat-root"
-        style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 9999, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+      style={{
+  position: "fixed",
+   zIndex: 999999, // 👈 ADD THIS
+  left: position.x !== null ? position.x : undefined,
+  top: position.y !== null ? position.y : undefined,
+  bottom: position.y !== null ? undefined : "20px",
+  right: position.x !== null ? undefined : "20px",
+}}>
 
         {/* Chat Window */}
         <div className={`chat-window flex flex-col overflow-hidden ${visible ? "visible" : ""}`}
@@ -1170,22 +1307,30 @@ const rendered = parts.map((part, i) => {
         )}
 
         {/* Toggle Button */}
-        <div style={{ position: "relative" }}>
-          {(showNotif || liveUnread > 0) && !open && (
-            <div className="notif-badge" style={{ position: "absolute", top: "-4px", right: "-4px", minWidth: "16px", height: "16px", background: "#ef4444", borderRadius: "99px", border: "2px solid white", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 3px" }}>
-              {liveUnread > 0 && <span style={{ color: "#fff", fontSize: "9px", fontWeight: 700 }}>{liveUnread}</span>}
-            </div>
-          )}
-          <button className="toggle-btn"
-            onClick={() => {
-              const n = !open;
-              setOpen(n);
-              localStorage.setItem("purcurie_chat_open", n.toString());
-              // Pre-init audio context on user gesture so it's ready
-              if (!audioCtxRef.current) {
-                audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-              }
+            <div
+            ref={dragRef}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            style={{
+              position: "relative",
+              cursor: dragging ? "grabbing" : "grab"
             }}
+          >
+         <button className="toggle-btn"
+  onClick={() => {
+    if (dragMovedRef.current) {
+      dragMovedRef.current = false;
+      return;
+    }
+
+    const n = !open;
+    setOpen(n);
+    localStorage.setItem("purcurie_chat_open", n.toString());
+
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+  }}
             style={{ background: "#1D2C34", border: "none", color: "#EAF0F4", width: "56px", height: "56px", borderRadius: "50%", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(29,44,52,0.2)" }}>
             {open
               ? <span style={{ fontSize: "20px", fontWeight: 600, lineHeight: 1 }}>✕</span>
