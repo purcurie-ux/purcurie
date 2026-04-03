@@ -3807,7 +3807,7 @@ blockquote {
   background-color: var(--bg-2);
   border-bottom: 1px solid #0000001a;
   padding: 14px 24px;
-  display: none;
+  display: block;
   position: absolute;
   inset: 0% 0% auto
 }
@@ -8411,18 +8411,6 @@ blockquote {
   display: none !important;
 }
 
-.brand img {
-  max-height: 45px; /* Adjust this number to scale the logo */
-  width: auto;
-  display: block;
-}
-
-/* For Mobile specifically if needed */
-@media (max-width: 479px) {
-  .brand img {
-    max-height: 35px;
-  }
-}
 
 @media (max-width: 991px) {
   .w-nav-menu .nav-link {
@@ -8528,3 +8516,15 @@ blockquote {
 .seller-main-img:active::after {
   opacity: 1;
 }
+
+.brand img {
+  width: auto;
+  display: block;
+}
+
+@media screen and (max-width: 991px) {
+  .brand img {
+    max-height: clamp(22px, 5.5vw, 38px) !important;
+  }
+}
+

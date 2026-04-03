@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { supabase, ChatSession, ChatMessage } from "@/lib/supabase";
-
+import Image from 'next/image';
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "";
 
 export default function AdminLiveChat() {
@@ -226,8 +226,30 @@ const sendReply = async () => {
     if (m.media_type === "video") {
       return <video src={m.media_url} controls style={{ maxWidth: "100%", maxHeight: "280px", borderRadius: "8px", marginTop: m.content ? "8px" : "0", display: "block" }} />;
     }
-  return <img src={m.media_url} alt="media" style={{ maxWidth: "100%", maxHeight: "280px", objectFit: "contain", borderRadius: "8px", marginTop: m.content ? "8px" : "0", display: "block", cursor: "pointer" }} onClick={() => window.open(m.media_url!, "_blank")} />;
-  };
+return (
+  <div 
+    className="image-container"
+    style={{ 
+      position: 'relative', 
+      width: '100%', 
+      height: '280px', // Matches your maxHeight
+      marginTop: m.content ? '8px' : '0',
+      cursor: 'pointer'
+    }}
+    onClick={() => window.open(m.media_url!, "_blank")}
+  >
+    <Image
+      src={m.media_url}
+      alt="media"
+      fill
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      style={{ 
+        objectFit: "contain", 
+        borderRadius: "8px" 
+      }}
+    />
+  </div>
+);
 
   // ── Login ──
   if (!authed) return (

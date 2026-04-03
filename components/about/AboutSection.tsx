@@ -47,12 +47,12 @@ function AboutPage() {
             <div className="home-wrapper">
               <div className="about-img-01">
                 <img
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/melanfolia-dctOwRdfbg8-unsplash.jpg?v=1768163297"
+                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/melanfolia-dctOwRdfbg8-unsplash_2.jpg?v=1775139067"
                   loading="lazy"
                   sizes="(max-width: 502px) 100vw, 502px"
                   srcSet="
                       https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874d274921141e3d7c53a6a_about-03-p-500.webp 500w,
-                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/melanfolia-dctOwRdfbg8-unsplash.jpg?v=1768163297       502w
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/melanfolia-dctOwRdfbg8-unsplash_2.jpg?v=1775139067       502w
                     "
                   alt="About Image"
                   className="about-image"
@@ -101,12 +101,12 @@ function AboutPage() {
               </div>
               <div className="about-img-02">
                 <img
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_36_09_AM.png?v=1768163254"
+                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_36_09_AM.jpg?v=1775139980"
                   loading="lazy"
                   sizes="(max-width: 502px) 100vw, 502px"
                   srcSet="
                       https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874d2738d1c01696af18536_about-02-p-500.webp 500w,
-                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_36_09_AM.png?v=1768163254       502w
+                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_36_09_AM.jpg?v=1775139980       502w
                     "
                   alt="About Image"
                   className="about-image"
@@ -133,12 +133,12 @@ function AboutPage() {
               >
                 <div className="wc-img">
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_46_51_AM.png?v=1768163226"
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_46_51_AM.jpg?v=1775140175"
                     loading="lazy"
                     sizes="(max-width: 654px) 100vw, 654px"
                     srcSet="
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97701376bc6a99cdd90_wc-01-p-500.webp 500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_46_51_AM.png?v=1768163226       654w
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_46_51_AM.jpg?v=1775140175       654w
                       "
                     alt="WC Image"
                     className="wc-image"
@@ -162,12 +162,12 @@ function AboutPage() {
               >
                 <div className="wc-img">
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_44_05_AM.png?v=1768163226"
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_44_05_AM.jpg?v=1775140525"
                     loading="lazy"
                     sizes="(max-width: 654px) 100vw, 654px"
                     srcSet="
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c979996d3b8bd39ec345_wc-02-p-500.webp 500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_44_05_AM.png?v=1768163226       654w
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_01_44_05_AM.jpg?v=1775140525       654w
                       "
                     alt="WC Image"
                     className="wc-image"
@@ -191,12 +191,12 @@ function AboutPage() {
               >
                 <div className="wc-img">
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_02_05_14_AM.png?v=1768163732"
+                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_02_05_14_AM.jpg?v=1775140628"
                     loading="lazy"
                     sizes="(max-width: 654px) 100vw, 654px"
                     srcSet="
                         https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97707f7761e1eb17d69_wc-03-p-500.webp 500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_02_05_14_AM.png?v=1768163732       654w
+                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_12_2026_02_05_14_AM.jpg?v=1775140628       654w
                       "
                     alt="WC Image"
                     className="wc-image"
@@ -987,7 +987,7 @@ function AboutPage() {
               <div data-w-tab="Tab 1" className="w-tab-pane">
                 <p className="single-text">
                   Orders are usually processed within 1–2 business days and delivered within 3–7 business days. Visit our 
-                  <a href="/return-policy"> Returns &amp; Exchanges</a> page to start the process.
+                  <a href="/refund"> Returns &amp; Exchanges</a> page to start the process.
                    
                 </p>
               </div>

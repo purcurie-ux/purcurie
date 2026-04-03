@@ -17,7 +17,23 @@ const nextConfig: NextConfig = {
         destination: '/product/:handle',
         permanent: true,
       },
+
+
+
+
     ]
+    
+
   },
+images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com', // e.g., 'images.unsplash.com'
+      },
+      { protocol: 'https', hostname: 'cdn.prod.website-files.com' },
+    ],
+  },
+
 };
 export default nextConfig;

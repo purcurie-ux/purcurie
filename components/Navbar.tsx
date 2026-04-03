@@ -182,6 +182,51 @@ const closeSearch = (clearQuery = true) => {
           color: #fff !important;
         }
 
+        /* Ensure nav-right-mobile never shows on desktop */
+        @media screen and (min-width: 992px) {
+          .nav-right-mobile {
+            display: none !important;
+          }
+        }
+
+    /* Mobile nav layout */
+        @media screen and (max-width: 991px) {
+          .nav-wrap {
+            position: relative !important;
+            justify-content: center !important;
+          }
+          .brand {
+            position: relative !important;
+            z-index: 2 !important;
+          }
+          .nav-menu-wrap {
+            display: none !important;
+          }
+        .nav-right-mobile {
+            position: absolute !important;
+            left: 0 !important;
+            right: 0 !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            z-index: 3 !important;
+            pointer-events: none !important;
+          }
+
+          .nav-right-mobile .menu-button.w-nav-button,
+          .nav-right-mobile > div:last-child,
+          .nav-right-mobile > div:last-child * {
+            pointer-events: auto !important;
+          }
+          .menu-button.w-nav-button {
+            float: none !important;
+            position: static !important;
+            padding: 0 !important;
+          }
+        }
    /* Mobile only: Target screen widths below 991px */
         @media screen and (max-width: 991px) {
           /* 1. Global Reset for all links to remove double lines */
@@ -292,7 +337,7 @@ const closeSearch = (clearQuery = true) => {
                 src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1773346756"
                 loading="lazy"
                 alt="Purcurie"
-                style={{ height: "40px", width: "auto", objectFit: "contain" }}
+                style={{ height: "40px", width: "auto", objectFit: "contain",  maxWidth: "28vw" }}
               />
             </a>
             <div className="nav-menu-wrap">
@@ -393,22 +438,40 @@ const closeSearch = (clearQuery = true) => {
               </a>
             </nav>
             {/* Mobile menu toggle */}
-            <div className="nav-right-mobile">
-              <div
-                className="w-commerce-commercecartwrapper"
-                data-node-type="commerce-cart-wrapper"
-                style={{display: 'flex', gap: '6px'}}
-              >
+            {/* Mobile menu toggle */}
+            <div className="nav-right-mobile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+              {/* Hamburger LEFT */}
+              <div className="menu-button w-nav-button" style={{ float: 'none', position: 'static', padding: '0' }}>
+                <div className="top-line"></div>
+                <div className="center-line"></div>
+                <div className="bottom-line"></div>
+              </div>
+              {/* Icons RIGHT */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                {/* Search */}
+               <div
+                  className="search-icon"
+                  style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 10 }}
+                    onClick={openSearch}
+                >
+                  <img
+                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
+                    loading="lazy"
+                    alt="Search Icon"
+                  />
+                </div>
+                {/* User */}
                 <a 
                   href="https://shopify.com/98468430146/account" 
                   className="w-commerce-commercecartopenlink cart-button w-inline-block"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <User size={20} strokeWidth={1.5} color="#1D2C34" />
                   </div>
                 </a>
+                {/* Cart */}
                 <a
                   className="w-commerce-commercecartopenlink cart-button w-inline-block"
                   role="button"
@@ -418,9 +481,7 @@ const closeSearch = (clearQuery = true) => {
                   onClick={handleCartClick}
                 >
                   <div
-                    style={{
-                      display: mounted && cartCount > 0 ? "block" : "none",
-                    }}
+                    style={{ display: mounted && cartCount > 0 ? "block" : "none" }}
                     data-count-hide-rule="empty"
                     className="w-commerce-commercecartopenlinkcount cart-quantity"
                   >
@@ -434,11 +495,6 @@ const closeSearch = (clearQuery = true) => {
                   />
                 </a>
               </div>
-              <div className="menu-button w-nav-button">
-                <div className="top-line"></div>
-                <div className="center-line"></div>
-                <div className="bottom-line"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -446,15 +502,21 @@ const closeSearch = (clearQuery = true) => {
         {/* Search Bar - mirrors Webflow's exact structure */}
 <div
   className="search-open"
-style={{
-  display: "block",
-  transform: isSearchOpen
-    ? "translate3d(0px, 0%, 0px)"
-    : "translate3d(0px, -100%, 0px)",
-  transformStyle: "preserve-3d",
-  transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-  willChange: "transform",
-}}
+  style={{
+    display: isSearchOpen ? "block" : "none",
+    position: "fixed",
+    top: isDesktop ? "0px" : "60px",
+    left: 0,
+    right: 0,
+    zIndex: 99999,
+    backgroundColor: "#eaf0f4",
+    padding: "14px 24px",
+    borderBottom: "1px solid rgba(0,0,0,0.1)",
+    transform: isDesktop
+      ? isSearchOpen ? "translate3d(0px, 0%, 0px)" : "translate3d(0px, -100%, 0px)"
+      : "none",
+    transition: isDesktop ? "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)" : "none",
+  }}
 >
   <form
     action="/search"
