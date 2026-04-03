@@ -153,6 +153,7 @@ useEffect(() => {
                 event_name: "Purchase",
                 event_id: eventId, // 🔥 REQUIRED
                 url: window.location.href,
+                test_event_code: "TEST654", // 👈 ADD THIS
                   custom_data: {
                     value: itemsRef.current.reduce((acc, item) => {
                       const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
