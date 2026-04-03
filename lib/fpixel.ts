@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    fbq?: any;
+  }
+}
+
 export const trackEvent = (
   event: string,
   data?: any,
