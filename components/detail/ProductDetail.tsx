@@ -169,6 +169,14 @@ function ProductDetail({
   const [coupon, setCoupon] = useState("");
   const [couponStatus, setCouponStatus] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState<string | null>(null); // Add this
+  const savings = discountedPrice
+  ? (() => {
+      const base = parseFloat(product.price.replace(/[^\d.]/g, ""));
+      const final = parseFloat(discountedPrice.replace(/[^\d.]/g, ""));
+      return base - final;
+    })()
+  : 0; 
+
   // Helper to extract sections from the description string
   const getSection = (desc: string, title: string) => {
   const parts = desc.split(title);
@@ -194,7 +202,7 @@ useEffect(() => {
           const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
           if (!isNaN(basePrice)) {
             const discountAmount = savedCode.includes("100") ? 100 : savedCode === "PANKAJ50" ? 50 : basePrice * 0.10;
-            setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
+            setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(0)} INR`);
           }
         }
       }
@@ -239,7 +247,7 @@ useEffect(() => {
         const basePrice = parseFloat(product.price.replace(/[^\d.]/g, ''));
         if (!isNaN(basePrice)) {
           const discountAmount = savedCoupon.includes("100") ? 100 : savedCoupon === "PANKAJ50" ? 50 : basePrice * 0.10;
-          setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(2)} INR`);
+          setDiscountedPrice(`₹ ${(basePrice - discountAmount).toFixed(0)} INR`);
         }
       }
     }
@@ -267,7 +275,7 @@ useEffect(() => {
         if (!isNaN(basePrice)) {
           const discountAmount = inputCode.includes("100") ? 100 : inputCode === "PANKAJ50" ? 50 : basePrice * 0.10;
           const finalPrice = basePrice - discountAmount;
-          setDiscountedPrice(`₹ ${finalPrice.toFixed(2)} INR`);
+          setDiscountedPrice(`₹ ${finalPrice.toFixed(0)} INR`);
         }
       } else {
         setCouponStatus("❌ Invalid code. Please check and try again.");
@@ -838,12 +846,66 @@ useEffect(() => {
           }
           .btn-custom {
             width: 100% !important; 
-            flex: none !important; /* ✅ Stops flexbox from squishing the height */
+            flex: none !important;
             height: 56px !important; 
-            min-height: 56px !important; /* ✅ Locks the height in place */
+            min-height: 56px !important;
             font-size: 14px !important; 
           }
+          .btn-amazon-img {
+            max-width: 65% !important;
+          }
         }
+
+       /* ✅ The Ultra-Simple PNG Fix */
+        .btn-amazon-img {
+          display: inline-block;   /* 👈 key fix */
+          width: auto;             /* 👈 don't stretch */
+          max-width: 260px;        /* control size */
+          margin-top: px;
+        }
+
+
+        .btn-amazon-img:active {
+          transform: scale(0.96);
+        }
+        .amazon-btn-image {
+          width: 70%;
+          height: auto;
+          display: block;
+        }
+        .product-price span {
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+          .product-price span {
+            font-size: 22px;   /* 👈 bigger on mobile */
+            font-weight: 700;
+          }
+        }
+
+@media (max-width: 768px) {
+  .main-price {
+    font-size: 24px !important;   /* 👈 perfect size */
+  }
+}
+  @media (max-width: 768px) {
+  .product-price {
+    flex-direction: column !important;   /* 👈 mobile stack */
+    align-items: flex-start !important;
+    gap: 4px;
+  }
+}
+@media (min-width: 769px) {
+  .savings-text {
+    width: 100%;          /* 👈 forces new line */
+    margin-top: 4px;
+  }
+}
+
+
+}
       `}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
@@ -954,7 +1016,15 @@ useEffect(() => {
                     data-product-id={product.productId.split('/').pop()}
                   ></span>
                 </div>
-             <div className="product-price" style={{ marginBottom: "4px", display: "flex", alignItems: "center", gap: "8px" }}>
+         <div className="product-price" style={{ 
+            display: "flex",
+            flexDirection: "row",   // 👈 desktop fix
+            alignItems: "center",
+            gap: "8px",
+            flexWrap: "wrap"        // 👈 important
+          }}>
+
+            
               {discountedPrice ? (
                 <>
                   {/* Slashed Price: Now smaller and slightly faded */}
@@ -965,24 +1035,33 @@ useEffect(() => {
                     opacity: "0.7",        // Faded effect
                     fontWeight: "400" 
                   }}>
-                    {product.price}
+                    {product.price.replace(".00", "")}
                   </span>
-                  
+                  <div className="savings-text" style={{
+                  fontSize: "18px",
+                  color: "#2e7d32",
+                  fontWeight: "700",
+                  marginTop: "2px"
+                }}>
+                  You saved ₹ {Number(savings).toFixed(0)} on this order 🎉
+                </div>
                   {/* New Price: Bold and prominent */}
-                  <span style={{ 
-                    color: "#1D2C34", 
-                    fontWeight: "700", 
-                    fontSize: "20px"        // Larger to stand out
-                  }}>
+                <span style={{ 
+                  color: "#1D2C34", 
+                  fontWeight: "700", 
+                  fontSize: "22px"
+                }} className="main-price">
                     {discountedPrice} <span style={{ fontSize: "16px" }}>✨⭐</span>
                   </span>
                 </>
               ) : (
                 // Default state when no coupon is applied
-                <span style={{ fontWeight: "600" }}>{product.price}</span>
+                <span style={{ fontWeight: "600" }}>{product.price.replace(".00", "")}</span>
               )}
             </div>
               </div>
+
+              
                 {/* ✅ QUANTITY SELECTOR */}
                  <div style={{ display: "flex", alignItems: "center", gap: "1px", marginBottom: "1px" }}>
                   <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34" }}></label>
@@ -1024,6 +1103,8 @@ useEffect(() => {
                       }}
                     /> 
 
+                    
+
                     {/* Plus */}
                     <button
                       type="button"
@@ -1034,6 +1115,24 @@ useEffect(() => {
                     </button>
                   </div>
                 </div>  
+
+
+                {/* ✅ Amazon Button — full width below */}
+{/* 🎁 Coupon Highlight */}
+{/* <div style={{
+  background: "#CDDFE7",
+  padding: "8px",
+  borderRadius: "6px",
+  fontSize: "13px",
+  color: "#1d2c34",
+  marginBottom: "8px",
+  width: "fit-content",
+  display: "inline-block",   // 👈 fixes width issue
+  maxWidth: "100%",        // safety for mobile
+}}
+>
+  🚚 Free!! Shipping on all orders
+</div> */}
 
 {/* coupon */}
               <div className="product-wrapper" style={{ marginTop: "0px" }}>
@@ -1120,6 +1219,16 @@ useEffect(() => {
                     {buyNowLoading ? "PURCHASING..." : "BUY NOW"}
                   </button>
                 </div>
+{/* <a
+  href="https://www.amazon.in/dp/B0GQWQ5MZ7"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-amazon-img"
+>
+  <img src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_70.png?v=1775228310" alt="Buy on Amazon" className="amazon-btn-image" />
+</a> */}
+                
+
                 
               {/* ✅ DYNAMIC MULTI-SECTION ACCORDION */}
         <div style={{ marginTop: "1px" }}>

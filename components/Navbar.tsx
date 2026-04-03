@@ -838,16 +838,25 @@ function CartModal() {
                   {/* Totals Section */}
                   {discountedTotal ? (
                     <>
+                      <div style={{
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      color: "#2e7d32",
+                      marginBottom: "8px"
+                    }}>
+                      🎉 Congratulations! You saved ₹ {Math.round(Number(subtotal) - Number(discountedTotal))} on this order
+                    </div>
                       <div className="w-commerce-commercecartlineitem" style={{ marginBottom: "4px" }}>
+                      
                         <div style={{ color: "#888" }}>Subtotal</div>
                         <div style={{ textDecoration: "line-through", color: "#888" }}>
-                          ₹ {subtotal} INR
+                        ₹ {Math.round(Number(subtotal))} INR
                         </div>
                       </div>
                       <div className="w-commerce-commercecartlineitem">
                         <div style={{ fontWeight: "bold", color: "#2e7d32" }}>Discount Applied</div>
                         <div className="w-commerce-commercecartordervalue" style={{ color: "#2e7d32" }}>
-                          ₹ {discountedTotal} INR
+                        ₹ {Math.round(Number(discountedTotal))} INR
                         </div>
                       </div>
                     </>
@@ -855,7 +864,7 @@ function CartModal() {
                     <div className="w-commerce-commercecartlineitem">
                       <div>Subtotal</div>
                       <div className="w-commerce-commercecartordervalue">
-                        ₹ {subtotal} INR
+                        ₹ {Math.round(Number(subtotal))} INR
                       </div>
                     </div>
                   )}
@@ -957,7 +966,7 @@ function CartItem({ item }: { item: any }) {
 
       <div className="w-commerce-commercecartiteminfo">
         <div className="w-commerce-commercecartproductname">{item.title}</div>
-        <div>{item.price}</div>
+        <div>{item.price.replace(".00", "")}</div>
         <ul className="w-commerce-commercecartoptionlist">
           <li>
             <span>SKU: </span>
