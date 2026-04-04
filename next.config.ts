@@ -32,8 +32,16 @@ images: {
         hostname: 'cdn.shopify.com', // e.g., 'images.unsplash.com'
       },
       { protocol: 'https', hostname: 'cdn.prod.website-files.com' },
+
+      // ✅ ADD THIS
+    {
+      protocol: 'https',
+      hostname: 'res.cloudinary.com',
+    },
     ],
   },
 
+
+  
 };
 export default nextConfig;

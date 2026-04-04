@@ -1,7 +1,8 @@
 import { getHomeProducts } from "@/lib/getHomeProducts";
 import { getCollections } from "@/lib/getCollections";
 import { getBestSellerProduct } from "@/lib/getBestSellerProduct";
-
+import Link from "next/link";
+import Image from "next/image";
 
 export default async function HomePage() {
   const products = await getHomeProducts();
@@ -54,7 +55,7 @@ export default async function HomePage() {
                   role="listitem"
                   className="category-item w-dyn-item"
                 >
-                  <a
+                  <Link
                     href={`/categories/${collection.handle}`}
                     className="category-box w-inline-block"
                   >
@@ -78,7 +79,7 @@ export default async function HomePage() {
                         alt="Arrow"
                       />
                     </div>
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -107,7 +108,8 @@ export default async function HomePage() {
                 <p className="single-text">
                  Discover our most loved cosmetics and beauty essentials.
                 </p>
-                <a href="/product"
+                <Link
+                 href="/product"
                   data-w-id="5ad1bb13-0115-b5a0-2487-66b7423c2b63"
                   className="primary-button desktop w-inline-block"
                 >
@@ -136,7 +138,7 @@ export default async function HomePage() {
                     />
                   </div>
                   <div>View All Products</div>
-                </a>
+               </Link>
               </div>
             </div>
           
@@ -145,7 +147,7 @@ export default async function HomePage() {
                 <>
                   {/* BIG HERO IMAGE (Image 0) */}
               {/* BIG HERO IMAGE (Image 0) - Now Clickable */}
-              <a 
+              <Link 
                 href={`/product/${bestSeller.handle}`} 
                 className="seller-main-img w-inline-block" 
                 style={{ cursor: 'pointer', display: 'block' }}
@@ -186,13 +188,13 @@ export default async function HomePage() {
                     )}
                   </div>
                 </div>
-              </a>
+              </Link>
 
                   {/* SIDE PRODUCT CARD (Image 1) */}
                   <div className="seller-product w-dyn-list">
                     <div role="list" className="product-list-02 w-dyn-items">
                       <div role="listitem" className="product-item w-dyn-item">
-                        <a
+                        <Link
                           href={`/product/${bestSeller.handle}`}
                           className="product-block w-inline-block"
                         >
@@ -229,7 +231,7 @@ export default async function HomePage() {
                           <div className="cursor">
                             <div>Detail</div>
                           </div>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -238,7 +240,7 @@ export default async function HomePage() {
             </div>
 
             <div className="button-wrap left">
-              <a
+              <Link
                 href="/product"
                 data-w-id="476cc226-a2cb-7bf5-6102-8bb9db03a2c0"
                 className="primary-button mobile w-inline-block"
@@ -268,7 +270,7 @@ export default async function HomePage() {
                   />
                 </div>
                 <div>View All Products</div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -377,7 +379,7 @@ export default async function HomePage() {
                     role="listitem"
                     className="product-item w-dyn-item"
                   >
-                    <a
+                    <Link
                       href={`/product/${product.handle}`}
                       className="product-block w-inline-block"
                     >
@@ -409,7 +411,7 @@ export default async function HomePage() {
                       <div className="cursor">
                         <div>Detail</div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}
@@ -417,9 +419,9 @@ export default async function HomePage() {
           </div>
 
           <div className="button-wrap">
-            <a href="/product" className="primary-button w-inline-block">
+            <Link href="/product" className="primary-button w-inline-block">
               <div>View All Products</div>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -445,29 +447,25 @@ export default async function HomePage() {
                   }}
                   className="section-img"
                 >
-                  <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888"
-                    loading="lazy"
-                    style={{
-                      WebkitTransform:
-                        "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      MozTransform:
-                        "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      msTransform:
-                        "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      transform:
-                        "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      filter: "blur(10px)",
-                    }}
-                    sizes="100vw"
-                    alt="Benefits Image"
-                    srcSet="
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  800w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Gemini_Generated_Image_lychrmlychrmlych.jpg?v=1773329888  1052w
-                      "
-                    className="section-image"
-                  />
+                  <Image
+                  src="https://res.cloudinary.com/dljsgxrge/image/upload/w_1052,q_auto,f_auto/v1775337409/homepage1_dfz0v0.webp"
+                  alt="Benefits Image"
+                  width={1052}
+                  height={1052}
+                  sizes="100vw"
+                  style={{
+                    WebkitTransform:
+                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                    MozTransform:
+                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                    msTransform:
+                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                    transform:
+                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                    filter: "blur(10px)",
+                  }}
+                  className="section-image"
+                />
                 </div>
               </div>
               <div className="benefit-wrap">
@@ -554,7 +552,7 @@ export default async function HomePage() {
                     </div>
                   </div>
                 </div>
-                <a
+                <Link
                   href="/product"
                   data-w-id="1efa7086-69b7-8580-2345-19c304d2671f"
                   style={{ opacity: 0 }}
@@ -585,7 +583,7 @@ export default async function HomePage() {
                     />
                   </div>
                   <div>Shop Now</div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -612,30 +610,25 @@ export default async function HomePage() {
                 }}
                 className="section-img"
               >
-                <img
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574"
-                  loading="lazy"
-                  style={{
-                    WebkitTransform:
-                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    MozTransform:
-                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    msTransform:
-                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    transform:
-                      "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    filter: "blur(10px)",
-                  }}
-                  sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                  alt="Story Image"
-                  srcSet="
-                       https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574  500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574   800w,
-                      https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574  1080w,
-                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-monirathnak-30797181.jpg?v=1768093574        1388w
-                    "
-                  className="section-image"
-                />
+               <Image
+              src="https://res.cloudinary.com/dljsgxrge/image/upload/w_940,q_auto,f_auto/v1775337653/pexels-monirathnak-30797181_2_ah2pvj.jpg"
+              alt="Story Image"
+              width={940}
+              height={940}
+              sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+              style={{
+                WebkitTransform:
+                  "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                MozTransform:
+                  "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                msTransform:
+                  "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                transform:
+                  "translate3d(0, -100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                filter: "blur(10px)",
+              }}
+              className="section-image"
+            />
               </div>
             </div>
             <div className="story-right">
@@ -649,20 +642,16 @@ export default async function HomePage() {
                 </h3>
               </div>
               <div className="story-img">
-                <img
-                  className="story-image"
-                  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102"
-                  alt="Story Image"
-                  style={{ opacity: 0 }}
-                  sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                  data-w-id="d320c2db-e691-2ddb-25c7-615332e021e3"
-                  loading="lazy"
-                  srcSet="
-                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102  500w,
-                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102 800w,
-                     https://cdn.shopify.com/s/files/1/0984/6843/0146/files/pexels-ds-stories-7256120_1.jpg?v=1773331102     1024w
-                    "
-                />
+               <Image
+                src="https://res.cloudinary.com/dljsgxrge/image/upload/w_940,q_auto,f_auto/v1775337812/pexels-ds-stories-7256120_1_mc1xlw.jpg"
+                alt="Story Image"
+                width={940}
+                height={940}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+                data-w-id="d320c2db-e691-2ddb-25c7-615332e021e3"
+                style={{ opacity: 0 }}
+                className="story-image"
+              />
               </div>
               <div
                 data-w-id="488a3b3a-7cca-0f7d-7f3b-4b061017c0e4"
@@ -672,7 +661,7 @@ export default async function HomePage() {
                 <p className="single-text">
                  Each product is chosen with intention guided by quality, aesthetic, and performance so your skin experience feels refined, effortless, and quietly luxurious.
                 </p>
-                <a
+               <Link
                   href="/about"
                   data-w-id="bc6d7e5f-c267-6747-a6fe-b15d24d4f1d5"
                   className="primary-button w-inline-block"
@@ -702,7 +691,7 @@ export default async function HomePage() {
                     />
                   </div>
                   <div>About us</div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

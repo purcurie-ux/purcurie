@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export function HeroSection() {
   return (
     <div className="w-layout-blockcontainer container w-container">
@@ -20,20 +23,21 @@ export function HeroSection() {
               Discover high-quality cosmetics and beauty tools designed for effortless everyday beauty.
             </p>
             <div className="hero-small-img">
-              <img
-                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/linh-ha-nt6KRD9im7A-unsplash_6.jpg?v=1768095227"
-                loading="lazy"
-                style={{ opacity: 0 }}
-                data-w-id="984ea446-ebc6-549c-4bff-abf152479da4"
-                alt="Hero Image"
-                className="hero-small-image"
-              />
+        <Image
+  src="https://res.cloudinary.com/dljsgxrge/image/upload/w_400,q_auto,f_auto/v1775338214/linh-ha-nt6KRD9im7A-unsplash_6_qcellt.jpg"
+  alt="Hero Image"
+  width={400}
+  height={400}
+  data-w-id="984ea446-ebc6-549c-4bff-abf152479da4"
+  style={{ opacity: 0 }}
+  className="hero-small-image"
+/>
             </div>
           </div>
         </div>
         <div className="hero-wrapper">
           <div className="hero-wrap">
-            <a
+            <Link
               href="/categories"
               data-w-id="0def259f-6aae-fc59-5c88-249c9263c6fd"
               style={{ opacity: 0, position: "relative", zIndex: 10}}
@@ -64,7 +68,7 @@ export function HeroSection() {
                 />
               </div>
               <div>View Collection</div>
-            </a>
+            </Link>
             <div
               data-w-id="34bffb0f-4624-5bf3-3143-01016de7623f"
               style={{ opacity: 0 }}
@@ -72,25 +76,28 @@ export function HeroSection() {
             >
               <div className="client-wrapper">
                 <div className="clients-wrap">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6875ffe721a33131471e237b_223d0928e1e689ae75b31c9c5a296de4_client-03.webp"
-                    loading="lazy"
-                    alt="Clients Image"
-                  />
+               <Image
+                src="https://res.cloudinary.com/dljsgxrge/image/upload/w_200,q_auto,f_auto/v1775338486/6875ffe721a33131471e237b_223d0928e1e689ae75b31c9c5a296de4_client-03_dddwpk.webp"
+                alt="Clients Image"
+                width={200}
+                height={200}
+              />
                 </div>
                 <div className="clients-wrap">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6875ffe7e192260df02b8f4c_client-02.webp"
-                    loading="lazy"
-                    alt="Clients Image"
-                  />
+                <Image
+                src="https://res.cloudinary.com/dljsgxrge/image/upload/w_200,q_auto,f_auto/v1775338486/6875ffe7e192260df02b8f4c_client-02_hpsgkn.webp"
+                alt="Clients Image"
+                width={200}
+                height={200}
+              />
                 </div>
                 <div className="clients-wrap">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6875ffe7bb70047a94f8afb4_09b83f083c49e91fcf95acf66f4c0c58_client-01.webp"
-                    loading="lazy"
-                    alt="Clients Image"
-                  />
+                 <Image
+                  src="https://res.cloudinary.com/dljsgxrge/image/upload/w_200,q_auto,f_auto/v1775338486/6875ffe7bb70047a94f8afb4_09b83f083c49e91fcf95acf66f4c0c58_client-01_sftxgd.webp"
+                  alt="Clients Image"
+                  width={200}
+                  height={200}
+                />
                 </div>
               </div>
               <div>Growing community of modern cosmetics lovers</div>
@@ -115,29 +122,25 @@ export function HeroSection() {
               }}
               className="section-img"
             >
-              <img
-                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_11_2026_06_19_39_AM.png?v=1768092614"
-                loading="lazy"
-                style={{
-                  WebkitTransform:
-                    "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  MozTransform:
-                    "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  msTransform:
-                    "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  transform:
-                    "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  filter: "blur(10px)",
-                }}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 840px"
-                alt="Hero Image"
-                srcSet="
-                    https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6875d99fff53632f871f6e2d_hero-05-p-500.webp 500w,
-                    https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6875d99fff53632f871f6e2d_hero-05-p-800.webp 800w,
-                    https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Jan_11_2026_06_22_44_AM_1_60.png?v=1768094717       840w
-                  "
-                className="section-image"
-              />
+              <Image
+              src="https://res.cloudinary.com/dljsgxrge/image/upload/w_840,q_auto,f_auto/v1775338795/face_qhkicj.webp"
+              alt="Hero Image"
+              width={840}
+              height={840}
+              sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 840px"
+              style={{
+                WebkitTransform:
+                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                MozTransform:
+                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                msTransform:
+                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                transform:
+                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                filter: "blur(10px)",
+              }}
+              className="section-image"
+            />
             </div>
           </div>
         </div>

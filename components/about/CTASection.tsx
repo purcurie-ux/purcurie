@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function CTASection() {
   return (
     <section className="cta">
@@ -25,7 +27,7 @@ function CTASection() {
             style={{ opacity: 0 }}
             className="cta-bottom"
           >
-            <a
+            <Link
               href="/categories"
               data-w-id="a96c79e4-ee77-71bb-ef4b-4e6d317a275f"
               className="primary-button outline w-inline-block"
@@ -55,7 +57,7 @@ function CTASection() {
                 />
               </div>
               <div>shop now</div>
-            </a>
+            </Link>
             <p className="cta-info">
               Explore our collection of cosmetics 
               and beauty tools designed for everyday confidence.
