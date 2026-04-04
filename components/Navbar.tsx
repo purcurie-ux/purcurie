@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { User } from "lucide-react";
+import Link from "next/link";
 
 export function Navbar() {
   const { openCart, items, } = useCart();
@@ -374,7 +375,7 @@ const closeSearch = (clearQuery = true) => {
       >
         <div className="container w-container">
           <div className="nav-wrap">
-            <a
+            <Link
               href="/"
               aria-current="page"
               className="brand w-inline-block w--current"
@@ -385,7 +386,7 @@ const closeSearch = (clearQuery = true) => {
                 alt="Purcurie"
                 style={{ height: "40px", width: "auto", objectFit: "contain",  maxWidth: "28vw" }}
               />
-            </a>
+            </Link>
             <div className="nav-menu-wrap">
               {/* Desktop Menu Toggle */}
               <div
@@ -403,7 +404,7 @@ const closeSearch = (clearQuery = true) => {
               </div>
               <div className="nav-right">
                 {/* Account Icon */}
-                <a 
+                <Link 
                   href="https://shopify.com/98468430146/account" 
                   className="w-commerce-commercecartopenlink cart-button desktop w-inline-block"
                   target="_blank"
@@ -412,13 +413,13 @@ const closeSearch = (clearQuery = true) => {
                   <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <User size={20} strokeWidth={1.5} color="#1D2C34" />
                   </div>
-                </a>
+                </Link>
                 {/* Cart */}
                 <div
                   className="w-commerce-commercecartwrapper"
                   data-node-type="commerce-cart-wrapper"
                 >
-                  <a
+                  <Link
                     className="w-commerce-commercecartopenlink cart-button desktop w-inline-block"
                     role="button"
                     aria-haspopup="dialog"
@@ -440,7 +441,7 @@ const closeSearch = (clearQuery = true) => {
                       loading="lazy"
                       alt="Cart Icon"
                     />
-                  </a>
+                  </Link>
                 </div>
                 {/* Search */}
                 <div
@@ -459,29 +460,29 @@ const closeSearch = (clearQuery = true) => {
             </div>
             {/* Webflow's nav menu - for mobile */}
             <nav role="navigation" className="nav-menu w-nav-menu">
-              <a href="/about" className="nav-link">
+              <Link href="/about" className="nav-link">
                 About us
-              </a>
-              <a href="/categories" className="nav-link">
+              </Link>
+              <Link href="/categories" className="nav-link">
                 Categories
-              </a>
-              <a href="/product" className="nav-link">
+              </Link>
+              <Link href="/product" className="nav-link">
                 Shop
-              </a>
-              <a href="/track" className="nav-link">
+              </Link>
+              <Link href="/track" className="nav-link">
               Track Order
-            </a>
-              <a href="/contact" className="nav-link">
+            </Link>
+              <Link href="/contact" className="nav-link">
                 Contact us
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="https://shopify.com/98468430146/account" 
                 className="nav-link login-link"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Login
-              </a>
+              </Link>
             </nav>
             {/* Mobile menu toggle */}
             {/* Mobile menu toggle */}
@@ -507,7 +508,7 @@ const closeSearch = (clearQuery = true) => {
                   />
                 </div>
                 {/* User */}
-                <a 
+                <Link 
                   href="https://shopify.com/98468430146/account" 
                   className="w-commerce-commercecartopenlink cart-button w-inline-block"
                   target="_blank"
@@ -516,9 +517,9 @@ const closeSearch = (clearQuery = true) => {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <User size={20} strokeWidth={1.5} color="#1D2C34" />
                   </div>
-                </a>
+                </Link>
                 {/* Cart */}
-                <a
+                <Link
                   className="w-commerce-commercecartopenlink cart-button w-inline-block"
                   role="button"
                   aria-haspopup="dialog"
@@ -539,7 +540,7 @@ const closeSearch = (clearQuery = true) => {
                     alt="Cart Icon"
                     className="cart-icon"
                   />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -702,35 +703,35 @@ const closeSearch = (clearQuery = true) => {
                 />
               </div>
               <div className="menu-wrap desktop-menu-links">
-                <a href="/about" className="nav-link" onClick={closeDesktopMenu}>
+                <Link href="/about" className="nav-link" onClick={closeDesktopMenu}>
                   About us
-                </a>
-                <a href="/categories" className="nav-link" onClick={closeDesktopMenu}>
+                </Link>
+                <Link href="/categories" className="nav-link" onClick={closeDesktopMenu}>
                   Categories
-                </a>
-                <a href="/product" className="nav-link" onClick={closeDesktopMenu}>
+                </Link>
+                <Link href="/product" className="nav-link" onClick={closeDesktopMenu}>
                   Shop
-                </a>
-               <a href="/track" className="nav-link">
+                </Link>
+               <Link href="/track" className="nav-link">
                 Track Order
-              </a>
-                <a href="/contact" className="nav-link" onClick={closeDesktopMenu}>
+              </Link>
+                <Link href="/contact" className="nav-link" onClick={closeDesktopMenu}>
                   Contact us
-                </a>
-                <a 
+                </Link>
+                <Link 
                   href="https://shopify.com/98468430146/account" 
                   className="nav-link"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Login
-                </a>
+                </Link>
               </div>
             </div>
             <div className="nav-bottom">
               <div>© 2026 Purcurie.</div>
               <div className="social-icon-wrap">
-                <a
+                <Link
                   href="https://x.com/PurCurie"
                   target="_blank"
                   className="social-icon w-inline-block"
@@ -741,8 +742,8 @@ const closeSearch = (clearQuery = true) => {
                     loading="lazy"
                     alt="Twitter"
                   />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="https://www.instagram.com/purcurie/"
                   target="_blank"
                   className="social-icon w-inline-block"
@@ -753,7 +754,7 @@ const closeSearch = (clearQuery = true) => {
                     loading="lazy"
                     alt="Instagram"
                   />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

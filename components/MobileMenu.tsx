@@ -1,3 +1,4 @@
+import Link from "next/link";
 export function MobileMenu() {
   return (
     <div className="open-menu">
@@ -14,40 +15,40 @@ export function MobileMenu() {
           />
         </div>
         <div className="menu-wrap">
-          <a href="/about" className="nav-link">
+          <Link href="/about" className="nav-link">
             About us
-          </a>
-          <a href="/categories" className="nav-link">
+          </Link>
+          <Link href="/categories" className="nav-link">
             Categories
-          </a>
-          <a href="/product" className="nav-link">
+          </Link>
+          <Link href="/product" className="nav-link">
             Shop
-          </a>
-           <a href="/track" className="nav-link">
+          </Link>
+           <Link href="/track" className="nav-link">
             Track Order
-          </a>
-          {/* <a href="/blogs" className="nav-link">
+          </Link>
+          {/* <Link href="/blogs" className="nav-link">
             Blogs
-          </a> */}
-          <a href="/contact" className="nav-link">
+          </Link> */}
+          <Link href="/contact" className="nav-link">
             Contact us
-          </a>
+          </Link>
           
-          <a 
+          <Link 
             href="https://shopify.com/98468430146/account" 
             className="nav-link"
             target="_blank"
             rel="noopener noreferrer"
           >
             Login Account
-          </a>
+          </Link>
 
         </div>
       </div>
       <div className="nav-bottom">
         <div>© 2026 Purcurie.</div>
         <div className="social-icon-wrap">
-          <a
+          <Link
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16514"
             href="https://x.com/PurCurie"
             target="_blank"
@@ -59,8 +60,8 @@ export function MobileMenu() {
               loading="lazy"
               alt="Twitter"
             />
-          </a>
-          {/* <a
+          </Link>
+          {/* <Link
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16516"
             href="https://facebook.com"
             target="_blank"
@@ -72,8 +73,8 @@ export function MobileMenu() {
               loading="lazy"
               alt="Facebook"
             />
-          </a> */}
-          {/* <a
+          </Link> */}
+          {/* <Link
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16518"
             href="https://youtube.com"
             target="_blank"
@@ -85,8 +86,8 @@ export function MobileMenu() {
               loading="lazy"
               alt="Youtube"
             />
-          </a> */}
-          <a
+          </Link> */}
+          <Link
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b1651a"
             href="https://www.instagram.com/purcurie/"
             target="_blank"
@@ -98,7 +99,7 @@ export function MobileMenu() {
               loading="lazy"
               alt="Instagram"
             />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

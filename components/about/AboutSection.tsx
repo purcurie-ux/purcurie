@@ -332,7 +332,7 @@ function AboutPage() {
                   Join the Purcurie community and discover cosmetics and beauty tools designed for effortless everyday beauty. We focus on simplicity, quality, and modern beauty essentials.
                 </p>
               </div>
-              <Link
+              <a
                 href="/categories"
                 data-w-id="0a4e6ccb-d271-033b-2549-7022f9ae2041"
                 className="primary-button w-inline-block"
@@ -362,7 +362,7 @@ function AboutPage() {
                   />
                 </div>
                 <div>view our categories</div>
-              </Link>
+              </a>
             </div>
             <div
               data-w-id="b4924d7d-3683-3435-6fb6-57b22fc97b0b"

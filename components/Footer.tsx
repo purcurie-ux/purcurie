@@ -195,7 +195,7 @@ function Footer() {
             </div>
             
             {/* View Store Link (Points to HQ) */}
-            <a 
+            <Link 
               href={locations[0].googleMapsUrl}
               target="_blank" 
               rel="noopener noreferrer"
@@ -209,7 +209,7 @@ function Footer() {
                 style={{ width: "20px", height: "auto" }}
               />
               <div style={{ color: "white", fontWeight: "500" }}>Purcurie Store</div>
-            </a>
+            </Link>
           </div>
 
           {/* MIDDLE LINKS (Unchanged) */}
@@ -217,29 +217,29 @@ function Footer() {
             <div>
               <div className="ft-sub-title">Pages</div>
               <div className="ft-menu">
-                <a href="/about" className="ft-link">About us</a>
-                <a href="/categories" className="ft-link">Categories</a>
-                <a href="/product" className="ft-link">Shop</a>
-                <a href="/contact" className="ft-link" style={{ whiteSpace: "nowrap" }}>
+                <Link href="/about" className="ft-link">About us</Link>
+                <Link href="/categories" className="ft-link">Categories</Link>
+                <Link href="/product" className="ft-link">Shop</Link>
+                <Link href="/contact" className="ft-link" style={{ whiteSpace: "nowrap" }}>
                 Contact us
-              </a>
+              </Link>
               </div>
             </div>
             <div>
               <div className="ft-sub-title">Utility</div>
               <div className="ft-menu">
-                <a href="/disclaimer" className="ft-link">Disclaimer</a>
-                <a href="/privacy" className="ft-link">Privacy Policy</a>
-                <a href="/refund" className="ft-link">Return Policy</a>
-                <a href="/terms" className="ft-link">Terms & Conditions</a>
-                <a href="/shipping" className="ft-link">Shipping Policy</a>
+                <Link href="/disclaimer" className="ft-link">Disclaimer</Link>
+                <Link href="/privacy" className="ft-link">Privacy Policy</Link>
+                <Link href="/refund" className="ft-link">Return Policy</Link>
+                <Link href="/terms" className="ft-link">Terms & Conditions</Link>
+                <Link href="/shipping" className="ft-link">Shipping Policy</Link>
               </div>
             </div>
             <div>
               <div className="ft-sub-title">Contact</div>
               <div className="ft-menu">
-                <a href="tel:+(91) 97697 77006" className="ft-link">+(91) 97697 77006</a>
-                <a href="mailto:contact@purcurie.com" className="ft-link">contact@purcurie.com</a>
+                <Link href="tel:+(91) 97697 77006" className="ft-link">+(91) 97697 77006</Link>
+                <Link href="mailto:contact@purcurie.com" className="ft-link">contact@purcurie.com</Link>
               </div>
               <div className="ft-legal-info" style={{ marginTop: '10px', fontSize: '0.9rem', opacity: 1, color: 'white' }}>
               <p style={{ fontWeight: 'bold', marginBottom: '4px' }}>PUR CURIE PRIVATE LIMITED</p>
@@ -279,7 +279,7 @@ function Footer() {
   <div className="social-icon-wrap" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
     
     {/* Twitter/X Icon */}
-    <a 
+    <Link 
       href="https://x.com/PurCurie" 
       target="_blank" 
       rel="noopener noreferrer" 
@@ -302,10 +302,10 @@ function Footer() {
         height={16}
         unoptimized
       />
-    </a>
+    </Link>
 
     {/* Instagram Icon */}
-    <a 
+    <Link 
       href="https://www.instagram.com/Purcurie/" 
       target="_blank" 
       rel="noopener noreferrer" 
@@ -328,7 +328,7 @@ function Footer() {
         height={16}
         unoptimized
       />
-    </a>
+    </Link>
 
   </div>
 </div>
