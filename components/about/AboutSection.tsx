@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 function AboutPage() {
   return (
@@ -21,28 +21,21 @@ function AboutPage() {
                 className="primary-button outline w-inline-block"
               >
                 <div className="arrow-wrap">
-                  <img
-                    style={{
-                      WebkitTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      MozTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      msTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      transform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    }}
-                    loading="lazy"
-                    alt="Arrow"
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870e5cbc53776c9e8ba8366_ic-arrow.svg"
-                    className="arrow"
-                  />
-                  <img
-                    loading="lazy"
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
-                    alt="Arrow"
-                    className="arrow hover"
-                  />
+                 <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870e5cbc53776c9e8ba8366_ic-arrow.svg"
+                  alt="Arrow"
+                  width={16}
+                  height={16}
+                  className="arrow"
+                />
+
+                <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
+                  alt="Arrow"
+                  width={16}
+                  height={16}
+                  className="arrow hover"
+                />
                 </div>
                 <div>view collection</div>
               </Link>
@@ -58,42 +51,28 @@ function AboutPage() {
               className="about-image"
             />
               </div>
+            <div
+              data-w-id="11b0ad60-f9e5-af05-f470-52ae473aacad"
+              className="about-img"
+            >
               <div
-                data-w-id="11b0ad60-f9e5-af05-f470-52ae473aacad"
-                className="about-img"
+                style={{
+                  transform: "translate3d(0, -110%, 0)",
+                }}
+                className="section-img"
               >
-                <div
-                  style={{
-                    WebkitTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    MozTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    msTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    transform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  }}
-                  className="section-img"
-                >
-            <Image
-              src="https://res.cloudinary.com/dljsgxrge/image/upload/w_540,q_auto,f_auto/v1775333864/about-us-2_xm9qk0.jpg"
-              alt="About Image"
-              width={540}
-              height={540}
-              sizes="(max-width: 540px) 100vw, 540px"
-              style={{
-                WebkitTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                MozTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                msTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                transform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                filter: "blur(10px)",
-              }}
-              className="section-image"
-            />
+           <Image
+            src="https://res.cloudinary.com/dljsgxrge/image/upload/w_540,q_auto,f_auto/v1775333864/about-us-2_xm9qk0.jpg"
+            alt="About Image"
+            width={540}
+            height={540}
+            sizes="(max-width: 540px) 100vw, 540px"
+            style={{
+              transform: "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
+              filter: "blur(10px)",
+            }}
+            className="section-image"
+          />
                 </div>
               </div>
               <div className="about-img-02">
@@ -136,11 +115,12 @@ function AboutPage() {
               />
                 </div>
                 <div className="wc-bottom">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c9750530c9f59f179b72_ic-wc-01.svg"
-                    loading="lazy"
-                    alt="WE Icon"
-                  />
+                 <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c9750530c9f59f179b72_ic-wc-01.svg"
+                alt="WE Icon"
+                width={24}
+                height={24}
+              />
                   <div>
                     <h4 className="wc-heading">Premium Quality</h4>
                     <div>Carefully selected cosmetics and beauty tools designed for everyday use.</div>
@@ -162,11 +142,12 @@ function AboutPage() {
                 />
                 </div>
                 <div className="wc-bottom">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97645930555f320d131_ic-wc-02.svg"
-                    loading="lazy"
-                    alt="WE Icon"
-                  />
+                <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97645930555f320d131_ic-wc-02.svg"
+                  alt="WE Icon"
+                  width={24}
+                  height={24}
+                />
                   <div>
                     <h4 className="wc-heading">Designed for Everyone</h4>
                     <div>Beauty essentials created to suit different styles and preferences.</div>
@@ -188,11 +169,12 @@ function AboutPage() {
               />
                 </div>
                 <div className="wc-bottom">
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97a79138fea038bdbb4_ic-wc-03.svg"
-                    loading="lazy"
-                    alt="WE Icon"
-                  />
+               <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874c97a79138fea038bdbb4_ic-wc-03.svg"
+                alt="WE Icon"
+                width={24}
+                height={24}
+              />
                   <div>
                     <h4 className="wc-heading">Modern Beauty Essentials</h4>
                     <div>Products designed to simplify your beauty routine.</div>
@@ -238,42 +220,28 @@ function AboutPage() {
                 </p>
               </div>
             </div>
-            <div
+           <div
               data-w-id="a6e6a9da-162d-1c5d-3c8c-606c2d2ee289"
               className="fact-img"
             >
               <div
                 style={{
-                  WebkitTransform:
-                    "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  MozTransform:
-                    "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  msTransform:
-                    "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  transform:
-                    "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, -110%, 0)",
                 }}
                 className="section-img"
               >
-          <Image
-          src="https://res.cloudinary.com/dljsgxrge/image/upload/w_940,q_auto,f_auto/v1775334859/aboutus7_j2rjwx.jpg"
-          alt="Fact Image"
-          width={940}
-          height={940}
-          sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-          style={{
-            WebkitTransform:
-              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-            MozTransform:
-              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-            msTransform:
-              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-            transform:
-              "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-            filter: "blur(10px)",
-          }}
-          className="section-image"
-        />
+        <Image
+            src="https://res.cloudinary.com/dljsgxrge/image/upload/w_940,q_auto,f_auto/v1775334859/aboutus7_j2rjwx.jpg"
+            alt="Fact Image"
+            width={940}
+            height={940}
+            sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+            style={{
+              transform: "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
+              filter: "blur(10px)",
+            }}
+            className="section-image"
+          />
               </div>
             </div>
           </div>
@@ -287,38 +255,24 @@ function AboutPage() {
               data-w-id="d3d61853-5104-98cb-f74e-12592fd69cc0"
               className="community-img"
             >
-              <div
-                style={{
-                  WebkitTransform:
-                    "translate3d(-110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  MozTransform:
-                    "translate3d(-110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  msTransform:
-                    "translate3d(-110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  transform:
-                    "translate3d(-110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                }}
-                className="section-img"
-              >
-                <Image
-                src="https://res.cloudinary.com/dljsgxrge/image/upload/w_772,q_auto,f_auto/v1775334969/aboutus8_ovrajl.jpg"
-                alt="Community Image"
-                width={772}
-                height={772}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 772px"
-                style={{
-                  WebkitTransform:
-                    "translate3d(100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  MozTransform:
-                    "translate3d(100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  msTransform:
-                    "translate3d(100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  transform:
-                    "translate3d(100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  filter: "blur(10px)",
-                }}
-                className="section-image"
-              />
+            <div
+            style={{
+              transform: "translate3d(-110%, 0, 0)",
+            }}
+            className="section-img"
+          >
+          <Image
+          src="https://res.cloudinary.com/dljsgxrge/image/upload/w_772,q_auto,f_auto/v1775334969/aboutus8_ovrajl.jpg"
+          alt="Community Image"
+          width={772}
+          height={772}
+          sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 772px"
+          style={{
+            transform: "translate3d(100%, 0, 0) scale3d(1.5, 1.5, 1)",
+            filter: "blur(10px)",
+          }}
+          className="section-image"
+        />
               </div>
             </div>
             <div
@@ -332,74 +286,55 @@ function AboutPage() {
                   Join the Purcurie community and discover cosmetics and beauty tools designed for effortless everyday beauty. We focus on simplicity, quality, and modern beauty essentials.
                 </p>
               </div>
-              <a
-                href="/categories"
-                data-w-id="0a4e6ccb-d271-033b-2549-7022f9ae2041"
-                className="primary-button w-inline-block"
-              >
-                <div className="arrow-wrap">
-                  <img
-                    style={{
-                      WebkitTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      MozTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      msTransform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      transform:
-                        "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    }}
-                    loading="lazy"
-                    alt="Arrow"
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
-                    className="arrow"
-                  />
-                  <img
-                    loading="lazy"
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
-                    alt="Arrow"
-                    className="arrow hover"
-                  />
-                </div>
-                <div>view our categories</div>
-              </a>
-            </div>
-            <div
-              data-w-id="b4924d7d-3683-3435-6fb6-57b22fc97b0b"
-              className="community-img bg-color-02"
+             <Link
+              href="/categories"
+              data-w-id="0a4e6ccb-d271-033b-2549-7022f9ae2041"
+              className="primary-button w-inline-block"
             >
-              <div
-                style={{
-                  WebkitTransform:
-                    "translate3d(110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  MozTransform:
-                    "translate3d(110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  msTransform:
-                    "translate3d(110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  transform:
-                    "translate3d(110%, null, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                }}
-                className="section-img"
-              >
-              <Image
-              src="https://res.cloudinary.com/dljsgxrge/image/upload/w_774,q_auto,f_auto/v1775335136/aboutus9_1_dtp77y.jpg"
-              alt="Community Image"
-              width={774}
-              height={774}
-              sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 774px"
+              <div className="arrow-wrap">
+                <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
+                  alt="Arrow"
+                  width={16}
+                  height={16}
+                  className="arrow"
+                />
+                <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
+                  alt="Arrow"
+                  width={16}
+                  height={16}
+                  className="arrow hover"
+                />
+              </div>
+
+  {/* ✅ MOVE THIS INSIDE */}
+  <div>view our categories</div>
+</Link>
+</div>
+
+           <div
+            data-w-id="b4924d7d-3683-3435-6fb6-57b22fc97b0b"
+            className="community-img bg-color-02"
+          >
+            <div
               style={{
-                WebkitTransform:
-                  "translate3d(-100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                MozTransform:
-                  "translate3d(-100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                msTransform:
-                  "translate3d(-100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                transform:
-                  "translate3d(-100%, null, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                filter: "blur(10px)",
+                transform: "translate3d(110%, 0, 0)",
               }}
-              className="section-image"
-            />
+              className="section-img"
+            >
+           <Image
+                  src="https://res.cloudinary.com/dljsgxrge/image/upload/w_774,q_auto,f_auto/v1775335136/aboutus9_1_dtp77y.jpg"
+                  alt="Community Image"
+                  width={774}
+                  height={774}
+                  sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 774px"
+                  style={{
+                    transform: "translate3d(-100%, 0, 0) scale3d(1.5, 1.5, 1)",
+                    filter: "blur(10px)",
+                  }}
+                  className="section-image"
+                />
               </div>
             </div>
           </div>
@@ -412,12 +347,14 @@ function AboutPage() {
               data-w-id="dd3545e4-e98e-db3e-147a-5d91e2dcf005"
               className="service-block"
             >
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90cb0afbc25764645d2_ic-service%20-02.svg"
-                loading="lazy"
-                alt="Service Iocn"
-                className="service-icon"
-              />
+             <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90cb0afbc25764645d2_ic-service%20-02.svg"
+              alt="Service Icon"
+           width={0}
+            height={0}
+            sizes="100vw"
+            className="service-icon"
+            />
               <div>
                 <h5 className="service-heading">Premium Cosmetics</h5>
                 <p className="single-text">
@@ -429,12 +366,14 @@ function AboutPage() {
               data-w-id="dd3545e4-e98e-db3e-147a-5d91e2dcf00c"
               className="service-block"
             >
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90ca4ecd9797b70a74e_ic-service%20-01.svg"
-                loading="lazy"
-                alt="Service Iocn"
-                className="service-icon"
-              />
+            <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90ca4ecd9797b70a74e_ic-service%20-01.svg"
+            alt="Service Icon"
+           width={0}
+            height={0}
+            sizes="100vw"
+            className="service-icon"
+          />
               <div>
                 <h5 className="service-heading">Beauty Tools</h5>
                 <p className="single-text">
@@ -446,12 +385,14 @@ function AboutPage() {
               data-w-id="dd3545e4-e98e-db3e-147a-5d91e2dcf013"
               className="service-block"
             >
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90c7186f18bd7003e8a_ic-service%20-03.svg"
-                loading="lazy"
-                alt="Service Iocn"
-                className="service-icon"
-              />
+            <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90c7186f18bd7003e8a_ic-service%20-03.svg"
+              alt="Service Icon"
+             width={0}
+              height={0}
+              sizes="100vw"
+              className="service-icon"
+            />
               <div>
                 <h5 className="service-heading">Modern Essentials</h5>
                 <p className="single-text">
@@ -463,12 +404,14 @@ function AboutPage() {
               data-w-id="dd3545e4-e98e-db3e-147a-5d91e2dcf01a"
               className="service-block"
             >
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90c7d199e1c99310909_ic-service%20-04.svg"
-                loading="lazy"
-                alt="Service Iocn"
-                className="service-icon"
-              />
+            <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6874a90c7d199e1c99310909_ic-service%20-04.svg"
+            alt="Service Icon"
+           width={0}
+            height={0}
+            sizes="100vw"
+            className="service-icon"
+          />
               <div>
                 <h5 className="service-heading">New Arrivals</h5>
                 <p className="single-text">
@@ -483,11 +426,12 @@ function AboutPage() {
         <div className="w-layout-blockcontainer container w-container">
           <div className="overflow-hidden">
             <div className="sub-title">
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
-                loading="lazy"
-                alt="Sub Title Icon"
-              />
+             <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
+            alt="Sub Title Icon"
+            width={20}
+            height={20}
+          />
               <div>Frequently Asked Questions</div>
             </div>
           </div>
@@ -504,60 +448,65 @@ function AboutPage() {
                 className="faq-wrap top w-inline-block w-tab-link w--current"
               >
                 <div>How do I choose the right cosmetic product for me?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+            <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+            alt="Arrow"
+            width={16}
+            height={16}
+            className="arrow"
+          />
               </a>
               <a
                 data-w-tab="Tab 1"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>How long does shipping take?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+              alt="Arrow"
+              width={16}
+              height={16}
+              className="arrow"
+            />
               </a>
               <a
                 data-w-tab="Tab 2"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>Do you offer returns or refunds?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+              alt="Arrow"
+              width={16}
+              height={16}
+              className="arrow"
+            />
               </a>
               <a
                 data-w-tab="Tab 3"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>How can I contact customer support?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
               <a
                 data-w-tab="Tab 4"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>How can I stay updated on new launches and offers?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+                <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
             </div>
             <div className="faq-right w-tab-content">

@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 
 interface Ingredient {
   image: { url: string; alt?: string };
@@ -188,20 +190,23 @@ export default function KeyIngredients({
             </button>
             </div>
 
-          {/* RIGHT */}
-          <div className="ki-ingredients">
-            {ingredients.map((ing, i) => (
-              <div key={i} className="ki-ingredient">
-                <img
-                  src={ing.image.url}
-                  alt={ing.image.alt || ing.name}
-                  className="ki-ingredient-img"
-                />
-                <p className="ki-ingredient-name">{ing.name}</p>
-                <p className="ki-ingredient-desc">{ing.description}</p>
-              </div>
-            ))}
-          </div>
+        {/* RIGHT */}
+<div className="ki-ingredients">
+  {ingredients.map((ing, i) => (
+    <div key={i} className="ki-ingredient">
+      <Image
+        src={ing.image.url}
+        alt={ing.image.alt || ing.name}
+        width={120}
+        height={120}
+        sizes="120px"
+        className="ki-ingredient-img"
+      />
+      <p className="ki-ingredient-name">{ing.name}</p>
+      <p className="ki-ingredient-desc">{ing.description}</p>
+    </div>
+  ))}
+</div>
 
         </div>
       </section>

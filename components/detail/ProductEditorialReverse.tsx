@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 interface EditorialImage {
   url: string;
@@ -191,16 +192,23 @@ export default function ProductEditorialReverse({
             {/* Stacked images */}
             {stackImages.length >= 2 && (
               <div className="per-stack">
-                <img
-                  src={stackImages[0].url}
-                  alt={stackImages[0].alt || "Product detail"}
-                  className="per-img-back"
-                />
-                <img
-                  src={stackImages[1].url}
-                  alt={stackImages[1].alt || "Product shot"}
-                  className="per-img-front"
-                />
+                <Image
+              src={stackImages[0].url}
+              alt={stackImages[0].alt || "Product detail"}
+              width={400}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="per-img-back"
+            />
+
+            <Image
+              src={stackImages[1].url}
+              alt={stackImages[1].alt || "Product shot"}
+              width={400}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="per-img-front"
+            />
               </div>
             )}
           </div>
@@ -208,11 +216,14 @@ export default function ProductEditorialReverse({
           {/* RIGHT */}
           <div className="per-right">
             {mainImage && (
-              <img
-                src={mainImage.url}
-                alt={mainImage.alt || heading}
-                className="per-main-image"
-              />
+             <Image
+              src={mainImage.url}
+              alt={mainImage.alt || heading}
+              width={600}
+              height={600}
+              sizes="(max-width: 768px) 100vw, 600px"
+              className="per-main-image"
+            />
             )}
           </div>
 

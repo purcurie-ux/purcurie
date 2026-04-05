@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 function CTASection() {
   return (
@@ -7,10 +8,11 @@ function CTASection() {
         <div className="cta-wrap">
           <div className="cta-top">
             <div className="sub-title">
-              <img
+              <Image
                 src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
-                loading="lazy"
                 alt="Sub Title Icon"
+                width={20}
+                height={20}
               />
               <div>Our Commitment to Beauty</div>
             </div>
@@ -33,30 +35,22 @@ function CTASection() {
               className="primary-button outline w-inline-block"
             >
               <div className="arrow-wrap">
-                <img
-                  style={{
-                    WebkitTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    MozTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    msTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    transform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  }}
-                  loading="lazy"
-                  alt="Arrow"
+                <Image
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870e5cbc53776c9e8ba8366_ic-arrow.svg"
+                  alt="Arrow"
+                  width={16}
+                  height={16}
                   className="arrow"
                 />
-                <img
-                  loading="lazy"
+                <Image
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
                   alt="Arrow"
+                  width={16}
+                  height={16}
                   className="arrow hover"
                 />
               </div>
-              <div>shop now</div>
+               <div>shop now</div>
             </Link>
             <p className="cta-info">
               Explore our collection of cosmetics 

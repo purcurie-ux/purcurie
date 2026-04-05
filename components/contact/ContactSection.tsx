@@ -3,6 +3,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import Link from "next/link";
+import Image from "next/image";
 
 function ContactSection() {
   // 1. Create references and state
@@ -191,48 +193,6 @@ function ContactSection() {
 
               </div>
             </div>
-            {/* <div className="contact-right">
-              <div
-                data-w-id="7a5bf802-07d1-f4e9-c1e5-fd13fc51572c"
-                className="contact-img"
-              >
-                <div
-                  style={{
-                    WebkitTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    MozTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    msTransform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    transform:
-                      "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  }}
-                  className="section-img"
-                >
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact.webp"
-                    loading="lazy"
-                    style={{
-                      WebkitTransform:
-                        "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      MozTransform:
-                        "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      msTransform:
-                        "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      transform:
-                        "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                      filter: "blur(10px)",
-                    }}
-                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                    alt="Contact Image"
-                    srcSet="
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact-p-500.webp   500w,
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact-p-800.webp   800w,
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact-p-1080.webp 1080w,
-                        https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686fb2b4a4912f99b0784250_contact.webp        1236w
-                      "
-                    className="section-image"
-                  /> */}
 
 
                   {/* RIGHT SIDE WITH ANIMATION 18. jan*/}
@@ -242,19 +202,14 @@ function ContactSection() {
                 {/* ✅ 2. APPLIED ANIMATION CLASS HERE */}
                 {/* Removed the inline 'style' that hid the image */}
                 <div className="section-img animate-on-load">
-                  <img
-                    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Feb_17_2026_04_56_51_PM.png?v=1773920718"
-                    loading="lazy"
-                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                    alt="Contact Image"
-                    srcSet="
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Feb_17_2026_04_56_51_PM.png?v=1773920718   500w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Feb_17_2026_04_56_51_PM.png?v=1773920718   800w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Feb_17_2026_04_56_51_PM.png?v=1773920718 1080w,
-                        https://cdn.shopify.com/s/files/1/0984/6843/0146/files/ChatGPT_Image_Feb_17_2026_04_56_51_PM.png?v=1773920718        1236w
-                      "
-                    className="section-image"
-                  />
+                  <Image
+  src="https://res.cloudinary.com/dljsgxrge/image/upload/q_auto,f_auto/v1775396917/ChatGPT_Image_Feb_17_2026_04_56_51_PM_v4bkkg.jpg"
+  alt="Contact Image"
+  width={940}
+  height={940}
+  sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+  className="section-image"
+/>
                 </div>
               </div>
               <div className="contact-bottom">
@@ -294,18 +249,19 @@ function ContactSection() {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq">
-        <div className="w-layout-blockcontainer container w-container">
-          <div className="overflow-hidden">
-            <div className="sub-title">
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
-                loading="lazy"
-                alt="Sub Title Icon"
-              />
-              <div>Frequently Asked Questions</div>
-            </div>
-          </div>
+    <section className="faq">
+  <div className="w-layout-blockcontainer container w-container">
+    <div className="overflow-hidden">
+      <div className="sub-title">
+        <Image
+          src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
+          alt="Sub Title Icon"
+          width={20}
+          height={20}
+        />
+        <div>Frequently Asked Questions</div>
+      </div>
+    </div>
           <div
             data-current="Tab 5"
             data-easing="ease"
@@ -318,11 +274,12 @@ function ContactSection() {
                 data-w-tab="Tab 5"
                 className="faq-wrap top w-inline-block w-tab-link w--current"
               >
-                <div>How can I contact PurCurie?</div>
-                <img
-                  loading="lazy"
+                  <div>How can I contact PurCurie?</div>
+                <Image
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
                   alt="Arrow"
+                  width={16}
+                  height={16}
                   className="arrow"
                 />
               </a>
@@ -331,46 +288,50 @@ function ContactSection() {
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>Do you offer phone or WhatsApp support?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+                <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
               <a
                 data-w-tab="Tab 2"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>How do I request a return or refund?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+              <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
               <a
                 data-w-tab="Tab 3"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>I have not received my order. Who should I contact?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
               <a
                 data-w-tab="Tab 4"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>What is your customer support timing?</div>
-                <img
-                  loading="lazy"
+               <Image
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
                   alt="Arrow"
+                  width={16}
+                  height={16}
                   className="arrow"
                 />
               </a>

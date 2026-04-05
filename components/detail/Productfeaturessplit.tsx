@@ -1,4 +1,5 @@
 "use client";
+ import Image from "next/image";
 
 interface ProductFeaturesSplitProps {
   heading?: string;       // Large italic serif heading
@@ -139,11 +140,14 @@ export default function ProductFeaturesSplit({
           {/* RIGHT */}
           {image && (
             <div className="pfs-right">
-              <img
-                src={image.url}
-                alt={image.alt || heading}
-                className="pfs-image"
-              />
+             <Image
+            src={image.url}
+            alt={image.alt || heading}
+            width={500}
+            height={500}
+            sizes="(max-width: 768px) 100vw, 500px"
+            className="pfs-image"
+          />
             </div>
           )}
 

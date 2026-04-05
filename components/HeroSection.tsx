@@ -44,28 +44,20 @@ export function HeroSection() {
               className="primary-button w-inline-block"
             >
               <div className="arrow-wrap">
-                <img
-                  style={{
-                    WebkitTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    MozTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    msTransform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                    transform:
-                      "translate3d(0%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                  }}
-                  loading="lazy"
-                  alt="Arrow"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
-                  className="arrow"
-                />
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
-                  alt="Arrow"
-                  className="arrow hover"
-                />
+                <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
+                <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f48e5a13bce2c1046c927_7d7f59d728541d7f09ba8bab672d5874_secondary-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow hover"
+              />
               </div>
               <div>View Collection</div>
             </Link>
@@ -103,44 +95,30 @@ export function HeroSection() {
               <div>Growing community of modern cosmetics lovers</div>
             </div>
           </div>
-          <div
+         <div
             data-w-id="ed5272db-fb2c-7901-e8a8-851f1fa539d0"
             className="hero-img"
-            // ADD pointerEvents: "none" here so clicks go through the image
-            style={{ pointerEvents: "none" }} 
-            >
+            style={{ pointerEvents: "none" }}
+          >
             <div
               style={{
-                WebkitTransform:
-                  "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                MozTransform:
-                  "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                msTransform:
-                  "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                transform:
-                  "translate3d(0, -110%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                transform: "translate3d(0, -110%, 0)",
               }}
               className="section-img"
             >
               <Image
-              src="https://res.cloudinary.com/dljsgxrge/image/upload/w_840,q_auto,f_auto/v1775338795/face_qhkicj.webp"
-              alt="Hero Image"
-              width={840}
-              height={840}
-              sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 840px"
-              style={{
-                WebkitTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                MozTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                msTransform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                transform:
-                  "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-                filter: "blur(10px)",
-              }}
-              className="section-image"
-            />
+                src="https://res.cloudinary.com/dljsgxrge/image/upload/w_840,q_auto,f_auto/v1775338795/face_qhkicj.webp"
+                alt="Hero Image"
+                priority
+                width={840}
+                height={840}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 840px"
+                style={{
+                  transform: "translate3d(0, 100%, 0) scale3d(1.5, 1.5, 1)",
+                  filter: "blur(10px)",
+                }}
+                className="section-image"
+              />
             </div>
           </div>
         </div>

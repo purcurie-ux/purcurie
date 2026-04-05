@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"
 export function MobileMenu() {
   return (
     <div className="open-menu">
@@ -8,11 +9,12 @@ export function MobileMenu() {
           className="close-button"
         >
           <div>CLOSE</div>
-          <img
-            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f693e08019c9b0408005d_ic-close.svg"
-            loading="lazy"
-            alt="Close Icon"
-          />
+        <Image
+          src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f693e08019c9b0408005d_ic-close.svg"
+          alt="Close Icon"
+          width={16}
+          height={16}
+        />
         </div>
         <div className="menu-wrap">
           <Link href="/about" className="nav-link">
@@ -55,11 +57,12 @@ export function MobileMenu() {
             className="social-icon w-inline-block"
             rel="noreferrer"
           >
-            <img
-              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7b344fca3399f4e2c_ic-twitter.svg"
-              loading="lazy"
-              alt="Twitter"
-            />
+           <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7b344fca3399f4e2c_ic-twitter.svg"
+            alt="Twitter"
+            width={20}
+            height={20}
+          />
           </Link>
           {/* <Link
             data-w-id="d3adb6d7-cc56-c118-6985-cf7153b16516"
@@ -94,11 +97,12 @@ export function MobileMenu() {
             className="social-icon w-inline-block"
             rel="noreferrer"
           >
-            <img
-              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7f89048e8516b771f_ic-insta.svg"
-              loading="lazy"
-              alt="Instagram"
-            />
+            <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7f89048e8516b771f_ic-insta.svg"
+            alt="Instagram"
+            width={20}
+            height={20}
+          />
           </Link>
         </div>
       </div>

@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { ChevronLeft, ChevronRight, ChevronDown, Award, Gem, Truck, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import ClinicalStats from "./ClinicalStats";
 import ProductEditorial from "@/components/detail/ProductEditorial";
 import ProductEditorialReverse from "@/components/detail/ProductEditorialReverse";
 import KeyIngredients from "@/components/detail/Keyingredients";
 import ProductFeaturesSplit from "@/components/detail/Productfeaturessplit";
 import { trackEvent } from "@/lib/fpixel";
+import Link from "next/link"; 
+import Image from "next/image";
 
 // interface MoreImage {
 //   url: string;
@@ -150,7 +151,9 @@ function ProductDetail({
   const { addToCart, buyNow, buyNowLoading, openCart } = useCart();
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
+  
+ const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
   const [openSection, setOpenSection] = useState<string | null>(null);
   
   // ✅ 1. Cursor Tracking State
@@ -179,11 +182,24 @@ function ProductDetail({
 
   // Helper to extract sections from the description string
   const getSection = (desc: string, title: string) => {
-  const parts = desc.split(title);
+  if (!desc) return null;
+
+  // 🚫 Remove problematic tags that break hydration
+  const cleanDesc = desc.replace(/<strong.*?>.*?<\/strong>/gi, "");
+
+  const parts = cleanDesc.split(title);
   if (parts.length < 2) return null;
-  const content = parts[1].split(/[A-Z]{2,}\s[A-Z]{2,}/)[0]; // Stops at next CAPITAL heading
+
+  const content = parts[1].split(/[A-Z]{2,}\s[A-Z]{2,}/)[0];
   return content.trim();
 };
+
+useEffect(() => {
+  const check = () => setIsMobile(window.innerWidth <= 768);
+  check();
+  window.addEventListener("resize", check);
+  return () => window.removeEventListener("resize", check);
+}, []);
 
 useEffect(() => {
     const handleCouponRemoved = () => {
@@ -344,7 +360,7 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    setMounted(true);
+  
     
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") goToPrevious();
@@ -416,7 +432,7 @@ useEffect(() => {
   const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
   const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+   if (touchStart === null || touchEnd === null) return;
     const distance = touchStart - touchEnd;
     if (distance > 50) goToNext();
     if (distance < -50) goToPrevious();
@@ -425,16 +441,20 @@ useEffect(() => {
   };
 
   const goToPrevious = () => {
-    setCurrentImageIndex((prev) => 
-      prev === 0 ? allImages.length - 1 : prev - 1
-    );
-  };
+  if (!isMobile) return;
 
-  const goToNext = () => {
-    setCurrentImageIndex((prev) => 
-      prev === allImages.length - 1 ? 0 : prev + 1
-    );
-  };
+  setCurrentImageIndex((prev) =>
+    prev === 0 ? allImages.length - 1 : prev - 1
+  );
+};
+
+ const goToNext = () => {
+  if (!isMobile) return;
+
+  setCurrentImageIndex((prev) =>
+    prev === allImages.length - 1 ? 0 : prev + 1
+  );
+};
 
   const handleAddToCart = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -513,400 +533,459 @@ useEffect(() => {
   return (
     <div className="page-wrap">
       {/* ✅ UPGRADED CAROUSEL STYLES */}
-      <style jsx>{`
-        .carousel-container {
-          position: relative;
-          width: 100%;
-          overflow: hidden;
-          border-radius: 4px;
-        }
-
-        .carousel-main {
-          position: relative;
-          width: 100%;
-          padding-bottom: 120%; /* Square aspect ratio */
-          background: #f9f9f9;
-        }
-
-        .carousel-image {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          opacity: 0;
-          transition: opacity 0.5s ease-in-out; /* Smooth Fade */
-        }
-
-        .carousel-image.active {
-          opacity: 1;
-          z-index: 1;
-        }
-
-        .carousel-nav {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255, 255, 255, 0.9);
-          border: 1px solid rgba(0,0,0,0.05);
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #111;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          z-index: 10;
-          transition: all 0.2s ease;
-          opacity: 1; /* Hidden by default */
-        }
-
-        .carousel-main:hover .carousel-nav {
-          opacity: 1;
-        }
-
-        .carousel-nav:hover {
-          background: #1D2C34;
-          color:#CDDFE7;
-          transform: translateY(-50%) scale(1.05);
-          box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-
-        .carousel-nav.prev { left: 16px; }
-        .carousel-nav.next { right: 16px; }
-
-        .carousel-dots {
-          position: absolute;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 8px;
-          z-index: 10;
-          padding: 6px 12px;
-          background: rgba(0,0,0,0.3);
-          border-radius: 20px;
-          backdrop-filter: blur(4px);
-        }
-
-        .carousel-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.5);
-          border: none;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-
-        .carousel-dot.active {
-          background: #fff;
-          transform: scale(1.2);
-        }
-
-        .carousel-thumbnails {
-          display: flex;
-          gap: 12px;
-          margin-top: 16px;
-          overflow-x: auto;
-          scroll-behavior: smooth;
-          padding-bottom: 8px;
-          display:none;
-        }
-
-        .carousel-thumbnails::-webkit-scrollbar {
-          height: 6px;
-        }
-
-        .carousel-thumbnails::-webkit-scrollbar-track {
-          background: #e5e5e5;
-          border-radius: 4px;
-        }
-
-        .carousel-thumbnails::-webkit-scrollbar-thumb {
-          background: #b5b5b5;
-          border-radius: 4px;
-        }
-
-        .carousel-thumbnail {
-          position: relative;
-          width: 90px;
-          height: 90px;
-          cursor: pointer;
-          border: 2px solid transparent;
-          border-radius: 6px;
-          overflow: hidden;
-          transition: all 0.2s;
-        }
-
-        .carousel-thumbnail.active {
-          border-color: #CEDFE7;
-        }
-
-        .carousel-thumbnail img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        @media (max-width: 768px) {
-          .carousel-nav {
-            opacity: 1;
-            width: 25px;
-            height: 25px;
-          }
-          .carousel-nav.prev { left: 8px; }
-          .carousel-nav.next { right: 8px; }
-          
-          .carousel-thumbnails {
-            gap: 8px;
-            overflow-x: auto;
-            display: flex;
-          }
-          .carousel-thumbnail {
-            width: 70px;
-            height: 70px;
-            flex-shrink: 0;
-            padding-bottom: 0;
-          }
-        }
-
-        .custom-detail-cursor {
-          position: fixed;
-          width: 80px;
-          height: 80px;
-          background-color: #1d2c34;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 14px;
-          font-weight: 500;
-          pointer-events: none;
-          z-index: 9999;
-          transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-          white-space: nowrap;
-        }
-
-        .product-block:hover {
-          cursor: none;
-        }
-
-        @media (max-width: 991px) {
-          .custom-detail-cursor { display: none; }
-        }
-
-        /* ✅ Description Styles */
-        .product-description-content {
-          font-size: 16px;
-          line-height: 1.7;
-          color: #333;
-          margin-bottom: 24px;
-        }
-
-        .product-description-content ul {
-          list-style: none !important;
-          padding-left: 0 !important;
-          margin-left: 0 !important;
-          margin-bottom: 16px;
-        }
-
-        .product-description-content li {
-          position: relative;
-          padding-left: px;
-          margin-bottom: 12px;
-          display: block;
-        }
-
-        .product-description-content li::before {
-          content: "✨";
-          position: absolute;
-          left: 0;
-          top: 0;
-          font-size: 14px;
-        }
-
-        .product-description-content strong,
-        .product-description-content b {
-          font-weight: 700;
-          color: #1a1a1a;
-        }
-
-        /* ✅ FORCE ONE LINE CSS */
-        .notification-toast {
-          position: fixed;
-          bottom: 30px;
-          left: 50%;
-          transform: translateX(-50%) translateY(100px); /* Start hidden below */
-          background: #1D2C34;
-          color: #fff;
-          padding: 12px 24px;
-          border-radius: 50px;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-          z-index: 2147483647;
-          opacity: 0;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          pointer-events: none;
-          
-          /* CRITICAL FIXES FOR ONE LINE */
-          width: auto;            /* Let content define width */
-          max-width: 90%;         /* Prevent touching screen edges */
-          white-space: nowrap;    /* 1. Never let text wrap */
-        }
-
-        .notification-toast.show {
-          transform: translateX(-50%) translateY(0); /* Animate to visible */
-          opacity: 1;
-        }
-
-        .toast-content {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex-wrap: nowrap;      /* 2. Force items to stay in a row */
-          width: 100%;
-        }
-
-        .toast-message {
-          font-size: 14px;
-          font-weight: 500;
-          letter-spacing: 0.5px;
-          white-space: nowrap;    /* 3. Double insurance for text */
-        }
-
-        /* Mobile Adjustment */
-        @media (max-width: 480px) {
-          .notification-toast {
-            padding: 10px 16px;   /* Reduce padding slightly on small screens */
-            bottom: 80px;         /* Move up slightly to avoid bottom bars */
-          }
-          .toast-message {
-            font-size: 13px;      /* Slightly smaller text to fit better */
-          }
-        }
-          /* ✅ ACTION BUTTON STYLES (Sleek & Smaller) */
-        .action-buttons-container {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 1px;
-          max-width: 450px; /* Prevents them from getting huge on desktop */
-        }
-
-        .btn-custom {
-          flex: 1; /* Makes both buttons equal width */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          height: 56px; /* Reduced height so it's not too big */
-          border-radius: 30px; /* Pill shape from your screenshot */
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          border: none;
-        }
-
-        /* Dark "Add to Cart" Button */
-        .btn-add {
-          background-color: #1d2c34; 
-          color: white;
-        }
-        .btn-add:hover {
-          background-color: #CDDFE7;
-          color:#1d2c34;
-          border: 2px solid #1d2c34 !important;
-        }
-
-        /* Outline "Buy Now" Button */
-        .btn-buy {
-          background-color:#f6be80;
-          color: #1d2c34;
-          
-        }
-        .btn-buy:hover {
-          background-color:  #CDDFE7;
-          color:#1d2c34;
-          border: 2px solid #1d2c34 !important;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-          .action-buttons-container {
-            flex-direction: column !important; 
-            gap: 12px !important; 
-          }
-          .btn-custom {
-            width: 100% !important; 
-            flex: none !important;
-            height: 56px !important; 
-            min-height: 56px !important;
-            font-size: 14px !important; 
-          }
-          .btn-amazon-img {
-            max-width: 65% !important;
-          }
-        }
-
-       /* ✅ The Ultra-Simple PNG Fix */
-        .btn-amazon-img {
-          display: inline-block;   /* 👈 key fix */
-          width: auto;             /* 👈 don't stretch */
-          max-width: 260px;        /* control size */
-          margin-top: px;
-        }
-
-
-        .btn-amazon-img:active {
-          transform: scale(0.96);
-        }
-        .amazon-btn-image {
-          width: 70%;
-          height: auto;
-          display: block;
-        }
-        .product-price span {
-          font-size: 24px;
-          font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-          .product-price span {
-            font-size: 22px;   /* 👈 bigger on mobile */
-            font-weight: 700;
-          }
-        }
-
-@media (max-width: 768px) {
-  .main-price {
-    font-size: 24px !important;   /* 👈 perfect size */
+     <style jsx>{`
+  /* ─── Carousel Container ─── */
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
   }
-}
+
+  .carousel-main {
+    position: relative;
+    width: 100%;
+    background: #f9f9f9;
+    height: auto;
+    min-height: auto;
+    padding-bottom: 0;
+  }
+
+  /* ─── Carousel Images ─── */
+  .carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .carousel-image.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  /* ─── Nav Buttons (hidden on desktop, shown on mobile) ─── */
+  .carousel-nav {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transition: all 0.2s ease;
+  }
+
+  .carousel-nav:hover {
+    background: #1D2C34;
+    color: #CDDFE7;
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .carousel-nav.prev { left: 16px; }
+  .carousel-nav.next { right: 16px; }
+
+  /* ─── Dots (hidden on desktop) ─── */
+  .carousel-dots {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 8px;
+    z-index: 10;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .carousel-dot.active {
+    background: #fff;
+    transform: scale(1.2);
+  }
+
+  /* ─── Thumbnails (hidden on desktop) ─── */
+  .carousel-thumbnails {
+    display: none;
+    gap: 12px;
+    margin-top: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+  }
+
+  .carousel-thumbnails::-webkit-scrollbar { height: 6px; }
+  .carousel-thumbnails::-webkit-scrollbar-track { background: #e5e5e5; border-radius: 4px; }
+  .carousel-thumbnails::-webkit-scrollbar-thumb { background: #b5b5b5; border-radius: 4px; }
+
+  .carousel-thumbnail {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+
+  .carousel-thumbnail.active { border-color: #CEDFE7; }
+
+  .carousel-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ─── Desktop Overrides ─── */
+  @media (min-width: 769px) {
+    .carousel-image {
+      position: relative;
+      height: auto;
+      opacity: 1 !important;
+    }
+  }
+
+  /* ─── Mobile Overrides ─── */
   @media (max-width: 768px) {
-  .product-price {
-    flex-direction: column !important;   /* 👈 mobile stack */
-    align-items: flex-start !important;
-    gap: 4px;
+    .carousel-main {
+      height: auto;
+      min-height: auto;
+      padding-bottom: 0;
+    }
+
+    .carousel-image {
+      position: absolute;
+      height: 100%;
+      opacity: 0;
+    }
+
+    .carousel-image.active {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      display: none !important;
+      opacity: 1;
+      width: 25px;
+      height: 25px;
+    }
+
+    .carousel-nav.prev { left: 8px; }
+    .carousel-nav.next { right: 8px; }
+
+    .carousel-dots {
+      display: flex;
+    }
+
+    .carousel-thumbnails {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .carousel-thumbnail {
+      width: 70px;
+      height: 70px;
+      flex-shrink: 0;
+      padding-bottom: 0;
+    }
+
+    .product-price {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px;
+    }
+
+    .main-price {
+      font-size: 24px !important;
+      font-weight: 500; !important
+    }
+
+    .action-buttons-container {
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+
+    .btn-custom {
+      width: 100% !important;
+      flex: none !important;
+      height: 56px !important;
+      min-height: 56px !important;
+      font-size: 14px !important;
+    }
+
+    .btn-amazon-img {
+      max-width: 65% !important;
+    }
   }
-}
-@media (min-width: 769px) {
-  .savings-text {
-    width: 100%;          /* 👈 forces new line */
-    margin-top: 4px;
+
+  @media (max-width: 480px) {
+    .notification-toast {
+      padding: 10px 16px;
+      bottom: 80px;
+    }
+    .toast-message {
+      font-size: 13px;
+    }
   }
+
+  /* ─── Custom Cursor ─── */
+  .custom-detail-cursor {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    background-color: #1d2c34;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    white-space: nowrap;
+  }
+
+  .product-block:hover { cursor: none; }
+
+  @media (max-width: 991px) {
+    .custom-detail-cursor { display: none; }
+  }
+
+  /* ─── Product Description ─── */
+  .product-description-content {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 24px;
+  }
+
+  .product-description-content ul {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    margin-bottom: 16px;
+  }
+
+  .product-description-content li {
+    position: relative;
+    padding-left: 0;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .product-description-content li::before {
+    content: "✨";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+  }
+
+  .product-description-content strong,
+  .product-description-content b {
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  /* ─── Notification Toast ─── */
+  .notification-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1D2C34;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 2147483647;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    width: auto;
+    max-width: 90%;
+    white-space: nowrap;
+  }
+
+  .notification-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  .toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .toast-message {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* ─── Action Buttons ─── */
+  .action-buttons-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1px;
+    max-width: 450px;
+  }
+
+  .btn-custom {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 56px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-add {
+    background-color: #1d2c34;
+    color: white;
+  }
+
+  .btn-add:hover {
+    background-color: #CDDFE7;
+    color: #1d2c34;
+    border: 2px solid #1d2c34 !important;
+  }
+
+  .btn-buy {
+    background-color: #f6be80;
+    color: #1d2c34;
+  }
+
+  .btn-buy:hover {
+    background-color: #CDDFE7;
+    color: #1d2c34;
+    border: 2px solid #1d2c34 !important;
+  }
+
+  /* ─── Amazon Button ─── */
+  .btn-amazon-img {
+    display: inline-block;
+    width: auto;
+    max-width: 260px;
+  }
+
+  .btn-amazon-img:active { transform: scale(0.96); }
+
+  .amazon-btn-image {
+    width: 70%;
+    height: auto;
+    display: block;
+  }
+
+  /* ─── Product Price ─── */
+  .product-price span {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .product-price span {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .savings-text {
+      width: 100%;
+      margin-top: 4px;
+    }
+  }
+
+  .price-clean {
+    font-family: "Satoshi", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* OLD PRICE */
+  .price-clean .old-price {
+    font-size: 14px;
+    color: #888;
+    font-weight: 400;
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  /* SAVINGS TEXT */
+  .price-clean .savings-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2e7d32;;
+  }
+
+  /* MAIN PRICE */
+  .price-clean .main-price {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1D2C34;
+    letter-spacing: -0.3px;
+  }
+
+  /* REMOVE EMOJI FONT BREAK */
+  .price-clean .emoji {
+    font-family: inherit;
+  }
+
+  .product-main-heading {
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
-
+.coupon-status.success {
+  color: #1D2C34;
 }
-      `}</style>
+
+.coupon-status.error {
+  color: #d9534f;
+}
+
+`}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
       <div 
@@ -929,25 +1008,46 @@ useEffect(() => {
               <div className="product-main-img">
                 <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                   <div className="carousel-main">
-                    {/* Images */}
-                   {allImages.map((img, index) => (
-                  <img
-                    key={index}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    src={img}
-                    srcSet={index === 0 ? product.mainImageSrcset : undefined}
-                    className={`product-main-image carousel-image ${
-                      index === currentImageIndex ? 'active' : ''
-                    }`}
-                    alt={product.title}
-                    style={{
-                      // ✅ Hide all non-active images immediately, even before CSS loads
-                      opacity: !mounted ? (index === 0 ? 1 : 0) : undefined,
-                      // ✅ Prevent non-active images from taking up layout space before mount
-                      visibility: !mounted && index !== 0 ? 'hidden' : undefined,
-                    }}
-                  />
-                ))}
+                    {isMobile === null ? null : isMobile ? (
+  // ✅ MOBILE CAROUSEL
+<>
+    {allImages.map((img, index) => (
+      <Image
+        key={index}
+        src={img}
+        alt={product.title}
+        width={800}
+        height={800}
+        sizes="100vw"
+        priority={index === 0}
+        loading={index === 0 ? "eager" : "lazy"}
+        className={`carousel-image ${
+          index === currentImageIndex ? "active" : ""
+        }`}
+      />
+    ))}
+ </>
+) : (
+  // ✅ DESKTOP STACKED
+  <div className="carousel-wrapper">
+    {allImages.map((img, index) => (
+      <Image
+        key={index}
+        src={img}
+        alt={product.title}
+        width={800}
+        height={800}
+        sizes="800px"
+        priority={index === 0}
+        style={{
+          width: "100%",
+          height: "auto",
+          marginBottom: "20px",
+        }}
+      />
+    ))}
+  </div>
+)}
                     
                     {/* Navigation Arrows */}
                     {allImages.length > 1 && (
@@ -995,11 +1095,13 @@ useEffect(() => {
                     }`}
                     onClick={() => setCurrentImageIndex(index)}
                   >
-                    <img
-                      loading="lazy"
-                      src={image}
-                      alt={`Thumbnail ${index + 1}`}
-                    />
+                   <Image
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  width={100}
+                  height={100}
+                  sizes="100px"
+                />
                   </div>
                 ))}
               </div>
@@ -1016,7 +1118,7 @@ useEffect(() => {
                     data-product-id={product.productId.split('/').pop()}
                   ></span>
                 </div>
-         <div className="product-price" style={{ 
+        <div className="product-price price-clean" style={{ 
             display: "flex",
             flexDirection: "row",   // 👈 desktop fix
             alignItems: "center",
@@ -1028,31 +1130,19 @@ useEffect(() => {
               {discountedPrice ? (
                 <>
                   {/* Slashed Price: Now smaller and slightly faded */}
-                  <span style={{ 
-                    textDecoration: "line-through", 
-                    color: "#888", 
-                    fontSize: "14px",      // Smaller than original
-                    opacity: "0.7",        // Faded effect
-                    fontWeight: "400" 
-                  }}>
-                    {product.price.replace(".00", "")}
-                  </span>
-                  <div className="savings-text" style={{
-                  fontSize: "18px",
-                  color: "#2e7d32",
-                  fontWeight: "700",
-                  marginTop: "2px"
-                }}>
-                  You saved ₹ {Number(savings).toFixed(0)} on this order 🎉
-                </div>
-                  {/* New Price: Bold and prominent */}
-                <span style={{ 
-                  color: "#1D2C34", 
-                  fontWeight: "700", 
-                  fontSize: "22px"
-                }} className="main-price">
-                    {discountedPrice} <span style={{ fontSize: "16px" }}>✨⭐</span>
-                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+  <span className="old-price">
+    {product.price.replace(".00", "")}
+  </span>
+
+  <span className="main-price">
+    {discountedPrice} <span style={{ fontSize: "16px" }}>✨⭐</span>
+  </span>
+</div>
+
+<div className="savings-text">
+  You saved ₹ {Number(savings).toFixed(0)} on this order 🎉
+</div>
                 </>
               ) : (
                 // Default state when no coupon is applied
@@ -1068,7 +1158,7 @@ useEffect(() => {
                   <div style={{
                     display: "flex",
                     alignItems: "center",
-                    border: "2px solid #1d2c34",
+                    border: "1px solid #1d2c34",
                     borderRadius: "50px",
                     padding: "4px 8px",
                     gap: "10px",
@@ -1138,7 +1228,7 @@ useEffect(() => {
               <div className="product-wrapper" style={{ marginTop: "0px" }}>
             <div style={{ marginBottom: "1px" }}>
             <label style={{ fontSize: "12px", fontWeight: "600", color: "#1D2C34", display: "block", marginBottom: "1px" }}>
-              HAVE A DISCOUNT CODE?
+              Have a Discount Code?
             </label>
             <div style={{ display: "flex", gap: "8px" }}>
               <input
@@ -1181,7 +1271,7 @@ useEffect(() => {
             </button>
             </div>
             {couponStatus && (
-              <p style={{ fontSize: "12px", marginTop: "6px", color: couponStatus.includes('✅') ? "green" : "red" }}>
+             <p className={`coupon-status ${couponStatus.includes('✅') ? 'success' : 'error'}`}>
                 {couponStatus}
               </p>
             )}
@@ -1225,8 +1315,14 @@ useEffect(() => {
   rel="noopener noreferrer"
   className="btn-amazon-img"
 >
-  <img src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_70.png?v=1775228310" alt="Buy on Amazon" className="amazon-btn-image" />
-</a> */}
+  <Image
+    src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Untitled_design_70.png?v=1775228310"
+    alt="Buy on Amazon"
+    width={160}
+    height={50}
+    className="amazon-btn-image"
+  />
+</a>*/}
                 
 
                 
@@ -1251,7 +1347,7 @@ useEffect(() => {
               <ChevronDown size={22} style={{ transform: openSection === 'does' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
             </button>
             <div style={{ display: openSection === 'does' ? 'block' : 'none' }} className="accordion-content">
-               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHAT IT DOES") || "Refer to description." }} />
+              <div className="text-body" dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHAT IT DOES") || "Refer to description." }} />
             </div>
           </div>
 
@@ -1262,8 +1358,16 @@ useEffect(() => {
               <ChevronDown size={22} style={{ transform: openSection === 'how' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
             </button>
             <div style={{ display: openSection === 'how' ? 'block' : 'none' }} className="accordion-content">
-               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "HOW IT DOES") || "Refer to description." }} />
-            </div>
+               <div suppressHydrationWarning>
+  <div className="text-body" dangerouslySetInnerHTML={{
+      __html:
+        typeof window !== "undefined"
+          ? getSection(product.descriptionHtml || "", "HOW IT DOES") || "Refer to description."
+          : "",
+    }}
+  />
+</div>
+          </div>
           </div>
 
           {/* 4. WHY YOU'LL LOVE IT */}
@@ -1273,7 +1377,7 @@ useEffect(() => {
               <ChevronDown size={22} style={{ transform: openSection === 'love' ? 'rotate(180deg)' : 'none', transition: '0.3s' }} />
             </button>
             <div style={{ display: openSection === 'love' ? 'block' : 'none' }} className="accordion-content">
-               <div dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHY YOU'LL LOVE IT") || "Refer to description." }} />
+               <div className="text-body" dangerouslySetInnerHTML={{ __html: getSection(product.descriptionHtml || "", "WHY YOU'LL LOVE IT") || "Refer to description." }} />
             </div>
           </div>
 
@@ -1427,54 +1531,61 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
   return (
     <div className="product-item">
       <Link
-        href={`/product/${product.slug}`}
-        className="product-block"
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        onMouseMove={handleMouseMove}
-        style={{ position: "relative", overflow: "hidden", display: "block" }}
-      >
-        <img src={product.image} alt={product.title} className="product-image" />
-        <div
-          style={{
-            opacity: isHovering ? 1 : 0,
-            transform: isHovering ? "translateY(0)" : "translateY(10px)",
-            transition: "all 0.3s ease",
-            marginTop: "12px", 
-            textAlign: "center",
-            paddingBottom: "20px",
-          }}
-        >
-          <h5>{product.title}</h5>
-          <div>{product.price}</div>
-        </div>
-   
+  href={`/product/${product.slug}`}
+  className="product-block"
+  onMouseEnter={() => setIsHovering(true)}
+  onMouseLeave={() => setIsHovering(false)}
+  onMouseMove={handleMouseMove}
+  style={{ position: "relative", overflow: "hidden", display: "block" }}
+>
+  <Image
+    src={product.image}
+    alt={product.title}
+    width={500}
+    height={500}
+    sizes="(max-width: 768px) 100vw, 500px"
+    className="product-image"
+  />
 
-        <div
-          style={{
-            position: "absolute",
-            left: pos.x,
-            top: pos.y,
-            width: "58px",
-            height: "58px",
-            backgroundColor: "#1d2c34",
-            borderRadius: "50%",
-            color: "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "11px",
-            fontWeight: 300,
-            pointerEvents: "none",
-            transform: "translate(-50%, -50%)",
-            opacity: isHovering ? 1 : 0,
-            transition: "opacity 0.2s ease",
-            zIndex: 10,
-          }}
-        >
-          Detail
-        </div>
-      </Link>
+  <div
+    style={{
+      opacity: isHovering ? 1 : 0,
+      transform: isHovering ? "translateY(0)" : "translateY(10px)",
+      transition: "all 0.3s ease",
+      marginTop: "12px",
+      textAlign: "center",
+      paddingBottom: "20px",
+    }}
+  >
+    <h5 className="heading-lg">{product.title}</h5>
+   <div className="text-price">{product.price}</div>
+  </div>
+
+  <div
+    style={{
+      position: "absolute",
+      left: pos.x,
+      top: pos.y,
+      width: "58px",
+      height: "58px",
+      backgroundColor: "#1d2c34",
+      borderRadius: "50%",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "11px",
+      fontWeight: 300,
+      pointerEvents: "none",
+      transform: "translate(-50%, -50%)",
+      opacity: isHovering ? 1 : 0,
+      transition: "opacity 0.2s ease",
+      zIndex: 10,
+    }}
+  >
+    Detail
+  </div>
+</Link>
     </div>
   );
 }

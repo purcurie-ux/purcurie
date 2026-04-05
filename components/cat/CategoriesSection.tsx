@@ -1,4 +1,7 @@
 import { getCategoriesWithProducts } from "@/lib/getCategoriesWithProducts";
+import Link from "next/link";
+import Image from "next/image";
+
 
 async function CategoriesSection() {
   const categories = await getCategoriesWithProducts();
@@ -17,13 +20,15 @@ async function CategoriesSection() {
               <div key={category.id} className="category-block">
                 {/* LEFT */}
                 <div className="category-left">
-                  {category.image?.url && (
-                    <img
-                      src={category.image.url}
-                      alt={category.image.altText || category.title}
-                      className="category-image"
-                      loading="lazy"
-                    />
+                 {category.image?.url && (
+                <Image
+                  src={category.image.url}
+                  alt={category.image.altText || category.title}
+                  width={500}
+                  height={500}
+                  sizes="(max-width: 768px) 100vw, 500px"
+                  className="category-image"
+                />
                   )}
                   <div className="category-text">{category.title}</div>
                 </div>
@@ -48,12 +53,14 @@ async function CategoriesSection() {
                             >
                               <div className="product-img">
                                 {image?.url && (
-                                  <img
-                                    src={image.url}
-                                    alt={image.altText || product.title}
-                                    className="product-image-02"
-                                    loading="lazy"
-                                  />
+                                  <Image
+                              src={image.url}
+                              alt={image.altText || product.title}
+                              width={500}
+                              height={500}
+                              sizes="(max-width: 768px) 100vw, 500px"
+                              className="product-image-02"
+                            />
                                 )}
                               </div>
 
@@ -101,11 +108,12 @@ async function CategoriesSection() {
         <div className="w-layout-blockcontainer container w-container">
           <div className="overflow-hidden">
             <div className="sub-title">
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
-                loading="lazy"
-                alt="Sub Title Icon"
-              />
+              <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
+              alt="Sub Title Icon"
+              width={20}
+              height={20}
+            />
               <div>Frequently Asked Questions</div>
             </div>
           </div>
@@ -122,60 +130,65 @@ async function CategoriesSection() {
                 className="faq-wrap top w-inline-block w-tab-link w--current"
               >
                 <div>How can I find the right product for my skin type?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+            <Image
+            src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+            alt="Arrow"
+            width={16}
+            height={16}
+            className="arrow"
+          />
               </a>
               <a
                 data-w-tab="Tab 1"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>Are Purcurie products cruelty-free?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+                <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+              alt="Arrow"
+              width={16}
+              height={16}
+              className="arrow"
+            />
               </a>
               <a
                 data-w-tab="Tab 2"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>How can I stay updated on new launches and offers?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
               <a
                 data-w-tab="Tab 3"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>Are your products tested for long-lasting wear?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+              <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+              alt="Arrow"
+              width={16}
+              height={16}
+              className="arrow"
+            />
               </a>
               <a
                 data-w-tab="Tab 4"
                 className="faq-wrap w-inline-block w-tab-link"
               >
                 <div>What is your return or exchange policy?</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
-                  alt="Arrow"
-                  className="arrow"
-                />
+               <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870a5867e04b6e9cab6c936_faq-arrow.svg"
+                alt="Arrow"
+                width={16}
+                height={16}
+                className="arrow"
+              />
               </a>
             </div>
             <div className="faq-right w-tab-content">

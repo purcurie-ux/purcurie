@@ -5,16 +5,8 @@ interface PageTitleProps {
 
 export default function PageTitle({ title, subtitle }: PageTitleProps) {
   const titleStyle = {
-    WebkitTransform:
-      "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, 0)",
-    MozTransform:
-      "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, 0)",
-    msTransform:
-      "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, 0)",
-    transform:
-      "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, 0)",
+    transform: "translate3d(0, 100%, 0) skew(-20deg, 0)",
   };
-
   return (
     <div className="page-title">
       <div className="w-layout-blockcontainer container w-container">

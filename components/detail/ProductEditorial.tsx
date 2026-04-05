@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface EditorialImage {
   url: string;
   alt?: string;
@@ -173,11 +175,14 @@ export default function ProductEditorial({
           {/* LEFT */}
           <div className="pe-left">
             {mainImage && (
-              <img
-                src={mainImage.url}
-                alt={mainImage.alt || heading}
-                className="pe-main-image"
-              />
+             <Image
+              src={mainImage.url}
+              alt={mainImage.alt || heading}
+              width={600}
+              height={600}
+              sizes="(max-width: 768px) 100vw, 600px"
+              className="pe-main-image"
+            />
             )}
           </div>
 
@@ -198,16 +203,23 @@ export default function ProductEditorial({
             {/* Stacked secondary images */}
             {secondaryImages.length >= 2 && (
               <div className="pe-images-stack">
-                <img
-                  src={secondaryImages[0].url}
-                  alt={secondaryImages[0].alt || "Product image"}
-                  className="pe-img-back"
-                />
-                <img
-                  src={secondaryImages[1].url}
-                  alt={secondaryImages[1].alt || "Product image"}
-                  className="pe-img-front"
-                />
+             <Image
+              src={secondaryImages[0].url}
+              alt={secondaryImages[0].alt || "Product image"}
+              width={400}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="pe-img-back"
+            />
+
+            <Image
+              src={secondaryImages[1].url}
+              alt={secondaryImages[1].alt || "Product image"}
+              width={400}
+              height={400}
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="pe-img-front"
+            />
               </div>
             )}
           </div>

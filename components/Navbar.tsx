@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import { User } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Navbar() {
   const { openCart, items, } = useCart();
@@ -380,12 +381,20 @@ const closeSearch = (clearQuery = true) => {
               aria-current="page"
               className="brand w-inline-block w--current"
             >
-              <img
-                src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PURCURIE_2.png?v=1773346756"
-                loading="lazy"
-                alt="Purcurie"
-                style={{ height: "40px", width: "auto", objectFit: "contain",  maxWidth: "28vw" }}
-              />
+         <Image
+            src="https://res.cloudinary.com/dljsgxrge/image/upload/q_auto/f_auto/v1775389238/PURCURIE_2_eox9bg.webp"
+            alt="Purcurie"
+            width={120}   // adjust based on your logo ratio
+            height={40}
+            priority
+            sizes="(max-width: 768px) 28vw, 120px"
+            style={{
+              height: "40px",
+              width: "auto",
+              objectFit: "contain",
+              maxWidth: "28vw",
+            }}
+          />
             </Link>
             <div className="nav-menu-wrap">
               {/* Desktop Menu Toggle */}
@@ -436,11 +445,12 @@ const closeSearch = (clearQuery = true) => {
                     >
                       {mounted ? cartCount : 0}
                     </div>
-                    <img
-                      src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"
-                      loading="lazy"
-                      alt="Cart Icon"
-                    />
+                    <Image
+                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"
+                    alt="Cart Icon"
+                    width={20}
+                    height={20}
+                  />
                   </Link>
                 </div>
                 {/* Search */}
@@ -450,11 +460,12 @@ const closeSearch = (clearQuery = true) => {
                 style={{ cursor: "pointer" }}
                 onClick={openSearch}
               >
-                <img
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
-                  loading="lazy"
-                  alt="Search Icon"
-                />
+                <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
+              alt="Search Icon"
+              width={20}
+              height={20}
+            />
               </div>
               </div>
             </div>
@@ -501,11 +512,12 @@ const closeSearch = (clearQuery = true) => {
                   style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 10 }}
                     onClick={openSearch}
                 >
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
-                    loading="lazy"
-                    alt="Search Icon"
-                  />
+                 <Image
+                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
+                  alt="Search Icon"
+                  width={20}
+                  height={20}
+                />
                 </div>
                 {/* User */}
                 <Link 
@@ -534,12 +546,13 @@ const closeSearch = (clearQuery = true) => {
                   >
                     {mounted ? cartCount : 0}
                   </div>
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"
-                    loading="lazy"
-                    alt="Cart Icon"
-                    className="cart-icon"
-                  />
+                  <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f675704fa71c85c348876_ic-cart.svg"
+                alt="Cart Icon"
+                width={20}
+                height={20}
+                className="cart-icon"
+              />
                 </Link>
               </div>
             </div>
@@ -638,16 +651,16 @@ const closeSearch = (clearQuery = true) => {
           borderBottom: "1px solid #f5f5f5",
         }}
       >
-        <img
-         src={product.featuredImage?.url}
-          alt={product.title}
-          style={{
-            width: "42px",
-            height: "42px",
-            objectFit: "cover",
-            borderRadius: "6px",
-          }}
-        />
+       <Image
+        src={product.featuredImage?.url}
+        alt={product.title}
+        width={42}
+        height={42}
+        style={{
+          objectFit: "cover",
+          borderRadius: "6px",
+        }}
+      />
 
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: "14px", fontWeight: "500" }}>
@@ -668,11 +681,12 @@ const closeSearch = (clearQuery = true) => {
       onClick={() => closeSearch(true)} // ← clears query on X button
       style={{ cursor: "pointer" }}
     >
-      <img
-        loading="lazy"
-        alt="Close Icon"
-        src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f7b22b344fca339adf748_ic-close.svg"
-      />
+   <Image
+  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f7b22b344fca339adf748_ic-close.svg"
+  alt="Close Icon"
+  width={16}
+  height={16}
+/>
     </div>
   </form>
 </div>
@@ -696,11 +710,12 @@ const closeSearch = (clearQuery = true) => {
                 style={{ cursor: "pointer" }}
               >
                 <div>CLOSE</div>
-                <img
-                  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f693e08019c9b0408005d_ic-close.svg"
-                  loading="lazy"
-                  alt="Close Icon"
-                />
+             <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f693e08019c9b0408005d_ic-close.svg"
+              alt="Close Icon"
+              width={16}
+              height={16}
+            />
               </div>
               <div className="menu-wrap desktop-menu-links">
                 <Link href="/about" className="nav-link" onClick={closeDesktopMenu}>
@@ -737,11 +752,12 @@ const closeSearch = (clearQuery = true) => {
                   className="social-icon w-inline-block"
                   rel="noreferrer"
                 >
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7b344fca3399f4e2c_ic-twitter.svg"
-                    loading="lazy"
-                    alt="Twitter"
-                  />
+                <Image
+                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7b344fca3399f4e2c_ic-twitter.svg"
+                alt="Twitter"
+                width={20}
+                height={20}
+              />
                 </Link>
                 <Link
                   href="https://www.instagram.com/purcurie/"
@@ -749,11 +765,12 @@ const closeSearch = (clearQuery = true) => {
                   className="social-icon w-inline-block"
                   rel="noreferrer"
                 >
-                  <img
-                    src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7f89048e8516b771f_ic-insta.svg"
-                    loading="lazy"
-                    alt="Instagram"
-                  />
+                 <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6ba7f89048e8516b771f_ic-insta.svg"
+              alt="Instagram"
+              width={20}
+              height={20}
+            />
                 </Link>
               </div>
             </div>
@@ -1080,11 +1097,14 @@ function CartItem({ item }: { item: any }) {
         }
       `}</style>
 
-      <img
-        src={item.image}
-        alt={item.title}
-        className="w-commerce-commercecartitemimage"
-      />
+     <Image
+  src={item.image}
+  alt={item.title}
+  width={80}
+  height={80}
+  sizes="80px"
+  className="w-commerce-commercecartitemimage"
+/>
 
       <div className="w-commerce-commercecartiteminfo">
         <div className="w-commerce-commercecartproductname">{item.title}</div>

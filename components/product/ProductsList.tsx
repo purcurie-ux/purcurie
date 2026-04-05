@@ -1,3 +1,5 @@
+ import Image from "next/image";
+ 
 interface Product {
   id: string;
   name: string;
@@ -45,12 +47,14 @@ function ProductsList({
                     className="product-block w-inline-block"
                   >
                     <div className="product-img">
-                      <img
-                        loading="lazy"
-                        src={product.image}
-                        className="product-image"
-                        alt=""
-                      />
+                      <Image
+                      src={product.image}
+                      alt=""
+                      width={500}
+                      height={500}
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      className="product-image"
+                    />
                     </div>
 
                     <div className="product-bottom">

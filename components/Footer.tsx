@@ -125,11 +125,14 @@ function Footer() {
                     
                     <MarkerPopup className="p-0 w-64 bg-white rounded-lg shadow-xl text-left">
                       <div className="relative h-32 overflow-hidden rounded-t-lg bg-gray-200">
-                        <img
-                          src={loc.image}
-                          alt={loc.name}
-                          className="w-full h-full object-cover"
-                        />
+                        <Image
+                        src={loc.image}
+                        alt={loc.name}
+                        width={500}
+                        height={500}
+                        sizes="(max-width: 768px) 100vw, 500px"
+                        className="w-full h-full object-cover"
+                      />
                       </div>
                       <div className="space-y-2 p-3">
                         <div>
@@ -202,12 +205,13 @@ function Footer() {
               className="location w-inline-block"
               style={{ marginTop: "15px", display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}
             >
-              <img
-                src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f8f8cfcbbe1d714f2ab1c_ic-location.svg"
-                loading="lazy"
-                alt="Location Icon"
-                style={{ width: "20px", height: "auto" }}
-              />
+             <Image
+              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f8f8cfcbbe1d714f2ab1c_ic-location.svg"
+              alt="Location Icon"
+              width={20}
+              height={20}
+              style={{ height: "auto" }}
+            />
               <div style={{ color: "white", fontWeight: "500" }}>Purcurie Store</div>
             </Link>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image"
 
 export default function JunipHomeReviews() {
   const [error, setError] = useState(false);
@@ -32,11 +33,12 @@ export default function JunipHomeReviews() {
       <div className="w-layout-blockcontainer container w-container">
         <div className="section-title">
           <div className="sub-title">
-            <img
-              src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
-              loading="lazy"
-              alt="Sub Title Icon"
-            />
+           <Image
+  src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/6870de521dcfdb3c101ba086_sub-title.svg"
+  alt="Sub Title Icon"
+  width={20}
+  height={20}
+/>
             <div>Testimonials</div>
           </div>
           <h2 className="section-heading">Store Reviews</h2>
