@@ -440,17 +440,13 @@ useEffect(() => {
   };
 
   const goToPrevious = () => {
-  if (!isMobile) return;
-
-  setCurrentImageIndex((prev) =>
+ setCurrentImageIndex((prev) =>
     prev === 0 ? allImages.length - 1 : prev - 1
   );
 };
 
  const goToNext = () => {
-  if (!isMobile) return;
-
-  setCurrentImageIndex((prev) =>
+setCurrentImageIndex((prev) =>
     prev === allImages.length - 1 ? 0 : prev + 1
   );
 };
