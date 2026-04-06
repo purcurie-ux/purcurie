@@ -80,72 +80,72 @@ interface ProductDetailData {
 }
 
 
-// const defaultProduct: ProductDetailData = {
-//   mainImage:
-//     "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
-//   mainImageSrcset:
-//     "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
-//   moreImages: [
-//     {
-//       url: "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
-//     },
-//     {
-//       url: "https://i.postimg.cc/pXvN2L30/Chat-GPT-Image-Jan-6-2026-02-45-38-PM-(1).png",
-//     },
-//     {
-//       url: "https://i.postimg.cc/rpK3h0Rv/Remove-Dark-spots.png",
-//     },
-//     {
-//       url: "https://i.postimg.cc/cCNz4Fk0/Gemini-Generated-Image-rytbn6rytbn6rytb.png",
-//     },
-//   ],
-//   title: "Argan Oil Repair Shampoo",
-//   price: "$ 22.99 USD",
-//   description:
-//     "Revitalize your hair with Argan Oil Repair Shampoo, nourishing formula designed to restore strength, moisture, and shine. Enriched with pure argan oil, keratin, and botanical extracts, this shampoo deeply hydrates while repairing damaged strands.",
-//   category: "Organic Beauty",
-//   sku: "AORS-007",
-//   tag: "Strengthening",
-//   skuId: "6871dbd8aa48a044cd83e93b",
-//   productId: "6871dbd877f454c5d99bff7c",
-// };
+const defaultProduct: ProductDetailData = {
+  mainImage:
+    "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
+  mainImageSrcset:
+    "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
+  moreImages: [
+    {
+      url: "https://i.postimg.cc/W4Yjzc0D/Chat-GPT-Image-Jan-6-2026-12-09-08-PM.png",
+    },
+    {
+      url: "https://i.postimg.cc/pXvN2L30/Chat-GPT-Image-Jan-6-2026-02-45-38-PM-(1).png",
+    },
+    {
+      url: "https://i.postimg.cc/rpK3h0Rv/Remove-Dark-spots.png",
+    },
+    {
+      url: "https://i.postimg.cc/cCNz4Fk0/Gemini-Generated-Image-rytbn6rytbn6rytb.png",
+    },
+  ],
+  title: "Argan Oil Repair Shampoo",
+  price: "$ 22.99 USD",
+  description:
+    "Revitalize your hair with Argan Oil Repair Shampoo, nourishing formula designed to restore strength, moisture, and shine. Enriched with pure argan oil, keratin, and botanical extracts, this shampoo deeply hydrates while repairing damaged strands.",
+  category: "Organic Beauty",
+  sku: "AORS-007",
+  tag: "Strengthening",
+  skuId: "6871dbd8aa48a044cd83e93b",
+  productId: "6871dbd877f454c5d99bff7c",
+};
 
-// const defaultSimilarProducts: SimilarProduct[] = [
-//   {
-//     id: "1",
-//     slug: "hydrating-rose-water-mist",
-//     title: "Hydrating Rose Water Mist",
-//     price: "₹ 34.99 USD",
-//     image:
-//       "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
-//     srcset:
-//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-800.webp 800w, https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png 824w",
-//   },
-//   {
-//     id: "2",
-//     slug: "euphoria-bloom-eau-de-parfum",
-//     title: "Euphoria Bloom Eau de Parfum",
-//     price: "$ 49.99 USD",
-//     image:
-//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp",
-//     srcset:
-//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp 824w",
-//   },
-//   {
-//     id: "3",
-//     slug: "vitamin-c-brightening-toner",
-//     title: "Vitamin C Brightening Toner",
-//     price: "$ 21.99 USD",
-//     image:
-//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp",
-//     srcset:
-//       "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp 824w",
-//   },
-// ];
+const defaultSimilarProducts: SimilarProduct[] = [
+  {
+    id: "1",
+    slug: "hydrating-rose-water-mist",
+    title: "Hydrating Rose Water Mist",
+    price: "₹ 34.99 USD",
+    image:
+      "https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png",
+    srcset:
+      "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6871da9e25286db78acd2c8f_product-thumb-08-p-800.webp 800w, https://i.postimg.cc/1RkmDS2n/Chat-GPT-Image-Jan-6-2026-12-10-48-PM.png 824w",
+  },
+  {
+    id: "2",
+    slug: "euphoria-bloom-eau-de-parfum",
+    title: "Euphoria Bloom Eau de Parfum",
+    price: "$ 49.99 USD",
+    image:
+      "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp",
+    srcset:
+      "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f58442182ca767d888ac_product-thumb-03.webp 824w",
+  },
+  {
+    id: "3",
+    slug: "vitamin-c-brightening-toner",
+    title: "Vitamin C Brightening Toner",
+    price: "$ 21.99 USD",
+    image:
+      "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp",
+    srcset:
+      "https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-500.webp 500w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02-p-800.webp 800w, https://cdn.prod.website-files.com/686f838d338fa886aea111c4/6870f1641bcd4ab4b5586638_product-thumb-02.webp 824w",
+  },
+];
 
 function ProductDetail({
   product = defaultProduct,
-  // similarProducts = defaultSimilarProducts,
+  similarProducts = defaultSimilarProducts,
 }: ProductDetailProps) {
   
   const { addToCart, buyNow, buyNowLoading, openCart } = useCart();
