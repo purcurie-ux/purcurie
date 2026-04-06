@@ -418,8 +418,9 @@ const closeSearch = (clearQuery = true) => {
                   className="w-commerce-commercecartopenlink cart-button desktop w-inline-block"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Go to account"
                 >
-                  <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div className="search-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'  }}>
                     <User size={20} strokeWidth={1.5} color="#1D2C34" />
                   </div>
                 </Link>
@@ -459,10 +460,12 @@ const closeSearch = (clearQuery = true) => {
                 className="search-icon"
                 style={{ cursor: "pointer" }}
                 onClick={openSearch}
+                role="button"
+                aria-label="Open search"
               >
                 <Image
               src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
-              alt="Search Icon"
+              alt="Search"
               width={20}
               height={20}
             />
@@ -514,7 +517,7 @@ const closeSearch = (clearQuery = true) => {
                 >
                  <Image
                   src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f6757dba6c47670af87be_ic-search.svg"
-                  alt="Search Icon"
+                  alt="Search"
                   width={20}
                   height={20}
                 />
@@ -525,6 +528,7 @@ const closeSearch = (clearQuery = true) => {
                   className="w-commerce-commercecartopenlink cart-button w-inline-block"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Go to account"
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <User size={20} strokeWidth={1.5} color="#1D2C34" />
@@ -675,7 +679,7 @@ const closeSearch = (clearQuery = true) => {
     ))}
   </div>
 )}
-    <input className="d-none w-button" type="submit" value="Search" />
+    <input className="d-none w-button" type="submit" value="Search"  aria-label="Search products" />
     <div
       data-w-id="d3adb6d7-cc56-c118-6985-cf7153b164f9"
       onClick={() => closeSearch(true)} // ← clears query on X button

@@ -1119,7 +1119,7 @@ setCurrentImageIndex((prev) =>
             {/* RIGHT SIDE - DETAILS */}
             <div className="product-right">
               <div>
-                <h2 className="product-main-heading">{product.title}</h2>
+                <h1 className="product-main-heading">{product.title}</h1>
                 {/* ✅ ADD THIS: Junip Star Ratings */}
                 <div style={{ marginBottom: "12px" }}>
                   <span 
@@ -1566,7 +1566,7 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
       paddingBottom: "20px",
     }}
   >
-    <h5 className="heading-lg">{product.title}</h5>
+    <h1 className="heading-lg">{product.title}</h1>
    <div className="text-price">{product.price}</div>
   </div>
 

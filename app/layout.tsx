@@ -132,7 +132,9 @@ export default function RootLayout({
         <WebflowInit />
         <CartProvider>
           <Navbar />
-          {children}
+            <main role="main">
+            {children}
+            </main>
           <PurcurieChat />
           <Footer />
         </CartProvider>

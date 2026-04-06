@@ -365,7 +365,7 @@ function Footer() {
               required />
               <input type="submit" 
               className="ft-submit-button w-button" 
-              value="" />
+              value="Submit" />
             </form>
           </div>
         </div>
