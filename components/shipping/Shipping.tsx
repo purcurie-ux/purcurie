@@ -16,7 +16,7 @@ function Shipping() {
             {/* INTRODUCTION */}
             <div className="info-data">
               <h3>Introduction</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 This Shipping Policy governs the shipment and delivery of all products purchased from Purcurie (“we”, “us”, “our”) through our website, mobile site and related services (collectively referred to as the “Platform”). By placing an order on the Platform, you agree to the terms of this Shipping Policy, which forms an integral part of our Terms and Conditions.
               </p>
             </div>
@@ -24,7 +24,7 @@ function Shipping() {
             {/* SERVICEABLE LOCATIONS */}
             <div className="info-data">
               <h3>Serviceable Locations</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie currently ships products only within India. Delivery is subject to courier partner serviceability, government regulations, and logistical constraints. We reserve the right to restrict delivery to certain locations or pin codes without prior notice.
               </p>
             </div>
@@ -32,7 +32,7 @@ function Shipping() {
             {/* ORDER PROCESSING */}
             <div className="info-data">
               <h3>Order Confirmation and Processing</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 An order is considered confirmed only after successful payment and issuance of an order confirmation. Orders are typically processed within 1 to 2 business days. Processing includes order verification, quality checks, packaging and handover to our logistics partners. Orders placed on weekends or public holidays will be processed on the next working day.
                 <br /><br />
                 Purcurie reserves the right to cancel any order if payment is not successfully completed, the product is unavailable, there is a pricing or listing error, or if the order is suspected to be fraudulent.
@@ -42,7 +42,7 @@ function Shipping() {
             {/* PACKAGING */}
             <div className="info-data">
               <h3>Packaging and Handover</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 All products are packed securely to prevent damage during transit. Purcurie uses tamper-evident packaging to ensure product integrity. Once the order is handed over to the courier partner, responsibility for transportation lies with the logistics provider, although Purcurie will continue to assist customers in tracking and issue resolution.
               </p>
             </div>
@@ -50,7 +50,7 @@ function Shipping() {
             {/* DELIVERY */}
             <div className="info-data">
               <h3>Delivery Timelines</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Estimated delivery times vary depending on location, courier serviceability and external conditions. In most cases, deliveries are completed within 3 to 7 business days after dispatch. However, delivery timelines are indicative and not guaranteed. Delays may occur due to weather, natural disasters, strikes, government restrictions, courier disruptions or other events beyond our control. Purcurie shall not be liable for delays caused by such circumstances.
               </p>
             </div>
@@ -58,7 +58,7 @@ function Shipping() {
             {/* TRACKING */}
             <div className="info-data">
               <h3>Order Tracking</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Once an order is shipped, customers will receive a tracking link via SMS or email. This can be used to track the shipment in real time. Purcurie relies on third-party courier systems for tracking and does not control the accuracy or frequency of tracking updates.
               </p>
             </div>
@@ -66,7 +66,7 @@ function Shipping() {
             {/* SHIPPING CHARGES */}
             <div className="info-data">
               <h3>Shipping Charges</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Shipping charges, if applicable, will be clearly displayed at checkout before the order is placed. Charges may vary based on order value, delivery location, weight and courier partner rates. Purcurie reserves the right to revise shipping charges at any time.There are no hidden handling fees or taxes added at the final step of checkout; all applicable GST is included in the listed product price or clearly stated shipping fee.
               </p>
             </div>
@@ -74,7 +74,7 @@ function Shipping() {
             {/* DELIVERY ATTEMPTS */}
             <div className="info-data">
               <h3>Delivery Attempts</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Courier partners generally make multiple attempts to deliver a package. If delivery fails due to reasons such as incorrect address, unreachable phone number, customer unavailability or refusal to accept the package, the order may be returned to Purcurie. In such cases, re-shipping or refund, if applicable, may be processed after deducting applicable shipping and handling charges.
               </p>
             </div>
@@ -82,7 +82,7 @@ function Shipping() {
             {/* ADDRESS */}
             <div className="info-data">
               <h3>Address Accuracy</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Customers are solely responsible for providing complete and accurate shipping details. Purcurie shall not be responsible for delivery failure due to incorrect or incomplete address information provided by the customer.
               </p>
             </div>
@@ -90,14 +90,14 @@ function Shipping() {
             {/* DAMAGE / LOSS */}
             <div className="info-data">
               <h3>Damaged, Lost or Missing Shipments</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 If a package is delivered in a damaged condition, or if any item is missing, the customer must notify Purcurie within 48 hours of delivery along with clear photographs or video evidence. Purcurie will investigate the matter with the courier partner and provide a replacement or refund in accordance with its Refund & Return Policy. Claims raised after 48 hours may not be accepted.
               </p>
             </div>
 
             <div className="info-data">
               <h3>Explicit Service Area & Origin</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie operates out of Nallasopara, Maharashtra, and currently ships products exclusively within India.
               </p>
             </div>
@@ -105,7 +105,7 @@ function Shipping() {
             {/* PARTIAL */}
             <div className="info-data">
               <h3>Partial Shipments</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 In some cases, an order may be shipped in multiple packages depending on product availability or warehouse location. Customers will be informed accordingly and will receive separate tracking details for each shipment.
               </p>
             </div>
@@ -113,7 +113,7 @@ function Shipping() {
             {/* FORCE MAJEURE */}
             <div className="info-data">
               <h3>Force Majeure</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie shall not be liable for failure or delay in delivery due to events beyond its reasonable control, including natural disasters, strikes, lockdowns, governmental actions, courier disruptions, or other force majeure events.
               </p>
             </div>
@@ -121,7 +121,7 @@ function Shipping() {
             {/* CONTACT */}
             <div className="info-data">
               <h3>Customer Support</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 For any shipping-related queries, customers may contact:
                 <br /><br />
                 <strong>Purcurie Customer Support</strong><br />
@@ -134,7 +134,7 @@ function Shipping() {
             {/* POLICY UPDATES */}
             <div className="info-data">
               <h3>Policy Updates</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie reserves the right to modify or update this Shipping Policy at any time. Any changes will be posted on this page and will become effective immediately upon publication.
               </p>
             </div>

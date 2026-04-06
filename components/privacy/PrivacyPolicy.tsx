@@ -16,7 +16,7 @@ function PrivacyPolicy() {
             {/* INTRODUCTION */}
             <div className="info-data">
               <h3>Introduction</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 This Privacy Policy describes how Purcurie (“we”, “us”, “our”) collects, uses, stores, processes and protects the personal information of users who access or use our website, mobile site and related services (collectively referred to as the “Platform”). This policy is issued in accordance with the Information Technology Act, 2000 and the rules made thereunder and governs your relationship with Purcurie in relation to data protection and privacy.
                 <br /><br />
                 By accessing or using the Platform or by providing your information, you agree to be bound by this Privacy Policy and the laws of India. If you do not agree with any part of this policy, you must not use the Platform.
@@ -24,7 +24,7 @@ function PrivacyPolicy() {
             </div>
 
             {/* WHO WE ARE */}
-            <div className="info-data">
+            <div className="single-text legal-text">
               <h3>Who We Are</h3>
               <div className="data-wrap">
                 <p>
@@ -36,7 +36,7 @@ function PrivacyPolicy() {
             {/* COMMITMENT */}
             <div className="info-data">
               <h3>Our Commitment to Privacy</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie is committed to protecting your privacy and ensuring that your personal information is handled in a safe, responsible and lawful manner. We continually review our data protection practices to ensure compliance with applicable laws and industry standards.
               </p>
             </div>
@@ -44,7 +44,7 @@ function PrivacyPolicy() {
               {/* Our Identity*/}
             <div className="info-data">
               <h3>Our Identity</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 We are a legally registered Private Limited Company incorporated under the laws of India. Our business is built on a foundation of professional integrity and a commitment to customer satisfaction. We leverage modern e-commerce technology to ensure a secure and seamless shopping experience for every user.
               </p>
             </div>
@@ -65,7 +65,7 @@ function PrivacyPolicy() {
             {/* USAGE */}
             <div className="info-data">
               <h3>How We Use Your Personal Information</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Your personal information is used to create and manage your account, process and deliver your orders, complete payment transactions, provide customer support, communicate with you regarding your purchases, send you promotional and marketing communications where permitted, personalize your shopping experience, improve our Platform, and protect against fraud, misuse and security risks.
               </p>
             </div>
@@ -73,7 +73,7 @@ function PrivacyPolicy() {
             {/* CONSENT */}
             <div className="info-data">
               <h3>Consent</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 By using the Platform and providing your personal information, you expressly consent to Purcurie collecting, storing, processing, transferring and using your personal information in accordance with this Privacy Policy.
               </p>
             </div>
@@ -81,7 +81,7 @@ function PrivacyPolicy() {
             {/* COOKIES */}
             <div className="info-data">
               <h3>Cookies and Tracking Technologies</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie uses cookies and similar tracking technologies to enable essential website functions, enhance performance, remember user preferences and understand how users interact with the Platform. You can control or disable cookies through your browser settings, however some features of the Platform may not function correctly if cookies are disabled.
               </p>
             </div>
@@ -102,7 +102,7 @@ function PrivacyPolicy() {
             {/* SECURITY */}
             <div className="info-data">
               <h3>Data Security</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie implements reasonable physical, technical and administrative safeguards to protect your personal information from unauthorized access, alteration, misuse or disclosure. These measures include secure servers, encrypted communications, restricted access to data and secure payment processing systems. While we take strong precautions, no system can be completely secure and we cannot guarantee absolute protection.
               </p>
             </div>
@@ -110,7 +110,7 @@ function PrivacyPolicy() {
             {/* RETENTION */}
             <div className="info-data">
               <h3>Data Retention</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 We retain your personal information only for as long as it is necessary to fulfil the purposes for which it was collected, including legal, accounting and regulatory obligations. Once the data is no longer required, it is deleted or permanently anonymized.
               </p>
             </div>
@@ -118,7 +118,7 @@ function PrivacyPolicy() {
             {/* THIRD PARTY */}
             <div className="info-data">
               <h3>Third-Party Links</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Our Platform may contain links to third-party websites. Purcurie is not responsible for the privacy practices of such websites and we encourage you to review their privacy policies before sharing any personal information.
               </p>
             </div>
@@ -126,7 +126,7 @@ function PrivacyPolicy() {
             {/* CHILDREN */}
             <div className="info-data">
               <h3>Children’s Privacy</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Our Platform is intended for use by adults only. We do not knowingly collect personal information from individuals under the age of 18. If we become aware that such information has been collected, we will take steps to delete it.
               </p>
             </div>
@@ -134,7 +134,7 @@ function PrivacyPolicy() {
             {/* RIGHTS */}
             <div className="info-data">
               <h3>Your Rights</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 You have the right to access, correct or request deletion of your personal information and to withdraw consent for marketing communications at any time. You may exercise these rights by contacting us using the details below.
               </p>
             </div>
@@ -142,7 +142,7 @@ function PrivacyPolicy() {
             {/* CONTACT */}
             <div className="info-data">
               <h3>Contact Us</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 For any questions regarding this policy, please contact our Grievance Officer:
                 <br /><br />
                 <strong>Purcurie - Privacy Team</strong><br />
@@ -152,22 +152,25 @@ function PrivacyPolicy() {
             </div>
             
             {/* Business Transparency */}
-           <div className="info-data">
-              <h3>Business Transparency</h3>
-              <p className="single-text">
-               In compliance with Indian trade regulations and Google’s transparency policies, we maintain full disclosure of our business operations:
-                <br /><br />
-                <strong>Purcurie - Privacy Team</strong><br />
-              Registered Trade Name: PUR CURIE PRIVATE LIMITED
-              GSTIN: 27AAQCP4131L1Z0
-              Principal Place of Business: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203
-              </p>
-            </div>
+        <div className="info-data">
+  <h3>Business Transparency</h3>
+  <p 
+    className="single-text legal-text"
+    style={{ color: "#000000 !important" }}
+  >
+    In compliance with Indian trade regulations and Google’s transparency policies, we maintain full disclosure of our business operations:
+    <br /><br />
+    <strong>Purcurie - Privacy Team</strong><br />
+    Registered Trade Name: PUR CURIE PRIVATE LIMITED<br />
+    GSTIN: 27AAQCP4131L1Z0<br />
+    Principal Place of Business: Room No. 001, Janki Apartment, Bhau Complex, Achole Road, Nallasopara West, Palghar, Maharashtra, 401203
+  </p>
+</div>
 
              {/* Our Leadership*/}
            <div className="info-data">
               <h3>Our Leadership</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                The strategic vision of Purcurie is led by our Board of Directors:
                 <br /><br />
                 <strong>Purcurie - Privacy Team</strong><br />
@@ -179,7 +182,7 @@ function PrivacyPolicy() {
             {/* CHANGES */}
             <div className="info-data">
               <h3>Changes to This Policy</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie may update this Privacy Policy from time to time. Any changes will be published on this page and we recommend that you review it regularly.
               </p>
             </div>

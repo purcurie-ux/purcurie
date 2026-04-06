@@ -16,7 +16,7 @@ function Refund() {
             {/* INTRODUCTION */}
             <div className="info-data">
               <h3>Introduction</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 This Refund and Return Policy governs the return, replacement and refund of products purchased from Purcurie (“we”, “us”, “our”) through our website, mobile site or related services (collectively referred to as the “Platform”). By placing an order on the Platform, you agree to the terms of this policy.
               </p>
             </div>
@@ -24,7 +24,7 @@ function Refund() {
             {/* ELIGIBILITY */}
             <div className="info-data">
               <h3>Eligibility for Returns</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie sells skincare, beauty, personal care and cosmetics products which are sensitive in nature and meant for personal use. For reasons of hygiene, safety and quality assurance, we do not accept returns for opened, used or tampered products.
                 <br /><br />
                 A return, replacement or refund may be initiated only if the product delivered is damaged, defective, expired, incorrect, or missing.
@@ -36,7 +36,7 @@ function Refund() {
             {/* TIME LIMIT */}
             <div className="info-data">
               <h3>Time Limit for Requests</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 All requests for return, replacement or refund must be raised within 48 hours of delivery. Requests raised after this period will not be accepted.
               </p>
             </div>
@@ -44,7 +44,7 @@ function Refund() {
             {/* HOW TO RAISE */}
             <div className="info-data">
               <h3>How to Raise a Request</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 To initiate a return or refund, you must contact Purcurie customer support at support@purcurie.com with your order number, product details and clear images or video showing the issue with the product. Our team will review the request and may ask for additional information before approving the claim.
               </p>
             </div>
@@ -52,7 +52,7 @@ function Refund() {
             {/* VERIFICATION */}
             <div className="info-data">
               <h3>Verification and Approval</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 All requests are subject to verification by Purcurie. If the claim is found to be valid, we will arrange for a replacement or refund as applicable. Purcurie reserves the right to reject any request that does not meet the conditions of this policy.
               </p>
             </div>
@@ -60,7 +60,7 @@ function Refund() {
             {/* REFUND METHOD */}
             <div className="info-data">
               <h3>Refund Method</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Once a return or refund request is approved, the refund will be processed to the original payment method used at the time of purchase. Refunds may take 5 to 10 business days to reflect, depending on the payment gateway or bank.Purcurie does not charge restocking fees for approved returns. Return shipping costs for defective or incorrect items will be covered by us.
               </p>
             </div>
@@ -80,7 +80,7 @@ function Refund() {
             {/* CANCELLATION */}
             <div className="info-data">
               <h3>Cancellations</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Orders can be cancelled only before they are shipped. Once an order has been dispatched, it cannot be cancelled.
               </p>
             </div>
@@ -88,7 +88,7 @@ function Refund() {
             {/* CONTACT */}
             <div className="info-data">
               <h3>Contact & Support</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 For any queries related to returns or refunds, you may contact:
                 <br /><br />
                 <strong>Purcurie Customer Support</strong><br />
@@ -100,7 +100,7 @@ function Refund() {
             {/* POLICY CHANGES */}
             <div className="info-data">
               <h3>Policy Changes</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 Purcurie reserves the right to modify or update this Refund & Return Policy at any time. Any changes will be effective once published on this page.
               </p>
             </div>

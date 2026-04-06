@@ -16,7 +16,7 @@ function disclaimer() {
             {/* DISCLAIMER */}
             <div className="info-data">
               <h3>Disclaimer</h3>
-              <p className="single-text">
+              <p className="single-text legal-text">
                 The information, products, content and services provided on the Purcurie website and related digital platforms (“Platform”) are intended for general skincare, beauty skincare and cosmetics products purposes only. Purcurie recommends performing a patch test on a small area of skin before full application of any new product to check for sensitivity, diagnosis, treatment or professional healthcare guidance.
                  <br /><br />
                 The information and products provided on the Purcurie Platform, operated by PUR CURIE PRIVATE LIMITED, are intended for general cosmetic purposes only.

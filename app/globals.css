@@ -4172,6 +4172,31 @@ blockquote {
   padding-left: 26px;
   display: flex
 }
+.data-list {
+  list-style: none;              /* ❌ remove default bullets */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;                    /* spacing between items */
+}
+
+.data-list li {
+  position: relative;
+  padding-left: 22px;           /* space for custom bullet */
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.data-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 18px;
+  color: #1D2C34;  /* your brand color */
+}
 
 .error-inner {
   grid-row-gap: 0px;
@@ -8679,4 +8704,18 @@ p,
   word-spacing: -0.2px;     /* optional but helps */
   font-weight: 410; /* 🔥 magic value */
   color: #333; /* softer than pure black */
+}
+
+.legal-text {
+  text-align: left !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+}
+
+
+.ft-legal-info,
+.ft-legal-info p {
+  color: #EAF0F4 !important;
 }

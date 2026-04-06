@@ -152,7 +152,7 @@ function ProductDetail({
   const [quantity, setQuantity] = useState<number | string>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
- const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
 
   const [openSection, setOpenSection] = useState<string | null>(null);
   
@@ -180,26 +180,25 @@ function ProductDetail({
     })()
   : 0; 
 
-  // Helper to extract sections from the description string
-  const getSection = (desc: string, title: string) => {
+ const getSection = (desc: string, title: string) => {
   if (!desc) return null;
 
-  // 🚫 Remove problematic tags that break hydration
-  const cleanDesc = desc.replace(/<strong.*?>.*?<\/strong>/gi, "");
+  const lowerDesc = desc.toLowerCase();
+  const lowerTitle = title.toLowerCase();
 
-  const parts = cleanDesc.split(title);
+  const parts = lowerDesc.split(lowerTitle);
   if (parts.length < 2) return null;
 
-  const content = parts[1].split(/[A-Z]{2,}\s[A-Z]{2,}/)[0];
-  return content.trim();
+  const originalParts = desc.split(new RegExp(title, "i"));
+
+  const content = originalParts[1]
+    ?.split(/WHAT IS IT|WHAT IT DOES|HOW IT DOES|WHY YOU'LL LOVE IT/i)[0];
+
+  return content?.trim() || null;
 };
 
-useEffect(() => {
-  const check = () => setIsMobile(window.innerWidth <= 768);
-  check();
-  window.addEventListener("resize", check);
-  return () => window.removeEventListener("resize", check);
-}, []);
+
+
 
 useEffect(() => {
     const handleCouponRemoved = () => {
@@ -985,6 +984,27 @@ useEffect(() => {
   color: #d9534f;
 }
 
+/* Default (desktop first) */
+.mobile-carousel {
+  display: none;
+}
+
+.desktop-carousel {
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .mobile-carousel {
+    display: block;
+  }
+
+  .desktop-carousel {
+    display: none;
+  }
+}
+  
+
 `}</style>
 
       {/* ✅ 4. Follow-Cursor Element */}
@@ -1008,46 +1028,39 @@ useEffect(() => {
               <div className="product-main-img">
                 <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                   <div className="carousel-main">
-                    {isMobile === null ? null : isMobile ? (
-  // ✅ MOBILE CAROUSEL
-<>
-    {allImages.map((img, index) => (
-      <Image
-        key={index}
-        src={img}
-        alt={product.title}
-        width={800}
-        height={800}
-        sizes="100vw"
-        priority={index === 0}
-        loading={index === 0 ? "eager" : "lazy"}
-        className={`carousel-image ${
-          index === currentImageIndex ? "active" : ""
-        }`}
-      />
-    ))}
- </>
-) : (
-  // ✅ DESKTOP STACKED
-  <div className="carousel-wrapper">
-    {allImages.map((img, index) => (
-      <Image
-        key={index}
-        src={img}
-        alt={product.title}
-        width={800}
-        height={800}
-        sizes="800px"
-        priority={index === 0}
-        style={{
-          width: "100%",
-          height: "auto",
-          marginBottom: "20px",
-        }}
-      />
-    ))}
-  </div>
-)}
+<div className="mobile-carousel">
+  {/* ✅ MOBILE CAROUSEL */}
+  {allImages.map((img, index) => (
+    <Image
+      key={index}
+      src={img}
+      alt={product.title}
+      width={800}
+      height={800}
+      className={`carousel-image ${
+        index === currentImageIndex ? "active" : ""
+      }`}
+    />
+  ))}
+</div>
+
+<div className="desktop-carousel">
+  {/* ✅ DESKTOP STACKED */}
+  {allImages.map((img, index) => (
+    <Image
+      key={index}
+      src={img}
+      alt={product.title}
+      width={800}
+      height={800}
+      style={{
+        width: "100%",
+        height: "auto",
+        marginBottom: "20px",
+      }}
+    />
+  ))}
+</div>
                     
                     {/* Navigation Arrows */}
                     {allImages.length > 1 && (

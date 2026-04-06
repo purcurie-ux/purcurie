@@ -342,7 +342,9 @@ function Footer() {
         <div className="footer-wrap">
           <div>
             <div className="ft-sub-title-02">Exclusive offers & tips</div>
-            <p className="single-text">
+            <p className="single-text"
+            style={{ color: "white" }}
+            >
               Be the first to know about exclusive deals, beauty tips, and new arrivals.
             </p>
           </div>
