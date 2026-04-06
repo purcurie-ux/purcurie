@@ -20,14 +20,13 @@ export function Hero() {
           ></div>
         </section>
         <HeroSection />
-       <img
-  src="https://cdn.shopify.com/s/files/1/0984/6843/0146/files/Svg_Purcurie_2.svg?v=1768310952"
-  alt="Purcurie beauty"
-  className="glamz-svg"
-  style={{ opacity: 0 }}
-  data-w-id="9061418a-ae45-c063-4c32-479d42553da4"
-/>
-
+    <div className="glamz-wrapper">
+  <img
+    src="/hero.svg"
+    alt="Purcurie beauty"
+    className="glamz-svg"
+  />
+</div>
           </section>
           
           <HomePage />

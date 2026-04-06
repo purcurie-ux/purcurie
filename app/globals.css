@@ -8719,3 +8719,29 @@ p,
 .ft-legal-info p {
   color: #EAF0F4 !important;
 }
+
+.hero {
+  position: relative;   /* 🔥 MUST */
+}
+
+.glamz-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glamz-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 1; /* adjust if needed */
+}
+
+@media (max-width: 768px) {
+  .glamz-wrapper {
+    display: none;
+  }
+}
