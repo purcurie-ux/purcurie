@@ -42,8 +42,23 @@ export default function GlamzHead({
       <meta property="twitter:image" content={twitterImage} />
       <meta name="twitter:card" content="summary_large_image" />
 
-      {/* Glamz CSS */}
-      {/* <link rel="stylesheet" href={cssUrl} /> */}
+
+<link rel="preconnect" href="https://cdn.prod.website-files.com" />
+<link rel="dns-prefetch" href="https://cdn.prod.website-files.com" />
+      {/* Glamz CSS (Optimized) */}
+       <link
+        rel="preload"
+        href={cssUrl}
+        as="style"
+        onLoad={(e) => {
+          const target = e.target as HTMLLinkElement;
+          target.rel = "stylesheet";
+        }}
+      />
+
+        <noscript>
+          <link rel="stylesheet" href={cssUrl} />
+        </noscript>
 
       {/* Touch Detection Script */}
       <Script id="modernizr-touch" strategy="beforeInteractive">

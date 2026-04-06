@@ -474,30 +474,34 @@ const closeSearch = (clearQuery = true) => {
             </div>
             {/* Webflow's nav menu - for mobile */}
             <nav role="navigation" className="nav-menu w-nav-menu">
-              <Link href="/about" className="nav-link">
-                About us
-              </Link>
-              <Link href="/categories" className="nav-link">
-                Categories
-              </Link>
-              <Link href="/product" className="nav-link">
-                Shop
-              </Link>
-              <Link href="/track" className="nav-link">
-              Track Order
-            </Link>
-              <Link href="/contact" className="nav-link">
-                Contact us
-              </Link>
-              <Link 
-                href="https://shopify.com/98468430146/account" 
-                className="nav-link login-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Login
-              </Link>
-            </nav>
+  {[
+    { href: "/about", label: "About us" },
+    { href: "/categories", label: "Categories" },
+    { href: "/product", label: "Shop" },
+    { href: "/track", label: "Track Order" },
+    { href: "/contact", label: "Contact us" },
+  ].map((link) => (
+    <Link
+      key={link.href}
+      href={link.href}
+      className="nav-link"
+      onClick={() => {
+        const btn = document.querySelector(".w-nav-button") as HTMLElement;
+        btn?.click(); // 🔥 CLOSE MENU (Webflow trigger)
+      }}
+    >
+      {link.label}
+    </Link>
+  ))}
+
+  <Link
+    href="https://shopify.com/98468430146/account"
+    className="nav-link login-link"
+    target="_blank"
+  >
+    Login
+  </Link>
+</nav>
             {/* Mobile menu toggle */}
             {/* Mobile menu toggle */}
             <div className="nav-right-mobile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
@@ -731,7 +735,7 @@ const closeSearch = (clearQuery = true) => {
                 <Link href="/product" className="nav-link" onClick={closeDesktopMenu}>
                   Shop
                 </Link>
-               <Link href="/track" className="nav-link">
+               <Link href="/track" className="nav-link" onClick={closeDesktopMenu}>
                 Track Order
               </Link>
                 <Link href="/contact" className="nav-link" onClick={closeDesktopMenu}>

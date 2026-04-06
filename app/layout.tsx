@@ -149,7 +149,7 @@ export default function RootLayout({
         {/* jQuery (Required by Webflow) */}
         <Script
           src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=686f439ee34b78f814ae2de2"
-          strategy="beforeInteractive"
+         strategy="afterInteractive"
           crossOrigin="anonymous"
         />
 
@@ -160,7 +160,7 @@ export default function RootLayout({
         />
         <Script
           src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/js/webflow.schunk.b3e18e1a6e478bb6.js"
-          strategy="afterInteractive"
+         strategy="afterInteractive"
         />
         <Script
           src="https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/js/webflow.8a267672.347e9cb06ba68506.js"
@@ -170,9 +170,10 @@ export default function RootLayout({
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RCPN5XWR33"
-          strategy="afterInteractive"
+          
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

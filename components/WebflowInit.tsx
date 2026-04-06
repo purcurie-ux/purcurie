@@ -9,23 +9,24 @@ export default function WebflowInit() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // ✅ Only run Webflow on important pages
+    const allowedPages = ["/", "/products", "/contact", "/categories"];
+
+    if (!allowedPages.includes(pathname)) return;
+
     const Webflow = (window as any).Webflow;
     if (!Webflow) return;
 
-    // Reset & re-init Webflow interactions
     Webflow.destroy();
     Webflow.ready();
     Webflow.require("ix2")?.init();
 
-    // Needed for some Webflow components
     document.dispatchEvent(new Event("readystatechange"));
 
-    // 🔥 FIX: Force initial scroll event to trigger animations immediately
     setTimeout(() => {
       window.dispatchEvent(new Event("scroll"));
       window.dispatchEvent(new Event("resize"));
-      
-      // Force Webflow to recalculate element positions
+
       if (Webflow.require("ix2")) {
         Webflow.require("ix2").store.dispatch({ type: "IX2_PAGE_UPDATE" });
       }
