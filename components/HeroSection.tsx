@@ -17,7 +17,7 @@ export function HeroSection() {
           <div className="hero-wrap">
             <p
               data-w-id="abb2ee16-b464-c2bb-822b-7ad222671516"
-              style={{ opacity: 0 }}
+              style={{ opacity: 1 }}
               className="hero-info"
             >
               Discover high-quality cosmetics and beauty tools designed for effortless everyday beauty.
@@ -29,7 +29,7 @@ export function HeroSection() {
   width={400}
   height={400}
   data-w-id="984ea446-ebc6-549c-4bff-abf152479da4"
-  style={{ opacity: 0 }}
+  style={{ opacity: 1 }}
   className="hero-small-image"
 />
             </div>
@@ -40,7 +40,7 @@ export function HeroSection() {
             <Link
               href="/categories"
               data-w-id="0def259f-6aae-fc59-5c88-249c9263c6fd"
-              style={{ opacity: 0, position: "relative", zIndex: 10}}
+              style={{ opacity: 1, position: "relative", zIndex: 10}}
               className="primary-button w-inline-block"
             >
               <div className="arrow-wrap">
@@ -63,7 +63,7 @@ export function HeroSection() {
             </Link>
             <div
               data-w-id="34bffb0f-4624-5bf3-3143-01016de7623f"
-              style={{ opacity: 0 }}
+              style={{ opacity: 1 }}
               className="client-data"
             >
               <div className="client-wrapper">

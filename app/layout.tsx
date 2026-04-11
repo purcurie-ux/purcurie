@@ -11,6 +11,13 @@ import { CartProvider } from "@/context/CartContext";
 import ScrollTrigger from "@/components/ui/ScrollTrigger";
 import ClientInit from "@/components/ClientInit";
 import PurcurieChat from "@/components/ChatBot";
+import localFont from "next/font/local";
+
+const satoshi = localFont({
+  src: "../public/font/Satoshi-Variable.woff2", // Check your exact filename in public/font
+  display: "swap",
+  variable: "--font-satoshi",
+});
 
 
 
@@ -58,6 +65,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      className={satoshi.variable}
       // data-wf-domain="glamz-template.webflow.io"
       // data-wf-page="686f439ee34b78f814ae2df2"
       // data-wf-site="686f439ee34b78f814ae2de2"
