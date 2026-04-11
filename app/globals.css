@@ -174,12 +174,7 @@ td,th {
   padding: 0
 }
 
-@font-face {
-  font-family: webflow-icons;
-  src: url(data:application/x-font-ttf;charset=utf-8;base64,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)format("truetype");
-  font-weight: 400;
-  font-style: normal
-}
+
 
 [class^=w-icon-],[class*=\ w-icon-] {
   speak: none;
@@ -230,12 +225,13 @@ body {
   background-color: #fff;
   min-height: 100%;
   margin: 0;
-  font-family: "Satoshi", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-satoshi), -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   line-height: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 img {
   vertical-align: middle;
@@ -2054,47 +2050,16 @@ textarea.w-input,textarea.w-select {
   display: grid
 }
 
-@font-face {
-  font-family: Satoshi;
-  src: url(https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f47d529fd30aa649683ad_Satoshi-Black.otf)format("opentype");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap
-}
 
-@font-face {
-  font-family: Satoshi;
-  src: url(https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f47d5f89048e85154223b_Satoshi-Medium.otf)format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap
-}
 
-@font-face {
-  font-family: Satoshi;
-  src: url(https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f47d563771d2505ad88d1_Satoshi-Regular.otf)format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap
-}
 
-@font-face {
-  font-family: Satoshi;
-  src: url(https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f47d5524fa594f13ad93d_Satoshi-Light.otf)format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap
-}
 
-@font-face {
-  font-family: Satoshi;
-  src: url(https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f47d59d1babee6802a64e_Satoshi-Bold.otf)format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap
-}
+
+
+
 
 :root {
+  --font-primary: var(--font-satoshi), sans-serif;
   --body: #333;
   --title: black;
   --bg-2: #eaf0f4;
@@ -8615,7 +8580,7 @@ blockquote {
 }
 
 :root {
-  --font-primary: "YourNewFont", "Satoshi", sans-serif;
+  --font-primary: var(--font-satoshi), sans-serif;
 }
 
 /* Titles */
@@ -8746,16 +8711,4 @@ p,
   }
 }
 
-.hero-heading {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.6s ease forwards;
-  animation-delay: 0.2s;
-}
 
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
