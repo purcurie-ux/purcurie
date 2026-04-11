@@ -43,10 +43,10 @@ const satoshi = localFont({
 
 
 export const metadata: Metadata = {
-  title: "Purcurie | Pure Care For Skin",
+  title: "Purcurie",
   description: "Discover the best skincare products designed to support your daily routine and natural glow.",
   openGraph: {
-    title: "Purcurie | Pure Care For Skin",
+    title: "Purcurie",
     description: "Discover the best skincare products designed to support your daily routine and natural glow.",
     url: "https://www.purcurie.com/", // ✅ Replace with your actual domain
     siteName: "Purcurie",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
 // 👇 UPDATED ICONS SECTION
   icons: {
-    icon: "icon.svg", // ✅ Main Favicon
+    icon: "/favicon.svg", // ✅ Main Favicon
     shortcut: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846", // ✅ Shortcut Icon
     apple: "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846", // ✅ Apple Touch Icon (iPhone/iPad home screen)
   },
@@ -95,7 +95,7 @@ export default function RootLayout({
       {/*         HEAD AREA          */}
       {/* ------------------------- */}
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        
 
         <GlamzHead />
 

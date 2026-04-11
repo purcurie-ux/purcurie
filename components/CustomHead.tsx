@@ -3,62 +3,26 @@
 import Script from "next/script";
 
 interface GlamzHeadProps {
-  title?: string;
-  description?: string;
-  ogImage?: string;
-  twitterImage?: string;
-  faviconSmall?: string;
-  faviconLarge?: string;
   cssUrl?: string;
 }
 
 export default function GlamzHead({
-  title = "Purcurie",
-  description = "Pure Care For Skin",
-  ogImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
-  twitterImage = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/686f99f37ed0ca3467964e3a_og-image.webp",
-  faviconSmall = "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_L_fav.jpg?v=1768595835",
-  faviconLarge = "https://cdn.shopify.com/s/files/1/0984/6843/0146/files/PUR_CURIE_1.jpg?v=1768595846",
   cssUrl = "https://cdn.prod.website-files.com/686f439ee34b78f814ae2de2/css/glamz-template.webflow.shared.2b171c674.min.css",
 }: GlamzHeadProps) {
   return (
     <>
-      {/* Meta Tags */}
-      <meta charSet="utf-8" />
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="generator" content="Webflow" />
 
-      {/* OG */}
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:type" content="website" />
+      <link rel="preconnect" href="https://cdn.prod.website-files.com" />
+      <link rel="dns-prefetch" href="https://cdn.prod.website-files.com" />
 
-      {/* Twitter */}
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={twitterImage} />
-      <meta name="twitter:card" content="summary_large_image" />
-
-
-<link rel="preconnect" href="https://cdn.prod.website-files.com" />
-<link rel="dns-prefetch" href="https://cdn.prod.website-files.com" />
       {/* Glamz CSS (Optimized) */}
-       <link
+      <link
         rel="preload"
         href={cssUrl}
         as="style"
-        onLoad={(e) => {
-          const target = e.target as HTMLLinkElement;
-          target.rel = "stylesheet";
-        }}
       />
-
-        <noscript>
-          <link rel="stylesheet" href={cssUrl} />
-        </noscript>
+      <link rel="stylesheet" href={cssUrl} />
 
       {/* Touch Detection Script */}
       <Script id="modernizr-touch" strategy="beforeInteractive">
@@ -73,10 +37,6 @@ export default function GlamzHead({
           })(window, document);
         `}
       </Script>
-
-      {/* Favicons */}
-      <link rel="shortcut icon" href={faviconSmall} type="image/x-icon" />
-      <link rel="apple-touch-icon" href={faviconLarge} />
 
       {/* Webflow Currency Settings */}
       <Script id="webflow-currency" strategy="beforeInteractive">
