@@ -14,8 +14,29 @@ import PurcurieChat from "@/components/ChatBot";
 import localFont from "next/font/local";
 
 const satoshi = localFont({
-  src: "../public/font/Satoshi-Variable.woff2", // Check your exact filename in public/font
-  display: "swap",
+  src: [
+    {
+      path: "../public/font/Satoshi-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Satoshi-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Satoshi-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Satoshi-Black.otf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  display: "swap", // ✅ This keeps the Lighthouse fix active
   variable: "--font-satoshi",
 });
 
