@@ -92,6 +92,7 @@ export default function ProductFeaturesSplit({
           object-fit: cover;
           object-position: center top;
           display: block;
+          border-radius: 16px;
         }
 
         /* Responsive */

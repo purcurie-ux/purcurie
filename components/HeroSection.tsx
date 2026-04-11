@@ -8,7 +8,7 @@ export function HeroSection() {
         <div className="hero-wrapper">
           <h2
             data-w-id="5ff34242-aa17-3537-d0fc-06ef05babff8"
-            style={{ opacity: 0 }}
+            style={{ opacity: 1 }}
             className="hero-heading"
           >
             Modern Beauty<br></br>

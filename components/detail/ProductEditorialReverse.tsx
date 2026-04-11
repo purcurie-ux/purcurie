@@ -106,6 +106,8 @@ export default function ProductEditorialReverse({
   object-fit: cover; /* This stays cover to fill the wide area */
   display: block;
   z-index: 1;
+  border-radius: 16px;
+  
 }
 
 /* The Product-in-hand image (The one that was cutting) */
@@ -115,6 +117,7 @@ export default function ProductEditorialReverse({
   left: 5%;
   width: 30%; 
   height: 240px; 
+  border-radius: 16px;
   
   /* KEY CHANGES BELOW */
   object-fit: contain;     /* This stops the cutting/cropping */
@@ -138,6 +141,7 @@ export default function ProductEditorialReverse({
           object-fit: cover;
           object-position: center;
           display: block;
+          border-radius: 16px;
         }
 
         /* Responsive */

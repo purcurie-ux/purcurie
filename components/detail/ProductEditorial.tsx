@@ -61,14 +61,14 @@ export default function ProductEditorial({
           position: relative;
         }
 
-        .pe-main-image {
-          width: 100%;
-          height: 680px;
-          object-fit: cover;
-          object-position: center top;
-          display: block;
-          
-        }
+      .pe-main-image {
+  width: 100%;
+  height: 680px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: 16px;
+}
 
         /* RIGHT — text + stacked images */
         .pe-right {
@@ -119,26 +119,28 @@ export default function ProductEditorial({
           width: 100%;
         }
 
-        .pe-img-back {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 72%;
-          height: 260px;
-          object-fit: cover;
-          display: block;
-        }
+       .pe-img-back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 72%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
 
-        .pe-img-front {
-          position: absolute;
-          bottom: 0;
-          right: 42%;
-          width: 45%;
-          height: 200px;
-          object-fit: cover;
-          display: block;
-          z-index: 2;
-        }
+      .pe-img-front {
+  position: absolute;
+  bottom: 0;
+  right: 42%;
+  width: 45%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  z-index: 2;
+  border-radius: 16px;
+}
 
         /* Responsive */
         @media (max-width: 900px) {

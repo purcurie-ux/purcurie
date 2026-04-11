@@ -20,13 +20,13 @@ export function Hero() {
           ></div>
         </section>
         <HeroSection />
-    <div className="glamz-wrapper">
+    {/* <div className="glamz-wrapper">
   <img
     src="/hero.svg"
     alt="Purcurie beauty"
     className="glamz-svg"
   />
-</div>
+</div> */}
           </section>
           
           <HomePage />
