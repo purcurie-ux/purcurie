@@ -1033,7 +1033,8 @@ setCurrentImageIndex((prev) =>
       alt={product.title}
       width={800}
       height={800}
-      priority={index === 0} // ✅ Only first image is priority
+      priority={index === currentImageIndex} // ✅ This fixes "Request Discovery"
+      loading={index === 0 ? "eager" : "lazy"} // ✅ Eager for the first one
       fetchPriority={index === 0 ? "high" : "low"} // ✅ High priority for first image
       className={`carousel-image ${
         index === currentImageIndex ? "active" : ""
@@ -1531,9 +1532,16 @@ export default ProductDetail;
 function SimilarProductCard({ product }: { product: SimilarProduct }) {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [rect, setRect] = useState<DOMRect | null>(null); // ✅ Store the box dimensions
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setRect(e.currentTarget.getBoundingClientRect()); // ✅ Only ask ONCE
+    setIsHovering(true);
+  };
+
+ const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!rect) return;
+    // ✅ No reflow here! Just simple math.
     setPos({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
@@ -1546,7 +1554,8 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
       <Link
   href={`/product/${product.slug}`}
   className="product-block"
-  onMouseEnter={() => setIsHovering(true)}
+  
+  onMouseEnter={handleMouseEnter} // ✅ New handle
   onMouseLeave={() => setIsHovering(false)}
   onMouseMove={handleMouseMove}
   style={{ position: "relative", overflow: "hidden", display: "block" }}
@@ -1554,9 +1563,9 @@ function SimilarProductCard({ product }: { product: SimilarProduct }) {
   <Image
     src={product.image}
     alt={product.title}
-    width={500}
-    height={500}
-    sizes="(max-width: 768px) 100vw, 500px"
+    width={400}
+    height={400}
+   sizes="(max-width: 768px) 50vw, 300px"
     className="product-image"
   />
 

@@ -3,11 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 interface Props {
-  params: { handle: string };
+  // ✅ FIX: params must be a Promise in Next.js 15+
+  params: Promise<{ handle: string }>;
 }
 
 export default async function CategoryProductsPage({ params }: Props) {
-  const collection = await getCollectionProducts(params.handle);
+  // ✅ FIX: Await the params before using them
+  const { handle } = await params;
+  const collection = await getCollectionProducts(handle);
 
   if (!collection) {
     return <div className="container">Collection not found</div>;
@@ -34,27 +37,30 @@ export default async function CategoryProductsPage({ params }: Props) {
 
                 return (
                   <div key={product.id} className="product-item">
-                    <a
+                    {/* ✅ OPTIMIZATION: Use Next.js Link instead of <a> */}
+                    <Link
                       href={`/product/${product.handle}`}
                       className="product-block w-inline-block"
                     >
                       <div className="product-img">
-  {image && (
-    <Image
-      src={image.url}
-      alt={image.altText || product.title}
-      width={500}
-      height={500}
-      sizes="(max-width: 768px) 100vw, 500px"
-      className="product-image"
-    />
-  )}
-</div>
+                        {image && (
+                          <Image
+                            src={image.url}
+                            alt={image.altText || product.title}
+                            width={500}
+                            height={500}
+                            // ✅ LCP FIX: Only priority the first few items in the grid
+                            priority={false} 
+                            sizes="(max-width: 768px) 50vw, 33vw"
+                            className="product-image"
+                          />
+                        )}
+                      </div>
 
                       <div className="product-bottom">
                         <h5 className="product-heading">{product.title}</h5>
-                        <div>
-                          ₹ {product.priceRange.minVariantPrice.amount}{" "}
+                        <div className="text-price">
+                          ₹ {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(0)}{" "}
                           {product.priceRange.minVariantPrice.currencyCode}
                         </div>
                       </div>
@@ -62,7 +68,7 @@ export default async function CategoryProductsPage({ params }: Props) {
                       <div className="cursor">
                         <div>Detail</div>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}

@@ -1,11 +1,16 @@
 import { getCollectionProducts } from "@/lib/getCollectionProducts";
+import Image from "next/image"; // ✅ Use Next.js Image for performance
 
 interface Props {
-  params: { handle: string };
+  // ✅ FIX: params must be a Promise in Next.js 15/16
+  params: Promise<{ handle: string }>;
 }
 
 export default async function CategoryProductsPage({ params }: Props) {
-  const { handle } = await params;
+  // ✅ FIX: Correctly await the params promise
+  const resolvedParams = await params;
+  const handle = resolvedParams.handle;
+  
   const collection = await getCollectionProducts(handle);
 
   if (!collection) {
@@ -18,10 +23,7 @@ export default async function CategoryProductsPage({ params }: Props) {
       <div className="page-title">
         <div className="w-layout-blockcontainer container w-container">
           <div className="pg-inner">
-            <h1
-              data-w-id="7f8ffbff-32c4-a952-109d-af7f823f9b65"
-              className="main-heading"
-            >
+            <h1 className="main-heading">
               {collection.title}
             </h1>
           </div>
@@ -49,19 +51,23 @@ export default async function CategoryProductsPage({ params }: Props) {
                       >
                         <div className="product-img">
                           {image && (
-                            <img
-                              loading="lazy"
+                            // ✅ OPTIMIZATION: Use Next.js Image component
+                            // This fixes the "957 KiB image size" issue in your report
+                            <Image
                               src={image.url}
                               alt={image.altText || product.title}
+                              width={400}
+                              height={400}
                               className="product-image"
+                              sizes="(max-width: 768px) 50vw, 33vw"
                             />
                           )}
                         </div>
 
                         <div className="product-bottom">
                           <h5 className="product-heading">{product.title}</h5>
-                          <div>
-                            ₹ {product.priceRange.minVariantPrice.amount}{" "}
+                          <div className="text-price">
+                            ₹ {parseFloat(product.priceRange.minVariantPrice.amount).toFixed(0)}{" "}
                             {product.priceRange.minVariantPrice.currencyCode}
                           </div>
                         </div>

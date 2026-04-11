@@ -3,10 +3,12 @@ import { mapProductDetail } from "@/lib/mapProductDetail";
 import ProductDetail from "@/components/detail/ProductDetail";
 
 interface Props {
-  params: { handle: string };
+  // ✅ FIX: params must be a Promise in Next.js 15/16
+  params: Promise<{ handle: string }>;
 }
 
 export default async function ProductPage({ params }: Props) {
+  // ✅ FIX: Await the params promise first
   const { handle } = await params;
 
   // 1. Fetch raw data from Shopify
@@ -16,10 +18,9 @@ export default async function ProductPage({ params }: Props) {
     return <div className="container">Product not found</div>;
   }
 
-  // ✅ 2. FIX: Extract the variables 'product' and 'similarProducts' 
-  // by passing the raw data through your mapper function.
+  // 2. Map the raw data to your components' format
   const { product, similarProducts } = mapProductDetail(shopifyProduct);
 
-  // 3. Now the variables exist and can be passed down
+  // 3. Pass the mapped data down
   return <ProductDetail product={product} similarProducts={similarProducts} />;
 }
