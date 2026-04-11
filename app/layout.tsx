@@ -16,27 +16,32 @@ import localFont from "next/font/local";
 const satoshi = localFont({
   src: [
     {
-      path: "../public/font/Satoshi-Light.otf",
+      path: "../public/font/Satoshi-Light.woff2", // ✅ Changed to .woff2
       weight: "300",
       style: "normal",
     },
     {
-      path: "../public/font/Satoshi-Medium.otf",
+      path: "../public/font/Satoshi-Italic.woff2", // ✅ Changed to .woff2
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/font/Satoshi-Medium.woff2", // ✅ Changed to .woff2
       weight: "500",
       style: "normal",
     },
     {
-      path: "../public/font/Satoshi-Bold.otf",
+      path: "../public/font/Satoshi-Bold.woff2", // ✅ Changed to .woff2
       weight: "700",
       style: "normal",
     },
     {
-      path: "../public/font/Satoshi-Black.otf",
+      path: "../public/font/Satoshi-Black.woff2", // ✅ Changed to .woff2
       weight: "900",
       style: "normal",
     },
   ],
-  display: "swap", // ✅ This keeps the Lighthouse fix active
+  display: "swap",
   variable: "--font-satoshi",
 });
 
