@@ -1033,6 +1033,8 @@ setCurrentImageIndex((prev) =>
       alt={product.title}
       width={800}
       height={800}
+      priority={index === 0} // ✅ Only first image is priority
+      fetchPriority={index === 0 ? "high" : "low"} // ✅ High priority for first image
       className={`carousel-image ${
         index === currentImageIndex ? "active" : ""
       }`}
@@ -1047,8 +1049,10 @@ setCurrentImageIndex((prev) =>
       key={index}
       src={img}
       alt={product.title}
-      width={800}
-      height={800}
+      width={720} // Match your actual display width
+      height={860}
+      priority={index === 0} // Still prioritize the first one
+      sizes="(max-width: 768px) 100vw, 720px" // ✅ Prevents loading the massive version
       style={{
         width: "100%",
         height: "auto",
